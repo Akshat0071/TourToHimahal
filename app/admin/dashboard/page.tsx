@@ -11,11 +11,27 @@ export default async function DashboardPage() {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
-  const [totalLeadsResult, newTodayResult, packageLeadsResult, taxiLeadsResult, recentLeadsResult] = await Promise.all([
+  const [
+    totalLeadsResult,
+    newTodayResult,
+    packageLeadsResult,
+    taxiLeadsResult,
+    activePackagesResult,
+    activeVehiclesResult,
+    activeRoutesResult,
+    activeBlogsResult,
+    activeDiariesResult,
+    recentLeadsResult,
+  ] = await Promise.all([
     supabase.from("leads").select("id", { count: "exact", head: true }),
     supabase.from("leads").select("id", { count: "exact", head: true }).gte("created_at", today.toISOString()),
     supabase.from("leads").select("id", { count: "exact", head: true }).eq("service_type", "package"),
     supabase.from("leads").select("id", { count: "exact", head: true }).eq("service_type", "taxi"),
+    supabase.from("packages").select("id", { count: "exact", head: true }).eq("is_active", true),
+    supabase.from("vehicles").select("id", { count: "exact", head: true }).eq("is_available", true),
+    supabase.from("taxi_routes").select("id", { count: "exact", head: true }).eq("is_active", true),
+    supabase.from("blogs").select("id", { count: "exact", head: true }).eq("is_published", true),
+    supabase.from("diaries").select("id", { count: "exact", head: true }).eq("is_published", true),
     supabase.from("leads").select("*").order("created_at", { ascending: false }).limit(5),
   ])
 
@@ -24,6 +40,11 @@ export default async function DashboardPage() {
     newToday: newTodayResult.count || 0,
     packageEnquiries: packageLeadsResult.count || 0,
     taxiEnquiries: taxiLeadsResult.count || 0,
+    activePackages: activePackagesResult.count || 0,
+    activeVehicles: activeVehiclesResult.count || 0,
+    activeRoutes: activeRoutesResult.count || 0,
+    activeBlogs: activeBlogsResult.count || 0,
+    activeDiaries: activeDiariesResult.count || 0,
   }
 
   const recentLeads = recentLeadsResult.data || []
@@ -32,13 +53,13 @@ export default async function DashboardPage() {
     <div>
       <AdminHeader title="Dashboard" description="Welcome back! Here's an overview of your business." />
 
-      <div className="p-6 space-y-6">
+      <div className="p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6">
         {/* Stats Cards */}
         <DashboardStats stats={stats} />
 
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
           {/* Recent Leads */}
-          <div className="lg:col-span-2">
+          <div className="md:col-span-2">
             <RecentLeads leads={recentLeads} />
           </div>
 

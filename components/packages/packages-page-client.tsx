@@ -117,7 +117,7 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
   }
 
   const hasActiveFilters =
-    searchQuery ||
+    !!searchQuery ||
     selectedRegion !== "All" ||
     selectedDuration !== "All" ||
     selectedTheme !== "All" ||
@@ -129,10 +129,11 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
 
       <InfiniteScrollHero
         images={[
-          { url: "/himalayan-mountains-landscape.jpg", alt: "Himalayan Mountains" },
-          { url: "/himalayan-mountains-snow-peaks-sunrise.jpg", alt: "Mountain Peaks" },
-          { url: "/chintpurni-temple-himachal-pradesh.jpg", alt: "Temple" },
-          { url: "/paragliding-bir-billing-himachal.jpg", alt: "Paragliding" },
+          { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765967133/hqjivfndozpkicr5eddz.png", alt: "Himalayan Mountains" },
+          { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765967181/vor6a288gor8vhrmnej1.png", alt: "Mountain Peaks" },
+          { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765970056/irdkpi0rs4cfcdmo985u.png", alt: "Rafting" },
+          { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765967996/nmnqkuvgik8wokp82kiv.jpg", alt: "Chintpurni Temple" },
+          { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765967269/flj6ga0vacjary3hscgt.png", alt: "Paragliding" },
         ]}
         badge="Handcrafted Himalayan Experiences"
         title="Unforgettable Travel Packages"
@@ -161,7 +162,7 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
       </section>
 
       {/* Packages Grid */}
-      <section className="py-6 sm:py-8 md:py-12 lg:py-16 bg-gradient-to-b from-background via-[oklch(0.97_0.02_85)] to-background">
+      <section className="py-6 sm:py-8 md:py-12 lg:py-16 bg-linear-to-b from-background via-[oklch(0.97_0.02_85)] to-background">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-4 sm:mb-6 md:mb-8">
             <p className="text-xs sm:text-sm md:text-base text-muted-foreground">
@@ -171,7 +172,7 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
           </div>
 
           {filteredPackages.length === 0 ? (
-            <div className="text-center py-8 sm:py-12 md:py-16 bg-gradient-to-br from-muted/50 to-muted/30 rounded-2xl sm:rounded-3xl">
+            <div className="text-center py-8 sm:py-12 md:py-16 bg-linear-to-br from-muted/50 to-muted/30 rounded-2xl sm:rounded-3xl">
               <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4 bg-saffron/10 rounded-full flex items-center justify-center">
                 <MapPin className="h-8 w-8 sm:h-10 sm:w-10 text-saffron" />
               </div>

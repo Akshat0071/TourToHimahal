@@ -132,10 +132,10 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="flex items-center gap-2">
-          <Car className="w-5 h-5" />
-          Vehicles
+      <CardHeader className="flex flex-row items-center justify-between p-3 sm:p-4 md:p-6">
+        <CardTitle className="flex items-center gap-1 sm:gap-2 text-sm sm:text-base lg:text-lg">
+          <Car className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+          <span className="truncate">Vehicles</span>
         </CardTitle>
         <Dialog
           open={isOpen}
@@ -145,75 +145,82 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
           }}
         >
           <DialogTrigger asChild>
-            <Button size="sm">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Vehicle
+            <Button size="sm" className="text-xs sm:text-sm shrink-0">
+              <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+              <span className="hidden xs:inline">Add Vehicle</span>
+              <span className="xs:hidden">Add Vehicle</span>
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="w-[calc(100vw-2rem)] sm:w-full max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>{editingVehicle ? "Edit Vehicle" : "Add Vehicle"}</DialogTitle>
+              <DialogTitle className="text-base sm:text-lg">{editingVehicle ? "Edit Vehicle" : "Add Vehicle"}</DialogTitle>
             </DialogHeader>
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-3 sm:space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Vehicle Name</Label>
+                  <Label htmlFor="name" className="text-xs sm:text-sm">Vehicle Name</Label>
                   <Input
                     id="name"
+                    className="text-base sm:text-sm"
                     value={formData.name}
                     onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
                     placeholder="e.g., Swift Dzire"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="type">Type</Label>
+                  <Label htmlFor="type" className="text-xs sm:text-sm">Type</Label>
                   <Input
                     id="type"
+                    className="text-base sm:text-sm"
                     value={formData.type}
                     onChange={(e) => setFormData((prev) => ({ ...prev, type: e.target.value }))}
                     placeholder="e.g., sedan, suv"
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="capacity">Passenger Capacity</Label>
+                  <Label htmlFor="capacity" className="text-xs sm:text-sm">Passenger Capacity</Label>
                   <Input
                     id="capacity"
                     type="number"
                     min="1"
+                    className="text-base sm:text-sm"
                     value={formData.capacity}
                     onChange={(e) => setFormData((prev) => ({ ...prev, capacity: Number(e.target.value) }))}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="luggage">Luggage Capacity</Label>
+                  <Label htmlFor="luggage" className="text-xs sm:text-sm">Luggage Capacity</Label>
                   <Input
                     id="luggage"
                     type="number"
                     min="0"
+                    className="text-base sm:text-sm"
                     value={formData.luggage_capacity}
                     onChange={(e) => setFormData((prev) => ({ ...prev, luggage_capacity: Number(e.target.value) }))}
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="base_fare">Base Fare (₹)</Label>
+                  <Label htmlFor="base_fare" className="text-xs sm:text-sm">Base Fare (₹)</Label>
                   <Input
                     id="base_fare"
                     type="number"
                     min="0"
+                    className="text-base sm:text-sm"
                     value={formData.base_fare}
                     onChange={(e) => setFormData((prev) => ({ ...prev, base_fare: Number(e.target.value) }))}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="per_km">Per KM Rate (₹)</Label>
+                  <Label htmlFor="per_km" className="text-xs sm:text-sm">Per KM Rate (₹)</Label>
                   <Input
                     id="per_km"
                     type="number"
                     min="0"
+                    className="text-base sm:text-sm"
                     value={formData.per_km_rate}
                     onChange={(e) => setFormData((prev) => ({ ...prev, per_km_rate: Number(e.target.value) }))}
                   />
@@ -221,7 +228,7 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
               </div>
               
               <div className="space-y-2">
-                <Label>Vehicle Image</Label>
+                <Label className="text-xs sm:text-sm">Vehicle Image</Label>
                 {formData.image_url ? (
                   <div className="space-y-2">
                     <UploadedImagePreview
@@ -232,9 +239,27 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
                   </div>
                 ) : (
                   <CloudinaryUploadWidget
-                    onUploadSuccess={(result: CloudinaryUploadResult) => {
-                      setFormData((prev) => ({ ...prev, image_url: result.secure_url }))
-                      toast.success("Image uploaded successfully!")
+                    onUploadSuccess={async (result: CloudinaryUploadResult) => {
+                      const url = result.secure_url
+                      setFormData((prev) => ({ ...prev, image_url: url }))
+
+                      // If editing an existing vehicle, persist immediately for clarity
+                      if (editingVehicle?.id) {
+                        const supabase = createClient()
+                        const { error } = await supabase
+                          .from("vehicles")
+                          .update({ image_url: url })
+                          .eq("id", editingVehicle.id)
+
+                        if (error) {
+                          toast.error("Image uploaded, but failed to save. Please try Update.")
+                        } else {
+                          toast.success("Image uploaded and saved.")
+                          router.refresh()
+                        }
+                      } else {
+                        toast.success("Image uploaded. Click Add to save.")
+                      }
                     }}
                     onUploadError={(error) => {
                       console.error("Upload failed:", error)
@@ -249,45 +274,46 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
                 )}
               </div>
 
-              <div className="flex justify-end gap-2 pt-4">
-                <Button variant="outline" onClick={() => setIsOpen(false)}>
+              <div className="flex flex-col xs:flex-row justify-end gap-2 pt-4">
+                <Button variant="outline" onClick={() => setIsOpen(false)} className="w-full xs:w-auto text-xs sm:text-sm">
                   Cancel
                 </Button>
-                <Button onClick={handleSubmit}>{editingVehicle ? "Update" : "Add"} Vehicle</Button>
+                <Button onClick={handleSubmit} className="w-full xs:w-auto text-xs sm:text-sm">{editingVehicle ? "Update" : "Add"} Vehicle</Button>
               </div>
             </div>
           </DialogContent>
         </Dialog>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-3 sm:p-4 md:p-6">
         {vehicles.length === 0 ? (
-          <div className="text-center py-8">
-            <Car className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-            <p className="text-muted-foreground">No vehicles added yet</p>
+          <div className="text-center py-6 sm:py-8">
+            <Car className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-2 sm:mb-3" />
+            <p className="text-xs sm:text-sm text-muted-foreground">No vehicles added yet</p>
           </div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {vehicles.map((vehicle, index) => (
               <motion.div
                 key={vehicle.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className="p-4 border border-border rounded-xl"
+                className="p-3 sm:p-4 border border-border rounded-xl"
               >
-                <div className="flex items-start justify-between mb-3">
+                <div className="flex items-start justify-between mb-2 sm:mb-3">
                   <div>
-                    <h4 className="font-medium text-foreground">{vehicle.name}</h4>
-                    <Badge variant="outline" className="mt-1">
+                    <h4 className="font-medium text-xs sm:text-sm text-foreground">{vehicle.name}</h4>
+                    <Badge variant="outline" className="mt-1 text-[10px] sm:text-xs">
                       {vehicle.type}
                     </Badge>
                   </div>
                   <Switch
                     checked={vehicle.is_available}
                     onCheckedChange={() => toggleAvailability(vehicle.id, vehicle.is_available)}
+                    className="scale-90 sm:scale-100"
                   />
                 </div>
-                <div className="text-sm text-muted-foreground space-y-1">
+                <div className="text-xs sm:text-sm text-muted-foreground space-y-1">
                   <p>
                     {vehicle.capacity} passengers • {vehicle.luggage_capacity || 0} bags
                   </p>
@@ -295,12 +321,12 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
                     ₹{vehicle.base_fare} base • ₹{vehicle.per_km_rate}/km
                   </p>
                 </div>
-                <div className="flex gap-2 mt-3">
-                  <Button variant="ghost" size="sm" onClick={() => openEdit(vehicle)}>
-                    <Edit className="w-4 h-4" />
+                <div className="flex gap-2 mt-2 sm:mt-3">
+                  <Button variant="ghost" size="sm" onClick={() => openEdit(vehicle)} className="h-8 px-2 sm:h-9 sm:px-3">
+                    <Edit className="w-3 h-3 sm:w-4 sm:h-4" />
                   </Button>
-                  <Button variant="ghost" size="sm" onClick={() => deleteVehicle(vehicle.id)}>
-                    <Trash2 className="w-4 h-4 text-destructive" />
+                  <Button variant="ghost" size="sm" onClick={() => deleteVehicle(vehicle.id)} className="h-8 px-2 sm:h-9 sm:px-3">
+                    <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 text-destructive" />
                   </Button>
                 </div>
               </motion.div>

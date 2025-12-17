@@ -23,7 +23,7 @@ function getImageUrl(url: string): string {
 
 export function StaticHero({ image, title, subtitle, badge, children }: StaticHeroProps) {
   return (
-    <section className="relative min-h-[300px] sm:min-h-[380px] md:min-h-[420px] lg:min-h-[480px] overflow-hidden flex items-center">
+    <section className="relative min-h-[40vh] min-h-[40svh] overflow-hidden flex items-center">
       {/* Static Background Image */}
       <div className="absolute inset-0">
         <img
@@ -52,7 +52,7 @@ export function StaticHero({ image, title, subtitle, badge, children }: StaticHe
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.3 }}
-                className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-sm font-medium text-white bg-gradient-to-r from-saffron/40 to-sunset-orange/40 backdrop-blur-md rounded-full border border-white/30"
+                className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-sm font-medium text-white bg-gradient-to-r from-saffron/40 to-sunset-orange/40 backdrop-blur-md rounded-full border border-white/30 mt-6 sm:mt-0"
               >
                 <Star className="h-3 w-3 md:h-4 md:w-4 text-golden-yellow fill-golden-yellow" />
                 <span className="bg-gradient-to-r from-golden-yellow via-white to-golden-yellow bg-clip-text text-transparent font-semibold text-xs md:text-sm">
@@ -77,7 +77,7 @@ export function StaticHero({ image, title, subtitle, badge, children }: StaticHe
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
-              className="text-xs sm:text-sm md:text-base lg:text-lg text-white/90 max-w-3xl mx-auto text-pretty leading-relaxed"
+              className="text-xs sm:text-sm md:text-base lg:text-lg text-white/90 max-w-3xl mx-auto text-pretty leading-relaxed mt-2 sm:mt-0"
             >
               {subtitle}
             </motion.p>

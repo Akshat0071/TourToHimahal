@@ -6,37 +6,37 @@ import Link from "next/link"
 import { fadeInUp, staggerContainer } from "@/lib/animation-variants"
 import { Compass, Heart, Mountain, Users, ArrowRight } from "lucide-react"
 
+// Ensure pasted URLs (including Cloudinary) work reliably like in the Hero
+function getImageUrl(url: string): string {
+  if (!url) return "/placeholder.svg"
+  const trimmed = url.trim()
+  const normalized = trimmed.startsWith("/http") ? trimmed.slice(1) : trimmed
+  return normalized
+}
+
 const themes = [
   {
     title: "Spiritual Tours",
-    image: "/spiritual-temple-tour-himachal.jpg",
+    image: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765974749/fbi4fyi69lft74u50by0.png",
     description: "Visit sacred temples and find inner peace",
     icon: Compass,
     color: "from-saffron to-sunset-orange",
     href: "/packages?theme=spiritual",
   },
   {
-    title: "Honeymoon Packages",
-    image: "/romantic-honeymoon-couple-mountains.jpg",
-    description: "Create magical memories together",
-    icon: Heart,
-    color: "from-temple-red to-saffron",
-    href: "/packages?theme=honeymoon",
-  },
-  {
     title: "Adventure & Trekking",
-    image: "/mountain-trekking-adventure.jpg",
+    image: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765967283/yegxwa1cdjow0g8madso.png",
     description: "Thrilling experiences await",
     icon: Mountain,
     color: "from-forest-green to-mountain-blue",
     href: "/packages?theme=adventure",
   },
   {
-    title: "Family Trips",
-    image: "/family-trip-mountains.jpg",
-    description: "Fun for all ages",
-    icon: Users,
-    color: "from-mountain-blue to-forest-green",
+    title: "Leisure & Relaxation",
+    image: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765975218/mduxsmb2vsymzqi0yyfz.jpg",
+    description: "Take a step back and relax",
+    icon: Heart,
+    color: "from-sunset-orange to-golden-yellow",
     href: "/packages?theme=family",
   },
 ]
@@ -83,7 +83,7 @@ export function TravelThemes() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6"
         >
           {themes.map((theme, index) => (
             <motion.div
@@ -94,16 +94,16 @@ export function TravelThemes() {
             >
               <Link href={theme.href}>
                 <Image
-                  src={theme.image || "/placeholder.svg"}
+                  src={getImageUrl(theme.image || "/placeholder.svg")}
                   alt={theme.title}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 {/* Gradient overlay */}
                 <div
-                  className={`absolute inset-0 bg-gradient-to-t ${theme.color} opacity-60 group-hover:opacity-70 transition-opacity duration-300`}
+                  className={`absolute inset-0 bg-gradient-to-t ${theme.color} opacity-40 group-hover:opacity-60 transition-opacity duration-300`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
                 {/* Content */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6">

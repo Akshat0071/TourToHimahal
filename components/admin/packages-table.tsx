@@ -90,17 +90,17 @@ export function PackagesTable({ packages }: PackagesTableProps) {
   }
 
   return (
-    <div className="bg-background border border-border rounded-xl overflow-hidden">
+    <div className="bg-background border border-border rounded-xl overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Package</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead>Duration</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead>Active</TableHead>
-            <TableHead>Featured</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead className="text-xs sm:text-sm">Package</TableHead>
+            <TableHead className="text-xs sm:text-sm">Price</TableHead>
+            <TableHead className="text-xs sm:text-sm">Duration</TableHead>
+            <TableHead className="hidden sm:table-head text-xs sm:text-sm">Category</TableHead>
+            <TableHead className="text-xs sm:text-sm">Active</TableHead>
+            <TableHead className="hidden md:table-head text-xs sm:text-sm">Featured</TableHead>
+            <TableHead className="text-right text-xs sm:text-sm">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -112,35 +112,35 @@ export function PackagesTable({ packages }: PackagesTableProps) {
               transition={{ delay: index * 0.03 }}
               className="border-b border-border hover:bg-muted/50 transition-colors"
             >
-              <TableCell>
+              <TableCell className="text-xs sm:text-sm">
                 <div>
-                  <p className="font-medium text-foreground">{pkg.title}</p>
-                  <p className="text-sm text-muted-foreground">/{pkg.slug}</p>
+                  <p className="font-medium text-foreground truncate">{pkg.title}</p>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground truncate">/{pkg.slug}</p>
                 </div>
               </TableCell>
-              <TableCell>
+              <TableCell className="text-xs sm:text-sm">
                 <div>
                   <p className="font-medium">₹{pkg.price.toLocaleString()}</p>
                   {pkg.original_price && (
-                    <p className="text-sm text-muted-foreground line-through">₹{pkg.original_price.toLocaleString()}</p>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground line-through">₹{pkg.original_price.toLocaleString()}</p>
                   )}
                 </div>
               </TableCell>
-              <TableCell>{pkg.duration}</TableCell>
-              <TableCell>
-                <Badge variant="outline">{pkg.category || "General"}</Badge>
+              <TableCell className="text-xs sm:text-sm whitespace-nowrap">{pkg.duration}</TableCell>
+              <TableCell className="hidden sm:table-cell text-xs sm:text-sm">
+                <Badge variant="outline" className="text-[10px] sm:text-xs">{pkg.category || "General"}</Badge>
               </TableCell>
               <TableCell>
                 <Switch checked={pkg.is_active} onCheckedChange={() => toggleActive(pkg.id, pkg.is_active)} />
               </TableCell>
-              <TableCell>
+              <TableCell className="hidden md:table-cell">
                 <Switch checked={pkg.is_featured} onCheckedChange={() => toggleFeatured(pkg.id, pkg.is_featured)} />
               </TableCell>
               <TableCell className="text-right">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                      <MoreHorizontal className="w-4 h-4" />
+                    <Button variant="ghost" size="icon" className="h-7 w-7 sm:h-8 sm:w-8">
+                      <MoreHorizontal className="w-3 h-3 sm:w-4 sm:h-4" />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">

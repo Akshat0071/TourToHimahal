@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Phone, MessageCircle, Car, Calendar, Shield } from "lucide-react"
+import { Phone, MessageCircle, Car, Calendar, Shield, Zap, Users, Gauge } from "lucide-react"
 import { Header } from "@/components/home/header"
 import { Footer } from "@/components/home/footer"
 import { InfiniteScrollHero } from "@/components/ui/infinite-scroll-hero"
@@ -73,10 +73,11 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
 
       <InfiniteScrollHero
         images={[
-          { url: "/taxi-cab-mountain-road.jpg", alt: "Taxi Service" },
-          { url: "/premium-taxi-service-himachal-mountains.jpg", alt: "Premium Taxi" },
-          { url: "/himalayan-mountains-landscape.jpg", alt: "Mountain Roads" },
-          { url: "/himalayan-mountains-snow-peaks-sunrise.jpg", alt: "Mountain Scenery" },
+          { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765972341/vwswidswmvrzozxoyhng.avif", alt: "Mountain Roads" },
+          { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765971157/dlkmhqcitksbbznvzo8t.jpg", alt: "Taxi Service" },
+          { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765972287/uc6q1azohh0a4k4xv72i.jpg", alt: "Time To Travel" },
+          { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765968189/ouf49gwwxagurjq2aqbi.png", alt: "River" },
+          { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765972296/j8gtceykrrky45uorsfo.jpg", alt: "Car on Road" },
         ]}
         badge="Trusted by 10,000+ Happy Travelers"
         title="Your Mountain Journey, Our Priority"
@@ -98,21 +99,83 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
         </div>
       </InfiniteScrollHero>
 
-      {/* Stats Section */}
-      <section className="py-12 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap gap-6 justify-center">
+      {/* Stats Section - Enhanced Design */}
+      <section className="py-16 md:py-24 bg-linear-to-br from-forest-green/5 via-mountain-blue/5 to-saffron/5 relative overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-forest-green/10 to-transparent rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-mountain-blue/10 to-transparent rounded-full blur-3xl" />
+
+        <div className="container mx-auto px-4 relative">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-4"
+          >
             {[
-              { value: "12+", label: "Years of Service" },
-              { value: "50+", label: "Expert Drivers" },
-              { value: "10K+", label: "Trips Completed" },
-            ].map((stat, index) => (
-              <div key={index} className="bg-muted rounded-lg px-8 py-4 text-center">
-                <p className="text-3xl font-bold text-primary">{stat.value}</p>
-                <p className="text-muted-foreground text-sm mt-1">{stat.label}</p>
-              </div>
-            ))}
-          </div>
+              { 
+                value: "12+", 
+                label: "Years of Service", 
+                icon: Calendar,
+                gradient: "from-forest-green to-emerald-600",
+                bgGradient: "from-forest-green/10 to-emerald-600/10"
+              },
+              { 
+                value: "50+", 
+                label: "Expert Drivers", 
+                icon: Users,
+                gradient: "from-mountain-blue to-blue-600",
+                bgGradient: "from-mountain-blue/10 to-blue-600/10"
+              },
+              { 
+                value: "10K+", 
+                label: "Trips Completed", 
+                icon: Gauge,
+                gradient: "from-saffron to-sunset-orange",
+                bgGradient: "from-saffron/10 to-sunset-orange/10"
+              },
+            ].map((stat, index) => {
+              const IconComponent = stat.icon
+              return (
+                <motion.div
+                  key={index}
+                  variants={fadeInUp}
+                  className="group relative"
+                >
+                  <div className={`absolute inset-0 bg-gradient-to-br ${stat.bgGradient} rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                  
+                  <div className={`relative bg-gradient-to-br ${stat.bgGradient} backdrop-blur-xl border border-white/20 rounded-2xl p-4 md:p-6 text-center hover:shadow-2xl transition-all duration-300 group-hover:scale-105`}>
+                    {/* Top accent line */}
+                    <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-16 h-1 bg-gradient-to-r ${stat.gradient} rounded-full`} />
+
+                    {/* Icon */}
+                    <div className={`inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br ${stat.gradient} rounded-2xl mb-4 shadow-lg transform group-hover:-translate-y-2 transition-transform duration-300`}>
+                      <IconComponent className="h-5 w-5 md:h-7 md:w-7 text-white" />
+                    </div>
+
+                    {/* Value */}
+                    <p className={`text-4xl md:text-5xl font-bold bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent mb-2`}>
+                      {stat.value}
+                    </p>
+
+                    {/* Label */}
+                    <p className="text-foreground font-semibold text-base md:text-lg mb-2">{stat.label}</p>
+                    
+                    {/* Decorative dots */}
+                    <div className="flex justify-center gap-1 mt-4">
+                      {[0, 1, 2].map((dot) => (
+                        <div
+                          key={dot}
+                          className={`w-2 h-2 rounded-full bg-gradient-to-r ${stat.gradient} opacity-60`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </motion.div>
         </div>
       </section>
 
@@ -190,7 +253,7 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <motion.div variants={slideInLeft} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <h2 className="text-3xl font-serif font-bold text-foreground mb-4">Book Your Ride</h2>
+              <h2 className="text-3xl font-serif font-bold text-foreground mb-4">Get Your Quote</h2>
               <p className="text-muted-foreground mb-6">
                 Fill in your travel details and we will get back to you with the best options. No advance payment
                 required - pay after your trip!

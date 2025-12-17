@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useRef } from "react"
 import { motion } from "framer-motion"
-import { Search, ChevronLeft, ChevronRight } from "lucide-react"
+import { Search } from "lucide-react"
 import { Header } from "@/components/home/header"
 import { Footer } from "@/components/home/footer"
 import { StaticHero } from "@/components/ui/static-hero"
@@ -38,9 +38,6 @@ export function BlogPageClient({ blogs, categories }: BlogPageClientProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE)
-  const carouselRef = useRef<HTMLDivElement>(null)
-
-  const featuredPosts = blogs.slice(0, 3)
 
   const filteredPosts = useMemo(() => {
     return blogs.filter((post) => {
@@ -60,70 +57,19 @@ export function BlogPageClient({ blogs, categories }: BlogPageClientProps) {
   const visiblePosts = filteredPosts.slice(0, visibleCount)
   const hasMore = visibleCount < filteredPosts.length
 
-  const scrollCarousel = (direction: "left" | "right") => {
-    if (!carouselRef.current) return
-    const scrollAmount = carouselRef.current.offsetWidth
-    carouselRef.current.scrollBy({
-      left: direction === "left" ? -scrollAmount : scrollAmount,
-      behavior: "smooth",
-    })
-  }
 
   return (
     <>
       <Header />
       <main>
         <StaticHero
-          image="/travel-blog-mountains.jpg"
+          image="/Images/blog.png"
           badge="Expert Insights & Local Secrets"
           title="Your Ultimate Himachal Guide"
           subtitle="Go beyond the tourist trail with our comprehensive travel guides. From budget itineraries to luxury escapes, from monsoon trekking tips to winter road safety — we've got the insider knowledge to make your trip extraordinary."
         />
 
-        {/* Featured Carousel */}
-        {featuredPosts.length > 0 && (
-          <section className="py-8 md:py-12 bg-gradient-to-r from-[oklch(0.96_0.03_220)] via-[oklch(0.97_0.025_200)] to-[oklch(0.96_0.02_180)]">
-            <div className="container mx-auto px-4">
-              <div className="flex items-center justify-between mb-4 md:mb-6">
-                <h2 className="text-xl md:text-2xl font-serif font-bold text-foreground">Featured Posts</h2>
-                <div className="hidden md:flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => scrollCarousel("left")}
-                    className="rounded-full border-2"
-                  >
-                    <ChevronLeft className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => scrollCarousel("right")}
-                    className="rounded-full border-2"
-                  >
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-
-              <div
-                ref={carouselRef}
-                className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4"
-                style={{ scrollSnapType: "x mandatory" }}
-              >
-                {featuredPosts.map((post) => (
-                  <div
-                    key={post.slug}
-                    className="shrink-0 w-[85%] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
-                    style={{ scrollSnapAlign: "start" }}
-                  >
-                    <BlogCard post={post} featured />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
+        {/* Featured section removed as requested */}
 
         {/* Main Content */}
         <section className="py-10 md:py-16 bg-gradient-to-b from-background via-[oklch(0.97_0.02_85)] to-background">

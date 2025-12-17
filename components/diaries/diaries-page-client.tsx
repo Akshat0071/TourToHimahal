@@ -81,21 +81,14 @@ export function DiariesPageClient({ diaries }: DiariesPageClientProps) {
       <Header />
       <main>
         <StaticHero
-          image="/travel-diary-mountains-adventure.jpg"
+          image="/Images/diary.png"
           badge="Real Stories, Real Adventures"
           title="Tales from the Mountains"
           subtitle="Dive into authentic travel experiences shared by fellow wanderers. From hidden waterfalls to sunrise treks, from cozy homestays to local chai stops — these diaries capture the soul of Himachal like no guidebook ever could."
-        >
-          <Button asChild className="bg-saffron hover:bg-saffron/90 text-white">
-            <Link href="/contact">
-              <PenLine className="h-4 w-4 mr-2" />
-              Share Your Story
-            </Link>
-          </Button>
-        </StaticHero>
+        />
 
         {/* Main Content */}
-        <section className="py-16">
+        <section className="py-12 md:py-16">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-3 gap-8">
               {/* Main Column */}
@@ -175,22 +168,7 @@ export function DiariesPageClient({ diaries }: DiariesPageClientProps) {
                   </div>
                 )}
 
-                {/* Newsletter */}
-                <div className="bg-mountain-blue rounded-xl p-6 text-white">
-                  <Mail className="h-8 w-8 mb-4" />
-                  <h3 className="text-lg font-serif font-bold mb-2">Get Stories in Your Inbox</h3>
-                  <p className="text-white/80 text-sm mb-4">
-                    Subscribe to receive new travel diaries and insider tips.
-                  </p>
-                  <form className="space-y-3">
-                    <Input
-                      type="email"
-                      placeholder="Your email"
-                      className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-                    />
-                    <Button className="w-full bg-saffron hover:bg-saffron/90 text-white">Subscribe</Button>
-                  </form>
-                </div>
+                {/* Newsletter removed */}
 
                 {/* Destinations */}
                 {destinations.length > 0 && (
@@ -220,26 +198,7 @@ export function DiariesPageClient({ diaries }: DiariesPageClientProps) {
           </div>
         </section>
 
-        {/* Submit CTA */}
-        <section className="py-16 bg-muted">
-          <div className="container mx-auto px-4 text-center">
-            <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">
-                Share Your Himachal Story
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-                Have you traveled through Himachal Pradesh? We'd love to feature your experience. Submit your travel
-                diary and inspire others to explore the mountains.
-              </p>
-              <Button asChild size="lg" className="bg-saffron hover:bg-saffron/90 text-white">
-                <Link href="/contact">
-                  <PenLine className="h-5 w-5 mr-2" />
-                  Submit Your Diary
-                </Link>
-              </Button>
-            </motion.div>
-          </div>
-        </section>
+
       </main>
       <Footer />
     </>

@@ -209,54 +209,58 @@ export function PackageForm({ initialData }: PackageFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-4xl">
+    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 w-full">
       <Card>
-        <CardHeader>
-          <CardTitle>Basic Information</CardTitle>
+        <CardHeader className="p-3 sm:p-6">
+          <CardTitle className="text-lg sm:text-xl">Basic Information</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
+        <CardContent className="p-3 sm:p-6 space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="title">Package Title *</Label>
+              <Label htmlFor="title" className="text-xs sm:text-sm">Package Title *</Label>
               <Input
                 id="title"
                 value={formData.title}
                 onChange={handleTitleChange}
                 placeholder="e.g., Shimla Manali Adventure"
+                className="text-base sm:text-sm"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="slug">URL Slug *</Label>
+              <Label htmlFor="slug" className="text-xs sm:text-sm">URL Slug *</Label>
               <Input
                 id="slug"
                 value={formData.slug}
                 onChange={(e) => setFormData((prev) => ({ ...prev, slug: e.target.value }))}
                 placeholder="shimla-manali-adventure"
+                className="text-base sm:text-sm"
                 required
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="short_description">Short Description</Label>
+            <Label htmlFor="short_description" className="text-xs sm:text-sm">Short Description</Label>
             <Textarea
               id="short_description"
               value={formData.short_description}
               onChange={(e) => setFormData((prev) => ({ ...prev, short_description: e.target.value }))}
               placeholder="Brief description for cards and previews..."
               rows={2}
+              className="text-base sm:text-sm"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Full Description *</Label>
+            <Label htmlFor="description" className="text-xs sm:text-sm">Full Description *</Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
               placeholder="Detailed package description..."
               rows={5}
+              className="text-base sm:text-sm"
               required
             />
           </div>
@@ -264,13 +268,13 @@ export function PackageForm({ initialData }: PackageFormProps) {
       </Card>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Pricing & Duration</CardTitle>
+        <CardHeader className="p-3 sm:p-6">
+          <CardTitle className="text-lg sm:text-xl">Pricing & Duration</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid md:grid-cols-3 gap-4">
+        <CardContent className="p-3 sm:p-6 space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="price">Price (₹) *</Label>
+              <Label htmlFor="price" className="text-xs sm:text-sm">Price (₹) *</Label>
               <Input
                 id="price"
                 type="number"
@@ -278,11 +282,12 @@ export function PackageForm({ initialData }: PackageFormProps) {
                 value={formData.price}
                 onChange={(e) => setFormData((prev) => ({ ...prev, price: Number(e.target.value) }))}
                 placeholder="12999"
+                className="text-base sm:text-sm"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="original_price">Original Price (₹)</Label>
+              <Label htmlFor="original_price" className="text-xs sm:text-sm">Original Price (₹)</Label>
               <Input
                 id="original_price"
                 type="number"
@@ -290,27 +295,29 @@ export function PackageForm({ initialData }: PackageFormProps) {
                 value={formData.original_price || ""}
                 onChange={(e) => setFormData((prev) => ({ ...prev, original_price: Number(e.target.value) || 0 }))}
                 placeholder="15999"
+                className="text-base sm:text-sm"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="duration">Duration *</Label>
+              <Label htmlFor="duration" className="text-xs sm:text-sm">Duration *</Label>
               <Input
                 id="duration"
                 value={formData.duration}
                 onChange={(e) => setFormData((prev) => ({ ...prev, duration: e.target.value }))}
                 placeholder="e.g., 5 Days / 4 Nights"
+                className="text-base sm:text-sm"
                 required
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="category">Category</Label>
+            <Label htmlFor="category" className="text-xs sm:text-sm">Category</Label>
             <Select
               value={formData.category}
               onValueChange={(value) => setFormData((prev) => ({ ...prev, category: value }))}
             >
-              <SelectTrigger id="category">
+              <SelectTrigger id="category" className="text-base sm:text-sm">
                 <SelectValue placeholder="Select category" />
               </SelectTrigger>
               <SelectContent>
@@ -326,18 +333,19 @@ export function PackageForm({ initialData }: PackageFormProps) {
       </Card>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Package Details</CardTitle>
+        <CardHeader className="p-3 sm:p-6">
+          <CardTitle className="text-lg sm:text-xl">Package Details</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="p-3 sm:p-6 space-y-6">
           {/* Highlights */}
           <div className="space-y-2">
-            <Label>Highlights</Label>
-            <div className="flex gap-2">
+            <Label className="text-xs sm:text-sm">Highlights</Label>
+            <div className="flex flex-col xs:flex-row gap-2">
               <Input
                 value={newHighlight}
                 onChange={(e) => setNewHighlight(e.target.value)}
                 placeholder="Add a highlight"
+                className="text-base sm:text-sm flex-1"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault()
@@ -349,6 +357,7 @@ export function PackageForm({ initialData }: PackageFormProps) {
                 type="button"
                 variant="outline"
                 onClick={() => addItem("highlights", newHighlight, setNewHighlight)}
+                className="w-full xs:w-auto"
               >
                 <Plus className="w-4 h-4" />
               </Button>
@@ -359,7 +368,7 @@ export function PackageForm({ initialData }: PackageFormProps) {
                   key={index}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="inline-flex items-center gap-1 bg-primary/10 text-primary px-3 py-1 rounded-full text-sm"
+                  className="inline-flex items-center gap-1 bg-primary/10 text-primary px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm"
                 >
                   {item}
                   <button type="button" onClick={() => removeItem("highlights", index)} className="hover:text-red-500">
@@ -372,12 +381,13 @@ export function PackageForm({ initialData }: PackageFormProps) {
 
           {/* Inclusions */}
           <div className="space-y-2">
-            <Label>Inclusions</Label>
-            <div className="flex gap-2">
+            <Label className="text-xs sm:text-sm">Inclusions</Label>
+            <div className="flex flex-col xs:flex-row gap-2">
               <Input
                 value={newInclusion}
                 onChange={(e) => setNewInclusion(e.target.value)}
                 placeholder="Add an inclusion"
+                className="text-base sm:text-sm flex-1"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault()
@@ -389,6 +399,7 @@ export function PackageForm({ initialData }: PackageFormProps) {
                 type="button"
                 variant="outline"
                 onClick={() => addItem("inclusions", newInclusion, setNewInclusion)}
+                className="w-full xs:w-auto"
               >
                 <Plus className="w-4 h-4" />
               </Button>
@@ -399,7 +410,7 @@ export function PackageForm({ initialData }: PackageFormProps) {
                   key={index}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="inline-flex items-center gap-1 bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm"
+                  className="inline-flex items-center gap-1 bg-green-100 text-green-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm"
                 >
                   {item}
                   <button type="button" onClick={() => removeItem("inclusions", index)} className="hover:text-red-500">
@@ -412,12 +423,13 @@ export function PackageForm({ initialData }: PackageFormProps) {
 
           {/* Exclusions */}
           <div className="space-y-2">
-            <Label>Exclusions</Label>
-            <div className="flex gap-2">
+            <Label className="text-xs sm:text-sm">Exclusions</Label>
+            <div className="flex flex-col xs:flex-row gap-2">
               <Input
                 value={newExclusion}
                 onChange={(e) => setNewExclusion(e.target.value)}
                 placeholder="Add an exclusion"
+                className="text-base sm:text-sm flex-1"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault()
@@ -429,6 +441,7 @@ export function PackageForm({ initialData }: PackageFormProps) {
                 type="button"
                 variant="outline"
                 onClick={() => addItem("exclusions", newExclusion, setNewExclusion)}
+                className="w-full xs:w-auto"
               >
                 <Plus className="w-4 h-4" />
               </Button>
@@ -439,7 +452,7 @@ export function PackageForm({ initialData }: PackageFormProps) {
                   key={index}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="inline-flex items-center gap-1 bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm"
+                  className="inline-flex items-center gap-1 bg-red-100 text-red-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm"
                 >
                   {item}
                   <button type="button" onClick={() => removeItem("exclusions", index)} className="hover:text-red-500">
@@ -454,12 +467,12 @@ export function PackageForm({ initialData }: PackageFormProps) {
 
       {/* Package Images */}
       <Card>
-        <CardHeader>
-          <CardTitle>Package Images</CardTitle>
+        <CardHeader className="p-3 sm:p-6">
+          <CardTitle className="text-lg sm:text-xl">Package Images</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="p-3 sm:p-6 space-y-4">
           <div className="space-y-2">
-            <Label>Upload Images (up to 5)</Label>
+            <Label className="text-xs sm:text-sm">Upload Images (up to 5)</Label>
             {images.length < 5 && (
               <CloudinaryUploadWidget
                 onUploadSuccess={(result: CloudinaryUploadResult) => {
@@ -481,10 +494,10 @@ export function PackageForm({ initialData }: PackageFormProps) {
           </div>
           {images.length > 0 && (
             <div>
-              <p className="text-sm text-muted-foreground mb-3">
+              <p className="text-xs sm:text-sm text-muted-foreground mb-3">
                 {images.length} / 5 images uploaded
               </p>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4">
                 {images.map((imageUrl, index) => (
                   <div key={index} className="relative group">
                     <UploadedImagePreview

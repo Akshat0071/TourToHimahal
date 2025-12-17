@@ -1,9 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
-import { Upload, Trash2, Copy, ImageIcon, FileText, Check, Folder } from "lucide-react"
+import { Upload, Trash2, Copy, ImageIcon, FileText, Check, Folder, Loader2 } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -38,9 +38,13 @@ const folders = [
 
 export function MediaLibrary({ media }: MediaLibraryProps) {
   const router = useRouter()
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const [isOpen, setIsOpen] = useState(false)
+  const [isUploadOpen, setIsUploadOpen] = useState(false)
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const [filter, setFilter] = useState("all")
+  const [isUploading, setIsUploading] = useState(false)
+  const [uploadFolder, setUploadFolder] = useState("general")
   const [formData, setFormData] = useState({
     name: "",
     url: "",
@@ -100,13 +104,86 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
     }
   }
 
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    // Validate file size (max 50MB)
+    if (file.size > 50 * 1024 * 1024) {
+      toast.error("File size must be less than 50MB")
+      return
+    }
+
+    // Validate file type
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif", "application/pdf"]
+    if (!allowedTypes.includes(file.type)) {
+      toast.error("Only images (JPG, PNG, WebP, GIF) and PDF files are allowed")
+      return
+    }
+
+    setIsUploading(true)
+
+    try {
+      const formDataToSend = new FormData()
+      formDataToSend.append("file", file)
+      formDataToSend.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "")
+
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/auto/upload`,
+        {
+          method: "POST",
+          body: formDataToSend,
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error("Upload failed")
+      }
+
+      const data = await response.json()
+
+      // Determine file type
+      let fileType = "image"
+      if (file.type === "application/pdf") {
+        fileType = "pdf"
+      }
+
+      // Save to database
+      const supabase = createClient()
+      const { error } = await supabase.from("media").insert({
+        name: file.name.replace(/\.[^/.]+$/, ""),
+        url: data.secure_url,
+        type: fileType,
+        folder: uploadFolder,
+        alt_text: file.name,
+      })
+
+      if (error) {
+        toast.error("Failed to save media to database")
+      } else {
+        toast.success("File uploaded successfully!")
+        setIsUploadOpen(false)
+        setUploadFolder("general")
+        if (fileInputRef.current) {
+          fileInputRef.current.value = ""
+        }
+        router.refresh()
+      }
+    } catch (error) {
+      toast.error("Upload failed. Please check your Cloudinary configuration.")
+      console.error("Upload error:", error)
+    } finally {
+      setIsUploading(false)
+    }
+  }
+
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6" suppressHydrationWarning>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <Folder className="w-5 h-5 text-muted-foreground" />
           <Select value={filter} onValueChange={setFilter}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-35 sm:w-45">
               <SelectValue placeholder="All folders" />
             </SelectTrigger>
             <SelectContent>
@@ -120,18 +197,92 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
           </Select>
         </div>
 
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Upload className="w-4 h-4 mr-2" />
-              Add Media
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
+        <div className="flex flex-col xs:flex-row gap-2 w-full sm:w-auto">
+          <Dialog open={isUploadOpen} onOpenChange={setIsUploadOpen}>
+            <DialogTrigger asChild>
+              <Button className="w-full xs:w-auto">
+                <Upload className="w-4 h-4 mr-2" />
+                Upload Media
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="w-[calc(100vw-2rem)] sm:w-full max-h-[90vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>Upload Media to Cloudinary</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="upload-folder">Folder</Label>
+                  <Select value={uploadFolder} onValueChange={setUploadFolder}>
+                    <SelectTrigger id="upload-folder">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {folders.map((folder) => (
+                        <SelectItem key={folder.value} value={folder.value}>
+                          {folder.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="file-upload">Select File</Label>
+                  <div className="relative">
+                    <input
+                      ref={fileInputRef}
+                      id="file-upload"
+                      type="file"
+                      accept="image/*,.pdf"
+                      onChange={handleFileUpload}
+                      disabled={isUploading}
+                      className="hidden"
+                    />
+                    <Button
+                      className="w-full justify-center"
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={isUploading}
+                    >
+                      {isUploading ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Uploading...
+                        </>
+                      ) : (
+                        <>
+                          <Upload className="w-4 h-4 mr-2" />
+                          Choose File
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Supported: JPG, PNG, WebP, GIF, PDF (Max 50MB)
+                  </p>
+                </div>
+
+                <div className="flex flex-col-reverse xs:flex-row justify-end gap-2 pt-4">
+                  <Button variant="outline" onClick={() => setIsUploadOpen(false)} className="w-full xs:w-auto">
+                    Close
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+
+          <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
+              <Button className="w-full xs:w-auto">
+                <Upload className="w-4 h-4 mr-2" />
+                Add Media
+              </Button>
+            </DialogTrigger>
+          <DialogContent className="w-[calc(100vw-2rem)] sm:w-full max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Add Media</DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
+              {/* Manual URL Entry */}
               <div className="space-y-2">
                 <Label htmlFor="name">Name *</Label>
                 <Input
@@ -139,6 +290,7 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
                   value={formData.name}
                   onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
                   placeholder="Image name"
+                  className="text-base sm:text-sm"
                 />
               </div>
               <div className="space-y-2">
@@ -148,19 +300,20 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
                   value={formData.url}
                   onChange={(e) => setFormData((prev) => ({ ...prev, url: e.target.value }))}
                   placeholder="https://..."
+                  className="text-base sm:text-sm"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Upload to Cloudinary and paste the URL here, or use any external image URL.
+                  Paste a Cloudinary URL or any external image URL.
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="type">Type</Label>
                   <Select
                     value={formData.type}
                     onValueChange={(value) => setFormData((prev) => ({ ...prev, type: value }))}
                   >
-                    <SelectTrigger id="type">
+                    <SelectTrigger id="type" className="text-base sm:text-sm">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -176,7 +329,7 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
                     value={formData.folder}
                     onValueChange={(value) => setFormData((prev) => ({ ...prev, folder: value }))}
                   >
-                    <SelectTrigger id="folder">
+                    <SelectTrigger id="folder" className="text-base sm:text-sm">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -196,17 +349,19 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
                   value={formData.alt_text}
                   onChange={(e) => setFormData((prev) => ({ ...prev, alt_text: e.target.value }))}
                   placeholder="Describe the image"
+                  className="text-base sm:text-sm"
                 />
               </div>
-              <div className="flex justify-end gap-2 pt-4">
-                <Button variant="outline" onClick={() => setIsOpen(false)}>
+              <div className="flex flex-col-reverse xs:flex-row justify-end gap-2 pt-4">
+                <Button variant="outline" onClick={() => setIsOpen(false)} className="w-full xs:w-auto">
                   Cancel
                 </Button>
-                <Button onClick={handleSubmit}>Add Media</Button>
+                <Button onClick={handleSubmit} className="w-full xs:w-auto">Add Media</Button>
               </div>
             </div>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       {filteredMedia.length === 0 ? (
@@ -220,7 +375,7 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
           </Button>
         </div>
       ) : (
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
           {filteredMedia.map((item, index) => (
             <motion.div
               key={item.id}
@@ -269,9 +424,9 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
                       </Button>
                     </div>
                   </div>
-                  <div className="p-3">
-                    <p className="text-sm font-medium truncate">{item.name}</p>
-                    <p className="text-xs text-muted-foreground capitalize">{item.folder}</p>
+                  <div className="p-2 sm:p-3">
+                    <p className="text-xs sm:text-sm font-medium truncate">{item.name}</p>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground capitalize truncate">{item.folder}</p>
                   </div>
                 </CardContent>
               </Card>

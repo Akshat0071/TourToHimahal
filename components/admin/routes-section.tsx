@@ -120,10 +120,10 @@ export function RoutesSection({ routes }: RoutesSectionProps) {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="flex items-center gap-2">
-          <MapPin className="w-5 h-5" />
-          Routes
+      <CardHeader className="flex flex-row items-center justify-between p-3 sm:p-4 md:p-6">
+        <CardTitle className="flex items-center gap-1 sm:gap-2 text-sm sm:text-base lg:text-lg">
+          <MapPin className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+          <span className="truncate">Routes</span>
         </CardTitle>
         <Dialog
           open={isOpen}
@@ -133,51 +133,56 @@ export function RoutesSection({ routes }: RoutesSectionProps) {
           }}
         >
           <DialogTrigger asChild>
-            <Button size="sm">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Route
+            <Button size="sm" className="text-xs sm:text-sm shrink-0">
+              <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+              <span className="hidden xs:inline">Add Route</span>
+              <span className="xs:hidden">Add Route</span>
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="w-[calc(100vw-2rem)] sm:w-full max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>{editingRoute ? "Edit Route" : "Add Route"}</DialogTitle>
+              <DialogTitle className="text-base sm:text-lg">{editingRoute ? "Edit Route" : "Add Route"}</DialogTitle>
             </DialogHeader>
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-3 sm:space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="from">From</Label>
+                  <Label htmlFor="from" className="text-xs sm:text-sm">From</Label>
                   <Input
                     id="from"
+                    className="text-base sm:text-sm"
                     value={formData.from_location}
                     onChange={(e) => setFormData((prev) => ({ ...prev, from_location: e.target.value }))}
                     placeholder="e.g., Chandigarh"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="to">To</Label>
+                  <Label htmlFor="to" className="text-xs sm:text-sm">To</Label>
                   <Input
                     id="to"
+                    className="text-base sm:text-sm"
                     value={formData.to_location}
                     onChange={(e) => setFormData((prev) => ({ ...prev, to_location: e.target.value }))}
                     placeholder="e.g., Shimla"
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="distance">Distance (km)</Label>
+                  <Label htmlFor="distance" className="text-xs sm:text-sm">Distance (km)</Label>
                   <Input
                     id="distance"
                     type="number"
                     min="0"
+                    className="text-base sm:text-sm"
                     value={formData.distance_km}
                     onChange={(e) => setFormData((prev) => ({ ...prev, distance_km: Number(e.target.value) }))}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="time">Estimated Time</Label>
+                  <Label htmlFor="time" className="text-xs sm:text-sm">Estimated Time</Label>
                   <Input
                     id="time"
+                    className="text-base sm:text-sm"
                     value={formData.estimated_time}
                     onChange={(e) => setFormData((prev) => ({ ...prev, estimated_time: e.target.value }))}
                     placeholder="e.g., 4 hours"
@@ -185,42 +190,43 @@ export function RoutesSection({ routes }: RoutesSectionProps) {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="fare">Base Fare (₹)</Label>
+                <Label htmlFor="fare" className="text-xs sm:text-sm">Base Fare (₹)</Label>
                 <Input
                   id="fare"
                   type="number"
                   min="0"
+                  className="text-base sm:text-sm"
                   value={formData.base_fare}
                   onChange={(e) => setFormData((prev) => ({ ...prev, base_fare: Number(e.target.value) }))}
                 />
               </div>
-              <div className="flex justify-end gap-2 pt-4">
-                <Button variant="outline" onClick={() => setIsOpen(false)}>
+              <div className="flex flex-col xs:flex-row justify-end gap-2 pt-4">
+                <Button variant="outline" onClick={() => setIsOpen(false)} className="w-full xs:w-auto text-xs sm:text-sm">
                   Cancel
                 </Button>
-                <Button onClick={handleSubmit}>{editingRoute ? "Update" : "Add"} Route</Button>
+                <Button onClick={handleSubmit} className="w-full xs:w-auto text-xs sm:text-sm">{editingRoute ? "Update" : "Add"} Route</Button>
               </div>
             </div>
           </DialogContent>
         </Dialog>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-3 sm:p-4 md:p-6">
         {routes.length === 0 ? (
-          <div className="text-center py-8">
-            <MapPin className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-            <p className="text-muted-foreground">No routes added yet</p>
+          <div className="text-center py-6 sm:py-8">
+            <MapPin className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-2 sm:mb-3" />
+            <p className="text-xs sm:text-sm text-muted-foreground">No routes added yet</p>
           </div>
         ) : (
-          <div className="border border-border rounded-lg overflow-hidden">
+          <div className="border border-border rounded-lg overflow-hidden overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Route</TableHead>
-                  <TableHead>Distance</TableHead>
-                  <TableHead>Time</TableHead>
-                  <TableHead>Base Fare</TableHead>
-                  <TableHead>Active</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead className="text-xs sm:text-sm">Route</TableHead>
+                  <TableHead className="hidden md:table-cell text-xs sm:text-sm">Distance</TableHead>
+                  <TableHead className="hidden sm:table-cell text-xs sm:text-sm">Time</TableHead>
+                  <TableHead className="text-xs sm:text-sm">Fare</TableHead>
+                  <TableHead className="hidden xs:table-cell text-xs sm:text-sm">Active</TableHead>
+                  <TableHead className="text-right text-xs sm:text-sm">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -232,24 +238,25 @@ export function RoutesSection({ routes }: RoutesSectionProps) {
                     transition={{ delay: index * 0.03 }}
                     className="border-b border-border"
                   >
-                    <TableCell className="font-medium">
+                    <TableCell className="font-medium text-xs sm:text-sm">
                       {route.from_location} → {route.to_location}
                     </TableCell>
-                    <TableCell>{route.distance_km} km</TableCell>
-                    <TableCell>{route.estimated_time}</TableCell>
-                    <TableCell>₹{route.base_fare?.toLocaleString()}</TableCell>
-                    <TableCell>
+                    <TableCell className="hidden md:table-cell text-xs sm:text-sm">{route.distance_km} km</TableCell>
+                    <TableCell className="hidden sm:table-cell text-xs sm:text-sm">{route.estimated_time}</TableCell>
+                    <TableCell className="text-xs sm:text-sm">₹{route.base_fare?.toLocaleString()}</TableCell>
+                    <TableCell className="hidden xs:table-cell">
                       <Switch
                         checked={route.is_active}
                         onCheckedChange={() => toggleActive(route.id, route.is_active)}
+                        className="scale-90 sm:scale-100"
                       />
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(route)}>
-                        <Edit className="w-4 h-4" />
+                      <Button variant="ghost" size="icon" className="h-7 w-7 sm:h-8 sm:w-8" onClick={() => openEdit(route)}>
+                        <Edit className="w-3 h-3 sm:w-4 sm:h-4" />
                       </Button>
-                      <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => deleteRoute(route.id)}>
-                        <Trash2 className="w-4 h-4 text-destructive" />
+                      <Button variant="ghost" size="icon" className="h-7 w-7 sm:h-8 sm:w-8" onClick={() => deleteRoute(route.id)}>
+                        <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 text-destructive" />
                       </Button>
                     </TableCell>
                   </motion.tr>

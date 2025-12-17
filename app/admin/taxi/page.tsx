@@ -15,7 +15,7 @@ export default async function TaxiPage() {
     <div>
       <AdminHeader title="Taxi Management" description="Manage vehicles and routes" />
 
-      <div className="p-6 space-y-8">
+      <div className="p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6 md:space-y-8">
         <VehiclesSection vehicles={vehiclesResult.data || []} />
         <RoutesSection routes={routesResult.data || []} />
       </div>

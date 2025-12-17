@@ -83,26 +83,7 @@ export function BlogSidebar({ blogs = [] }: BlogSidebarProps) {
         </motion.div>
       )}
 
-      {/* Newsletter */}
-      <motion.div
-        variants={fadeInUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        className="bg-forest-green rounded-xl p-6 text-white"
-      >
-        <Mail className="h-8 w-8 mb-4" />
-        <h3 className="text-lg font-serif font-bold mb-2">Travel Tips Newsletter</h3>
-        <p className="text-white/80 text-sm mb-4">Get weekly travel guides and tips delivered to your inbox.</p>
-        <form className="space-y-3">
-          <Input
-            type="email"
-            placeholder="Your email"
-            className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-          />
-          <Button className="w-full bg-saffron hover:bg-saffron/90 text-white">Subscribe</Button>
-        </form>
-      </motion.div>
+      {/* Newsletter removed as requested */}
 
       {/* Tag Cloud */}
       {allTags.length > 0 && (

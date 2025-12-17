@@ -5,10 +5,25 @@ import { Button } from "@/components/ui/button"
 import { MessageCircle, Phone, ArrowRight, Sparkles } from "lucide-react"
 
 export function CTABanner() {
+  function getImageUrl(url: string): string {
+    if (!url) return "/placeholder.svg"
+    const trimmed = url.trim()
+    const normalized = trimmed.startsWith("/http") ? trimmed.slice(1) : trimmed
+    return normalized
+  }
+
+  const ctaImage = ""
   return (
     <section className="relative py-24 md:py-32 overflow-hidden">
-      {/* Background with vibrant gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-mountain-blue via-forest-green to-mountain-blue" />
+      {/* Background image layer */}
+      <img
+        src={getImageUrl("https://res.cloudinary.com/dabqqymqe/image/upload/v1765967181/vor6a288gor8vhrmnej1.png")}
+        alt="panoramic landcape view"
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      {/* Background overlay gradient (semi-transparent so image shows) */}
+      <div className="absolute inset-0 bg-gradient-to-br from-mountain-blue/70 via-forest-green/50 to-mountain-blue/70" />
 
       {/* Decorative patterns */}
       <div className="absolute inset-0 opacity-10">
@@ -76,7 +91,8 @@ export function CTABanner() {
           >
             <Button
               size="xl"
-              className="bg-white text-mountain-blue hover:bg-golden-yellow hover:text-foreground text-lg px-10 shadow-2xl group"
+              variant="gradient"
+              className="text-lg px-10 shadow-2xl group"
               asChild
             >
               <a

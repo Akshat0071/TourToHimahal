@@ -31,13 +31,15 @@ export function LeadsFilters({ currentStatus = "all", currentType = "all" }: Lea
   }
 
   return (
-    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between bg-background p-4 rounded-xl border border-border">
-      <div className="flex items-center gap-3">
-        <Filter className="w-5 h-5 text-muted-foreground" />
-        <span className="text-sm font-medium text-foreground">Filters:</span>
-
+    <div className="flex flex-col gap-3 bg-background p-3 sm:p-4 rounded-xl border border-border">
+      <div className="flex items-center gap-2">
+        <Filter className="w-5 h-5 text-muted-foreground shrink-0" />
+        <span className="text-xs sm:text-sm font-medium text-foreground">Filters:</span>
+      </div>
+      
+      <div className="flex flex-col xs:flex-row gap-2 items-stretch xs:items-center">
         <Select value={currentStatus} onValueChange={(value) => updateFilter("status", value)}>
-          <SelectTrigger className="w-[140px]">
+          <SelectTrigger className="w-full xs:w-32 text-xs sm:text-sm">
             <SelectValue placeholder="Status" />
           </SelectTrigger>
           <SelectContent>
@@ -50,7 +52,7 @@ export function LeadsFilters({ currentStatus = "all", currentType = "all" }: Lea
         </Select>
 
         <Select value={currentType} onValueChange={(value) => updateFilter("type", value)}>
-          <SelectTrigger className="w-[140px]">
+          <SelectTrigger className="w-full xs:w-32 text-xs sm:text-sm">
             <SelectValue placeholder="Type" />
           </SelectTrigger>
           <SelectContent>
@@ -60,12 +62,12 @@ export function LeadsFilters({ currentStatus = "all", currentType = "all" }: Lea
             <SelectItem value="enquiry">Enquiry</SelectItem>
           </SelectContent>
         </Select>
-      </div>
 
-      <Button variant="outline" onClick={handleExport} className="gap-2 bg-transparent">
-        <Download className="w-4 h-4" />
-        Export CSV
-      </Button>
+        <Button variant="outline" onClick={handleExport} className="gap-2 bg-transparent w-full xs:w-auto text-xs sm:text-sm">
+          <Download className="w-4 h-4" />
+          <span className="xs:inline">Export CSV</span>
+        </Button>
+      </div>
     </div>
   )
 }

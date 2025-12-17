@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { fadeInUp } from "@/lib/animation-variants"
+import { generateWhatsAppLink } from "@/lib/whatsapp"
 
 interface PackageBookingFormProps {
   packageName: string
@@ -60,10 +61,11 @@ export function PackageBookingForm({ packageName, packagePrice, onSuccess }: Pac
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
-          email: formData.email,
+          email: formData.email || "",
           subject: `Package Booking: ${packageName}`,
           message: `Package: ${packageName}\nPrice: ₹${packagePrice.toLocaleString()}\nPreferred Date: ${formData.date}\nTravelers: ${formData.travelers || "Not specified"}\n\nAdditional Notes: ${formData.message || "None"}`,
           serviceType: "package",
+          honeypot: "",
         }),
       })
 
@@ -73,6 +75,21 @@ export function PackageBookingForm({ packageName, packagePrice, onSuccess }: Pac
         setIsSuccess(true)
         setReferenceNumber(result.referenceNumber)
         onSuccess?.()
+
+        // Generate WhatsApp link and redirect
+        const whatsappLink = generateWhatsAppLink({
+          packageName: packageName,
+          packagePrice: packagePrice,
+          date: formData.date,
+          travelers: Number.parseInt(formData.travelers) || undefined,
+          name: formData.name,
+          phone: formData.phone,
+          message: formData.message,
+        })
+
+        setTimeout(() => {
+          window.open(whatsappLink, "_blank")
+        }, 1500)
       } else {
         setErrors({ submit: result.message || "Failed to submit. Please try again." })
       }
@@ -95,7 +112,7 @@ export function PackageBookingForm({ packageName, packagePrice, onSuccess }: Pac
             Reference: <span className="text-primary">{referenceNumber}</span>
           </p>
         )}
-        <p className="text-muted-foreground mb-4">We will contact you within 12 hours to confirm your booking.</p>
+        <p className="text-muted-foreground mb-4">Redirecting you to WhatsApp to complete your booking...</p>
         <Button
           onClick={() => {
             setIsSuccess(false)

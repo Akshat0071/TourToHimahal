@@ -49,14 +49,14 @@ export function AdminHeader({ title, description }: AdminHeaderProps) {
   }
 
   return (
-    <header className="bg-background border-b border-border px-6 py-4">
+    <header className="bg-background border-b border-border px-6 py-4" suppressHydrationWarning>
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-serif font-bold text-foreground">{title}</h1>
           {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4" suppressHydrationWarning>
           {/* Search */}
           <div className="hidden md:flex relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />

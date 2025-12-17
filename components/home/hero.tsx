@@ -16,13 +16,13 @@ interface HeroProps {
 }
 
 const defaultHeroImages: HeroImage[] = [
-  { url: "/himalayan-mountains-snow-peaks-sunrise.jpg", alt: "Majestic Himalayan Mountains" },
-  { url: "/chintpurni-temple-himachal-pradesh.jpg", alt: "Chintpurni Temple" },
-  { url: "/himalayan-river-waterfall-scenic.jpg", alt: "Himalayan Rivers and Waterfalls" },
-  { url: "/trekking-adventure-himalaya-mountains.jpg", alt: "Trekking in Himalayas" },
-  { url: "/paragliding-bir-billing-himachal.jpg", alt: "Paragliding in Bir Billing" },
-  { url: "/jwala-ji-temple-himachal.jpg", alt: "Jwala Ji Temple" },
-  { url: "/naina-devi-temple-scenic-view.jpg", alt: "Naina Devi Temple" },
+  { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765967133/hqjivfndozpkicr5eddz.png", alt: "Majestic Himalayan Mountains" },
+  { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765967996/nmnqkuvgik8wokp82kiv.jpg", alt: "Chintpurni Temple" },
+  { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765968189/ouf49gwwxagurjq2aqbi.png", alt: "Himalayan Rivers and Waterfalls" },
+  { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765967283/yegxwa1cdjow0g8madso.png", alt: "Trekking in Himalayas" },
+  { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765967269/flj6ga0vacjary3hscgt.png", alt: "Paragliding in Bir Billing" },
+  { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765967986/grcidxlhudsgstymd0cu.webp", alt: "Jwala Ji Temple" },
+  { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765968158/i7ebhijld1ooby1khlab.jpg", alt: "Naina Devi Temple" },
 ]
 
 // Helper function to ensure Cloudinary images work directly

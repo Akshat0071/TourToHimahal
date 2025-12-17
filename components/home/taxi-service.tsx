@@ -7,6 +7,14 @@ import { Button } from "@/components/ui/button"
 import { Car, MapPin, Shield, Clock, CheckCircle2, ArrowRight } from "lucide-react"
 import { slideInLeft, slideInRight } from "@/lib/animation-variants"
 
+// Ensure pasted URLs (including Cloudinary) work reliably like in the Hero
+function getImageUrl(url: string): string {
+  if (!url) return "/placeholder.svg"
+  const trimmed = url.trim()
+  const normalized = trimmed.startsWith("/http") ? trimmed.slice(1) : trimmed
+  return normalized
+}
+
 const routes = [
   "Chandigarh to Manali",
   "Delhi to Shimla",
@@ -40,7 +48,7 @@ export function TaxiService() {
           >
             <div className="relative h-[280px] sm:h-[350px] md:h-[450px] lg:h-[600px] rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl">
               <Image
-                src="/premium-taxi-service-himachal-mountains.jpg"
+                src={getImageUrl("https://res.cloudinary.com/dabqqymqe/image/upload/v1765974268/zla7y765gubxllghbnc8.jpg")}
                 alt="Premium Taxi Service"
                 fill
                 className="object-cover"

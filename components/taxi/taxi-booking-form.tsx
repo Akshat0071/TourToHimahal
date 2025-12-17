@@ -56,7 +56,7 @@ export function TaxiBookingForm() {
     setIsSubmitting(true)
 
     try {
-      const response = await fetch("/api/taxi-booking", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,10 +64,11 @@ export function TaxiBookingForm() {
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
-          email: formData.email || undefined,
+          email: formData.email || "",
           subject: `Taxi Booking: ${formData.pickup} to ${formData.drop}`,
           message: `Service Type: ${formData.serviceType}\nVehicle: ${formData.vehicleType}\nPickup: ${formData.pickup}\nDrop: ${formData.drop}\nDate: ${formData.date}\nTime: ${formData.time || "Not specified"}\nPassengers: ${formData.passengers || "Not specified"}\n\nAdditional Notes: ${formData.message || "None"}`,
           serviceType: "taxi",
+          honeypot: "",
         }),
       })
 
@@ -355,7 +356,7 @@ export function TaxiBookingForm() {
           </>
         ) : (
           <>
-            Book Now
+            Get Your Quote
             <Send className="h-4 w-4" />
           </>
         )}
