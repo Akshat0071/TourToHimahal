@@ -5,7 +5,7 @@ INSERT INTO settings (key, value) VALUES
   ('business_email', '"info@himachalyatra.com"'),
   ('business_address', '{"street": "Near Temple Complex", "city": "Chintpurni", "state": "Himachal Pradesh", "pincode": "177106"}'::jsonb),
   ('office_hours', '{"weekdays": "9:00 AM - 7:00 PM", "saturday": "9:00 AM - 5:00 PM", "sunday": "10:00 AM - 4:00 PM"}'::jsonb),
-  ('auto_reply_text', '"Thank you for contacting Himachal Yatra! We have received your inquiry and will respond within 12 hours."'),
+  ('auto_reply_text', '"Thank you for contacting TourToHimachal! We have received your inquiry and will respond within 12 hours."'),
   ('seo_defaults', '{"title_suffix": " | Himachal Yatra", "default_description": "Discover Himachal Pradesh with curated tour packages and reliable taxi services."}'::jsonb)
 ON CONFLICT (key) DO NOTHING;
 

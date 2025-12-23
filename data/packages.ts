@@ -521,7 +521,7 @@ export const packages: Package[] = [
   },
 ]
 
-export const regions = ["All", "Himachal", "Shimla", "Manali", "Dharamshala", "Spiti"]
-export const durations = ["All", "1-3 Days", "4-6 Days", "7+ Days"]
-export const themes = ["All", "Adventure", "Spiritual", "Honeymoon", "Nature", "Culture", "Backpacking"]
+export const regions = ["All", "Himachal", "Shimla", "Manali", "Dharamshala", "Spiti", "Chintpurni"]
+export const durations = ["All", "1-2 Days", "3-5 Days", "5+ Days"]
+export const themes = ["All", "Adventure", "Spiritual", "Leisure"]
 export const priceRanges = ["All", "Under ₹10,000", "₹10,000 - ₹25,000", "₹25,000 - ₹50,000", "Above ₹50,000"]

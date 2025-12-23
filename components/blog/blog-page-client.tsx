@@ -90,12 +90,14 @@ export function BlogPageClient({ blogs, categories }: BlogPageClientProps) {
     <>
       <Header />
       <main>
-        <StaticHero
+        <div className="mt-16">
+          <StaticHero
           image="/Images/blog.png"
           badge="Expert Insights & Local Secrets"
           title="Your Ultimate Himachal Guide"
           subtitle="Go beyond the tourist trail with our comprehensive travel guides. From budget itineraries to luxury escapes, from monsoon trekking tips to winter road safety — we've got the insider knowledge to make your trip extraordinary."
-        />
+          />
+        </div>
 
         {/* Featured section removed as requested */}
 
@@ -120,7 +122,7 @@ export function BlogPageClient({ blogs, categories }: BlogPageClientProps) {
                 </div>
 
                 {/* Category Filter - Horizontal scroll on mobile */}
-                <div className="flex gap-2 mb-4 md:mb-8 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 sticky top-14 z-20 bg-background/80 backdrop-blur-sm py-2 md:static md:bg-transparent md:p-0">
+                <div className="flex gap-2 mb-4 md:mb-8 overflow-x-auto pb-2 scrollbar-hide px-4 sticky top-14 z-20 bg-background/80 backdrop-blur-sm py-2 md:static md:bg-transparent md:p-0">
                   <Badge
                     variant={selectedCategory === null ? "default" : "outline"}
                     className={`cursor-pointer shrink-0 rounded-full px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm transition-all ${selectedCategory === null

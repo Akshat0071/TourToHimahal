@@ -6,7 +6,6 @@ import { createBrowserClient } from "@/lib/supabase/client"
 export interface SiteSettings {
   id?: string
   site_name: string
-  site_tagline: string
   contact_email: string
   contact_phone: string
   whatsapp_number: string
@@ -25,7 +24,6 @@ export interface SiteSettings {
 
 const defaultSettings: SiteSettings = {
   site_name: "TourToHimachal",
-  site_tagline: "Your Himalayan Journey",
   contact_email: "info@tourtohimachal.com",
   contact_phone: "+91 98765 43210",
   whatsapp_number: "+919876543210",

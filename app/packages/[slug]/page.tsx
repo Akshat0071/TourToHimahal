@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `${pkg.title} | Himachal Yatra`,
+    title: `${pkg.title} | TourToHimachal`,
     description: pkg.short_description || pkg.description,
     openGraph: {
       title: pkg.title,

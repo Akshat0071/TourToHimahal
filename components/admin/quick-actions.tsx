@@ -19,10 +19,10 @@ const actions = [
 export function QuickActions() {
   return (
     <Card>
-      <CardHeader className="p-3 sm:p-4 md:p-6">
+      <CardHeader>
         <CardTitle className="text-base sm:text-lg">Quick Actions</CardTitle>
       </CardHeader>
-      <CardContent className="p-3 sm:p-4 md:p-6 space-y-2 sm:space-y-3">
+      <CardContent>
         {actions.map((action, index) => (
           <motion.div
             key={action.id}
@@ -32,7 +32,7 @@ export function QuickActions() {
           >
             <Link
               href={action.href}
-              className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg hover:bg-muted transition-colors group w-full xs:w-auto"
+              className="flex items-center gap-2 sm:gap-3 p-1.5 rounded-lg hover:bg-muted transition-colors group w-full xs:w-auto"
             >
               <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg ${action.color} flex items-center justify-center shrink-0`}>
                 <action.icon className="w-4 h-4 sm:w-5 sm:h-5" />

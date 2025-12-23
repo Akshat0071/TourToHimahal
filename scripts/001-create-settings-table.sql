@@ -51,7 +51,6 @@ END $$;
 -- Insert default settings if they don't exist
 INSERT INTO settings (key, value) VALUES
   ('site_name', '"TourToHimachal"'),
-  ('site_tagline', '"Your Himalayan Journey"'),
   ('contact_email', '"info@tourtohimachal.com"'),
   ('contact_phone', '"+91 98765 43210"'),
   ('whatsapp_number', '"+919876543210"'),

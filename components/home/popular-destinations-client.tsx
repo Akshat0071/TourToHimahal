@@ -139,16 +139,15 @@ export function PopularDestinationsClient({ packages }: PopularDestinationsClien
                   {/* Title overlay */}
                   <div className="absolute bottom-4 left-4 right-4">
                     <h3 className="text-2xl font-serif font-bold text-white mb-1">{destination.name}</h3>
-                    <div className="flex items-center gap-2 text-white/80 text-sm">
-                      <Clock className="h-4 w-4" />
-                      {destination.duration}
-                    </div>
                   </div>
                 </div>
 
                 {/* Card footer */}
                 <div className="p-5 flex items-center justify-between bg-gradient-to-r from-background to-muted/30">
-                  <span className="text-sm text-muted-foreground">Starting from</span>
+                  <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                    <Clock className="h-4 w-4" />
+                    {destination.duration}
+                  </div>
                   <Button size="sm" variant="saffron" className="group-hover:translate-x-1 transition-transform">
                     View Details
                     <ArrowRight className="ml-1 h-4 w-4" />

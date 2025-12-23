@@ -44,7 +44,7 @@ export function MapSection() {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Himachal Yatra Office - Chintpurni Location"
+              title="TourToHimachal Office - Chintpurni Location"
               className="absolute inset-0"
             />
           </div>
@@ -56,7 +56,7 @@ export function MapSection() {
                   <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-saffron" />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="font-semibold text-foreground text-sm sm:text-base">Himachal Yatra Office</h3>
+                  <h3 className="font-semibold text-foreground text-sm sm:text-base">TourToHimachal Office</h3>
                   <p className="text-xs sm:text-sm text-muted-foreground">Near Temple Complex, Chintpurni, HP 177106</p>
                 </div>
               </div>

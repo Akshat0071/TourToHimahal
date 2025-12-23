@@ -3,6 +3,17 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Disable html smooth scroll to avoid nested scroll bugs */
+html {
+  scroll-behavior: auto;
+}
+
 /* Add basic animation utilities inline instead of importing broken package */
 @keyframes fadeIn {
   from {

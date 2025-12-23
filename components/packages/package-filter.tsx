@@ -163,7 +163,7 @@ export function PackageFilter({
                   className="price-slider w-full"
                 />
                 <div className="flex justify-between text-[10px] sm:text-xs text-muted-foreground mt-1 sm:mt-2">
-                  <span>Up to ₹500</span>
+                  <span>From ₹500</span>
                   <span>Up to ₹10,000</span>
                 </div>
               </div>
@@ -233,7 +233,7 @@ export function PackageFilter({
                       <SelectValue placeholder="Sort" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="popular">Popular</SelectItem>
+                      <SelectItem value="all">All</SelectItem>
                       <SelectItem value="price-low">Price: Low to High</SelectItem>
                       <SelectItem value="price-high">Price: High to Low</SelectItem>
                       <SelectItem value="duration">Duration</SelectItem>

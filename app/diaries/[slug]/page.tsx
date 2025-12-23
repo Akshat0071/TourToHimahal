@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: DiaryDetailPageProps) {
   }
 
   return {
-    title: `${diary.title} | Himachal Yatra Travel Diaries`,
+    title: `${diary.title} | TourToHimachal Travel Diaries`,
     description: diary.excerpt,
     openGraph: {
       title: diary.title,
@@ -61,6 +61,14 @@ export default async function DiaryDetailPage({ params }: DiaryDetailPageProps) 
     .neq("slug", slug)
     .limit(3)
 
+  // Popular stories: latest published diaries
+  const { data: popularDiaries } = await supabase
+    .from("diaries")
+    .select("*")
+    .eq("is_published", true)
+    .order("published_at", { ascending: false })
+    .limit(4)
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -83,7 +91,7 @@ export default async function DiaryDetailPage({ params }: DiaryDetailPageProps) 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <DiaryDetailClient diary={diary} relatedDiaries={relatedDiaries || []} url={diaryUrl} />
+      <DiaryDetailClient diary={diary} relatedDiaries={relatedDiaries || []} popularDiaries={popularDiaries || []} url={diaryUrl} />
     </>
   )
 }

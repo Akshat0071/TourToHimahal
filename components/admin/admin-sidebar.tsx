@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import {
   LayoutDashboard,
   Users,
@@ -39,14 +39,14 @@ export function AdminSidebar() {
   const pathname = usePathname()
   const router = useRouter()
   const [isMobileOpen, setIsMobileOpen] = useState(false)
-  const [isClient, setIsClient] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setIsClient(true)
+    setMounted(true)
   }, [])
 
   const handleLogout = async () => {
-    if (!isClient) return
+    if (!mounted) return
     await safeSignOut()
     router.push("/admin/login")
     router.refresh()
@@ -55,19 +55,19 @@ export function AdminSidebar() {
   const SidebarContent = () => (
     <>
       {/* Logo */}
-      <div className="p-2 border-b border-border">
-        <Link href="/admin/dashboard" className="flex items-center gap-3">
-          <div className="flex flex-col items-center -mt-1 text-center leading-tight">
-            <Logo size="md" href={null} forceColors />
-            <p className="text-xs text-muted-foreground mt-0.5">Admin Panel</p>
-          </div>
+      <div className="p-4 border-b border-border">
+        <Link href="/admin/dashboard" className="flex flex-col items-center gap-1">
+          <Logo size="md" href={null} forceColors />
+          <span className="text-xs text-muted-foreground">Admin Panel</span>
         </Link>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
         {navItems.map((item) => {
-          const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`)
+          const isActive =
+            pathname === item.href || pathname.startsWith(`${item.href}/`)
+
           return (
             <Link
               key={item.href}
@@ -76,7 +76,7 @@ export function AdminSidebar() {
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all",
                 isActive
-                  ? "bg-primary text-primary-foreground shadow-md"
+                  ? "bg-primary text-primary-foreground shadow"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground",
               )}
             >
@@ -103,47 +103,48 @@ export function AdminSidebar() {
 
   return (
     <>
-      {/* Mobile Header */}
+      {/* ================= MOBILE HEADER ================= */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-background border-b border-border px-4 py-3">
         <div className="flex items-center justify-between">
-          <Link href="/admin/dashboard" className="flex items-center gap-2">
-            <div className="flex flex-col items-center -mt-0.5 text-center leading-tight">
-              <Logo size="sm" href={null} forceColors />
-              {isMobileOpen && (
-                <span className="text-[10px] text-muted-foreground mt-0.5">Admin Panel</span>
-              )}
-            </div>
-
+          <Link href="/admin/dashboard">
+            <Logo size="sm" href={null} forceColors />
           </Link>
-          <button onClick={() => setIsMobileOpen(!isMobileOpen)} className="p-2">
+
+          <button
+            onClick={() => setIsMobileOpen((v) => !v)}
+            className="p-2"
+            aria-label="Toggle Menu"
+          >
             {isMobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Sidebar Overlay */}
-      {isMobileOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="lg:hidden fixed inset-0 z-40 bg-black/50"
-          onClick={() => setIsMobileOpen(false)}
-        />
-      )}
+      {/* ================= MOBILE OVERLAY ================= */}
+      <AnimatePresence>
+        {isMobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="lg:hidden fixed inset-0 z-40 bg-black/50"
+            onClick={() => setIsMobileOpen(false)}
+          />
+        )}
+      </AnimatePresence>
 
-      {/* Mobile Sidebar */}
+      {/* ================= MOBILE SIDEBAR ================= */}
       <motion.aside
         initial={{ x: "-100%" }}
         animate={{ x: isMobileOpen ? 0 : "-100%" }}
-        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+        transition={{ type: "spring", damping: 25, stiffness: 220 }}
         className="lg:hidden fixed top-0 left-0 bottom-0 z-50 w-72 bg-background border-r border-border flex flex-col"
       >
         <SidebarContent />
       </motion.aside>
 
-      {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex fixed top-0 left-0 bottom-0 w-64 bg-background border-r border-border flex-col">
+      {/* ================= DESKTOP SIDEBAR ================= */}
+      <aside className="hidden lg:flex fixed top-0 left-0 bottom-0 w-64 bg-background border-r border-border flex-col z-40">
         <SidebarContent />
       </aside>
     </>

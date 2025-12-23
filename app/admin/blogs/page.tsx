@@ -15,7 +15,7 @@ export default async function BlogsPage() {
   }
 
   return (
-    <div>
+    <div suppressHydrationWarning>
       <AdminHeader title="Blogs Management" description="Create and manage blog posts" />
 
       <div className="p-6 space-y-6">

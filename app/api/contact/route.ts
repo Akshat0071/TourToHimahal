@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { contactFormSchema } from "@/lib/contact"
+import { sendLeadNotification } from "@/lib/email"
 
 export async function POST(request: NextRequest) {
   try {
@@ -62,18 +63,19 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Log email notification (in production, integrate SendGrid)
-    console.log("📧 Email notification would be sent to admin:", {
-      to: "info@himachalyatra.com",
-      subject: `New ${serviceType} inquiry from ${name}`,
-      body: `
-        Name: ${name}
-        Email: ${email}
-        Phone: ${phone}
-        Service: ${serviceType}
-        Message: ${message}
-        Reference: ${data.reference_number}
-      `,
+    // Send email notification
+    const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || "info@himachalyatra.com"
+    await sendLeadNotification({
+      to: adminEmail,
+      leadData: {
+        name,
+        email: email || "noemail@himachalyatra.com",
+        phone,
+        subject: subject || `${serviceType} inquiry`,
+        message,
+        serviceType,
+        referenceNumber: data.reference_number,
+      },
     })
 
     return NextResponse.json({

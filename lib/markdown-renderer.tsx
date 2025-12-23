@@ -22,18 +22,47 @@ function hasImageChild(children: React.ReactNode): boolean {
 }
 
 export function MarkdownRenderer({ content, className }: MarkdownRendererProps) {
+  function extractText(node: React.ReactNode): string {
+    return React.Children.toArray(node)
+      .map((child) => {
+        if (typeof child === "string") return child
+        if (typeof child === "number") return String(child)
+        if (React.isValidElement(child)) return extractText(child.props.children)
+        return ""
+      })
+      .join("")
+  }
+
+  function slugify(text: string): string {
+    return text
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "")
+  }
+
   return (
     <div className={cn("prose prose-lg max-w-none", className)}>
       <ReactMarkdown
         components={{
-        h2: ({ children }) => (
-          <h2 className="text-2xl md:text-3xl font-serif font-bold text-foreground mt-12 mb-6 scroll-mt-24">
-            {children}
-          </h2>
-        ),
-        h3: ({ children }) => (
-          <h3 className="text-xl md:text-2xl font-serif font-semibold text-foreground mt-8 mb-4">{children}</h3>
-        ),
+        h2: ({ children }) => {
+          const id = slugify(extractText(children))
+          return (
+            <h2
+              id={id}
+              className="text-2xl md:text-3xl font-serif font-bold text-foreground mt-12 mb-6 scroll-mt-24"
+            >
+              {children}
+            </h2>
+          )
+        },
+        h3: ({ children }) => {
+          const id = slugify(extractText(children))
+          return (
+            <h3 id={id} className="text-xl md:text-2xl font-serif font-semibold text-foreground mt-8 mb-4">
+              {children}
+            </h3>
+          )
+        },
         p: ({ children }) => {
           if (hasImageChild(children)) {
             return <div className="mb-6">{children}</div>

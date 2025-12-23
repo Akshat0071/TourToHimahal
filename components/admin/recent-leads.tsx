@@ -39,7 +39,7 @@ const serviceLabels: Record<string, string> = {
 export function RecentLeads({ leads }: RecentLeadsProps) {
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between p-3 sm:p-4 md:p-6">
+      <CardHeader className="flex flex-row items-center justify-between p-2">
         <CardTitle className="text-sm sm:text-base lg:text-lg truncate">Recent Leads</CardTitle>
         <Button variant="ghost" size="sm" asChild className="text-xs sm:text-sm shrink-0">
           <Link href="/admin/leads" className="gap-1">
@@ -49,7 +49,7 @@ export function RecentLeads({ leads }: RecentLeadsProps) {
           </Link>
         </Button>
       </CardHeader>
-      <CardContent className="p-3 sm:p-4 md:p-6">
+      <CardContent className="p-2 ">
         {leads.length === 0 ? (
           <div className="text-center py-6 sm:py-8">
             <Inbox className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-2 sm:mb-3" />
@@ -82,7 +82,7 @@ export function RecentLeads({ leads }: RecentLeadsProps) {
                   </div>
                 </div>
                 <a
-                  href={`https://wa.me/${lead.phone.replace(/\D/g, "")}?text=Hi ${lead.name}, thank you for contacting Himachal Yatra!`}
+                  href={`https://wa.me/${lead.phone.replace(/\D/g, "")}?text=Hi ${lead.name}, thank you for contacting TourToHimachal!`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-1.5 sm:p-2 rounded-lg bg-[#25D366] text-white hover:bg-[#25D366]/90 transition-colors shrink-0"

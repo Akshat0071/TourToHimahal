@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: BlogDetailPageProps) {
   }
 
   return {
-    title: `${post.title} | Himachal Yatra Blog`,
+    title: `${post.title} | TourToHimachal Blog`,
     description: post.excerpt,
     openGraph: {
       title: post.title,
@@ -76,7 +76,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
     },
     publisher: {
       "@type": "Organization",
-      name: "Himachal Yatra",
+      name: "TouToHimachal",
     },
   }
 

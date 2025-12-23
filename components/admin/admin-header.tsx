@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useId, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Bell, Search, User } from "lucide-react"
@@ -25,6 +25,7 @@ export function AdminHeader({ title, description }: AdminHeaderProps) {
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [isClient, setIsClient] = useState(false)
   const router = useRouter()
+  const menuTriggerId = useId()
 
   useEffect(() => {
     setIsClient(true)
@@ -70,32 +71,34 @@ export function AdminHeader({ title, description }: AdminHeaderProps) {
           </Button>
 
           {/* User Menu */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                  <User className="w-4 h-4 text-primary" />
-                </div>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>
-                <p className="font-normal text-muted-foreground text-xs">Signed in as</p>
-                <p className="truncate">{userEmail || "Admin"}</p>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link href="/admin/profile">Profile Settings</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/admin/settings">Site Settings</Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive cursor-pointer" onClick={handleLogout}>
-                Sign Out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {isClient && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button id={menuTriggerId} variant="ghost" size="icon" className="rounded-full">
+                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                    <User className="w-4 h-4 text-primary" />
+                  </div>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>
+                  <p className="font-normal text-muted-foreground text-xs">Signed in as</p>
+                  <p className="truncate">{userEmail || "Admin"}</p>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/admin/profile">Profile Settings</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/admin/settings">Site Settings</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-destructive cursor-pointer" onClick={handleLogout}>
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
       </div>
     </header>

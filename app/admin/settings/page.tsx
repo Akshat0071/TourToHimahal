@@ -31,7 +31,6 @@ import { toast } from "sonner"
 
 interface Settings {
   site_name: string
-  site_tagline: string
   contact_email: string
   contact_phone: string
   whatsapp_number: string
@@ -50,7 +49,6 @@ interface Settings {
 
 const defaultSettings: Settings = {
   site_name: "TourToHimachal",
-  site_tagline: "Your Himalayan Journey",
   contact_email: "info@tourtohimachal.com",
   contact_phone: "+91 98765 43210",
   whatsapp_number: "+919876543210",
@@ -226,15 +224,6 @@ export default function SettingsPage() {
                     value={settings.site_name}
                     onChange={(e) => updateSetting("site_name", e.target.value)}
                     placeholder="TourToHimachal"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="site_tagline">Tagline</Label>
-                  <Input
-                    id="site_tagline"
-                    value={settings.site_tagline}
-                    onChange={(e) => updateSetting("site_tagline", e.target.value)}
-                    placeholder="Your Himalayan Journey"
                   />
                 </div>
               </div>
@@ -485,7 +474,7 @@ export default function SettingsPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-destructive/50">
+          {/* <Card className="border-destructive/50">
             <CardHeader>
               <CardTitle className="text-destructive">Danger Zone</CardTitle>
               <CardDescription>Irreversible actions - proceed with caution</CardDescription>
@@ -501,7 +490,7 @@ export default function SettingsPage() {
                 </Button>
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
         </TabsContent>
       </Tabs>
     </div>

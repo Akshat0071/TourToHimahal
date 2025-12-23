@@ -140,7 +140,7 @@ export function BlogForm({ initialData }: BlogFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-4xl">
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-4xl" suppressHydrationWarning>
       <Card>
         <CardHeader>
           <CardTitle>Blog Content</CardTitle>

@@ -4,6 +4,7 @@ import { Poppins, Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { SettingsProvider } from "@/lib/settings-context"
 import { ScrollToTop } from "@/components/ui/scroll-to-top"
+import { createClient } from "@/lib/supabase/server"
 import "./globals.css"
 
 const poppins = Poppins({
@@ -17,19 +18,68 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
 })
 
-export const metadata: Metadata = {
+// Default fallback metadata
+const defaultMetadata = {
   title: "TourToHimachal - Tours, Travel Packages & Taxi Services",
   description:
     "Discover the magic of Himachal Pradesh with our curated tour packages, reliable taxi services, and personalized travel experiences. Book spiritual tours, honeymoon packages, adventure trips, and more.",
-  keywords:
-    "Himachal Pradesh tours, Manali packages, Shimla travel, taxi service Himachal, spiritual tours, honeymoon packages, adventure trekking",
-  openGraph: {
-    title: "TourToHimachal - Your Gateway to Himalayan Adventures",
-    description:
-      "Experience breathtaking mountains, sacred temples, thrilling adventures with our curated tour packages and reliable taxi services.",
-    type: "website",
-  },
-  generator: "v0.app",
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const supabase = await createClient()
+    const { data, error } = await supabase.from("settings").select("key, value").in("key", ["meta_title", "meta_description", "site_name"])
+
+    if (error || !data || data.length === 0) {
+      return {
+        title: defaultMetadata.title,
+        description: defaultMetadata.description,
+        keywords:
+          "Himachal Pradesh tours, Manali packages, Shimla travel, taxi service Himachal, spiritual tours, honeymoon packages, adventure trekking",
+        openGraph: {
+          title: "TourToHimachal - Your Gateway to Himalayan Adventures",
+          description:
+            "Experience breathtaking mountains, sacred temples, thrilling adventures with our curated tour packages and reliable taxi services.",
+          type: "website",
+        },
+      }
+    }
+
+    // Extract meta_title and meta_description from settings
+    const settingsMap: Record<string, string> = {}
+    data.forEach((row: { key: string; value: any }) => {
+      settingsMap[row.key] = row.value
+    })
+
+    const metaTitle = settingsMap.meta_title || defaultMetadata.title
+    const metaDescription = settingsMap.meta_description || defaultMetadata.description
+
+    return {
+      title: metaTitle,
+      description: metaDescription,
+      keywords:
+        "Himachal Pradesh tours, Manali packages, Shimla travel, taxi service Himachal, spiritual tours, honeymoon packages, adventure trekking",
+      openGraph: {
+        title: metaTitle,
+        description: metaDescription,
+        type: "website",
+      },
+    }
+  } catch (error) {
+    console.error("Error generating metadata:", error)
+    return {
+      title: defaultMetadata.title,
+      description: defaultMetadata.description,
+      keywords:
+        "Himachal Pradesh tours, Manali packages, Shimla travel, taxi service Himachal, spiritual tours, honeymoon packages, adventure trekking",
+      openGraph: {
+        title: "TourToHimachal - Your Gateway to Himalayan Adventures",
+        description:
+          "Experience breathtaking mountains, sacred temples, thrilling adventures with our curated tour packages and reliable taxi services.",
+        type: "website",
+      },
+    }
+  }
 }
 
 export default function RootLayout({

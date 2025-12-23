@@ -27,6 +27,7 @@ interface Package {
   images?: string[]
   is_active: boolean
   is_featured: boolean
+  region?: string
 }
 
 interface PackagesPageClientProps {
@@ -46,7 +47,7 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
   const [selectedDuration, setSelectedDuration] = useState("All")
   const [selectedTheme, setSelectedTheme] = useState("All")
   const [selectedPrice, setSelectedPrice] = useState("All")
-  const [sortBy, setSortBy] = useState("popular")
+  const [sortBy, setSortBy] = useState("all")
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE)
 
   const filteredPackages = useMemo(() => {
@@ -62,6 +63,10 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
       )
     }
 
+    if (selectedRegion !== "All") {
+      result = result.filter((pkg) => pkg.region?.toLowerCase() === selectedRegion.toLowerCase())
+    }
+
     if (selectedTheme !== "All") {
       result = result.filter((pkg) => pkg.category?.toLowerCase() === selectedTheme.toLowerCase())
     }
@@ -69,9 +74,9 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
     if (selectedDuration !== "All") {
       result = result.filter((pkg) => {
         const days = extractDurationDays(pkg.duration || "")
-        if (selectedDuration === "1-3 Days") return days <= 3
-        if (selectedDuration === "4-6 Days") return days >= 4 && days <= 6
-        if (selectedDuration === "7+ Days") return days >= 7
+        if (selectedDuration === "1-2 Days") return days >= 1 && days <= 2
+        if (selectedDuration === "3-5 Days") return days >= 3 && days <= 5
+        if (selectedDuration === "5+ Days") return days >= 5
         return true
       })
     }
@@ -101,9 +106,10 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
       case "duration":
         result.sort((a, b) => extractDurationDays(a.duration || "") - extractDurationDays(b.duration || ""))
         break
-      case "popular":
+      case "all":
       default:
-        result.sort((a, b) => (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0))
+        // No sorting, keep original order
+        break
     }
 
     return result
@@ -118,7 +124,7 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
     setSelectedDuration("All")
     setSelectedTheme("All")
     setSelectedPrice("All")
-    setSortBy("popular")
+    setSortBy("all")
   }
 
   const hasActiveFilters =

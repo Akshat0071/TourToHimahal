@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS blogs (
   content TEXT NOT NULL,
   excerpt TEXT,
   cover_image TEXT,
-  author TEXT DEFAULT 'Himachal Yatra',
+  author TEXT DEFAULT 'TourToHimachal',
   category TEXT,
   tags TEXT[],
   is_published BOOLEAN DEFAULT false,
