@@ -102,19 +102,23 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
     <motion.article variants={fadeInUp} initial="hidden" animate="visible" className="min-w-0">
       <Link href={post.slug ? `/blog/${post.slug}` : "#"} className="block min-w-0">
         <motion.div
-          className="group bg-card rounded-xl md:rounded-2xl overflow-hidden shadow-md h-full flex flex-col border border-border hover:border-mountain-blue/40 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 min-w-0"
+          className="group bg-card rounded-xl md:rounded-2xl overflow-hidden shadow-md h-full flex flex-col md:flex-row border border-border hover:border-mountain-blue/40 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 min-w-0"
           variants={cardHover}
           initial="rest"
           whileHover="hover"
         >
-          <div className="relative aspect-[4/3] md:aspect-[16/10] w-full min-w-0">
+          {/* Left: Image */}
+          <div className="relative w-full md:w-2/5 flex-shrink-0 overflow-hidden rounded-xl md:rounded-2xl" style={{ aspectRatio: '16/9', display: 'block' }}>
             <Image
               src={imageUrl || "/placeholder.svg"}
               alt={post.title}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              width={800}
+              height={450}
+              layout="responsive"
+              className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105 rounded-xl md:rounded-2xl block"
+              style={{ objectFit: 'cover', borderRadius: 'inherit' }}
             />
-            <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/20 to-transparent rounded-xl md:rounded-2xl pointer-events-none" />
             {post.category && (
               <div className="absolute top-2 left-2 md:top-3 md:left-3">
                 <Badge variant="secondary" className="bg-white/90 text-mountain-blue font-semibold text-[10px] md:text-xs px-2 py-0.5 md:px-2.5 md:py-0.5 shadow-sm">
@@ -123,12 +127,13 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
               </div>
             )}
           </div>
-          <div className="p-4 md:p-5 flex flex-col flex-1 bg-gradient-to-b from-transparent to-white/60">
-            <h3 className="text-base md:text-lg font-serif font-bold text-foreground mb-2 group-hover:text-mountain-blue transition-colors line-clamp-2 leading-tight">
+          {/* Right: Content */}
+          <div className="flex-1 flex flex-col justify-center p-4 md:p-6 lg:p-8 bg-gradient-to-b from-transparent to-white/60">
+            <h3 className="text-lg md:text-2xl font-serif font-bold text-foreground mb-2 group-hover:text-mountain-blue transition-colors line-clamp-2 leading-tight">
               {post.title}
             </h3>
             {post.excerpt && (
-              <p className="text-sm text-muted-foreground mb-3 md:mb-4 line-clamp-2 flex-1 leading-relaxed">
+              <p className="text-base text-muted-foreground mb-3 md:mb-4 line-clamp-2 flex-1 leading-relaxed">
                 {post.excerpt}
               </p>
             )}

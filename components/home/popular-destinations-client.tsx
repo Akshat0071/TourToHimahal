@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { Clock, IndianRupee, MapPin, ArrowRight } from "lucide-react"
 import { fadeInUp, staggerContainer } from "@/lib/animation-variants"
 
@@ -13,6 +14,7 @@ interface Package {
   slug: string
   short_description?: string
   price: number
+  original_price?: number
   duration: string
   images?: string[]
   is_featured: boolean
@@ -28,21 +30,24 @@ const fallbackDestinations = [
     name: "Manali",
     image: "/manali-snow-mountains.jpg",
     duration: "3 Days / 2 Nights",
-    price: "8,999",
+    price: 8999,
+    original_price: 9999,
     slug: "manali",
   },
   {
     name: "Shimla",
     image: "/shimla-hills-colonial.jpg",
     duration: "2 Days / 1 Night",
-    price: "5,499",
+    price: 5499,
+    original_price: 5999,
     slug: "shimla",
   },
   {
     name: "Dharamshala",
     image: "/dharamshala-monastery.jpg",
     duration: "3 Days / 2 Nights",
-    price: "7,999",
+    price: 7999,
+    original_price: 8999,
     slug: "dharamshala",
   },
 ]
@@ -55,7 +60,8 @@ export function PopularDestinationsClient({ packages }: PopularDestinationsClien
           name: pkg.title,
           image: pkg.images?.[0] || `/placeholder.svg?height=400&width=600&query=${pkg.title} himachal`,
           duration: pkg.duration,
-          price: pkg.price.toLocaleString("en-IN"),
+          price: pkg.price,
+          original_price: pkg.original_price,
           slug: pkg.slug,
         }))
       : fallbackDestinations
@@ -128,12 +134,26 @@ export function PopularDestinationsClient({ packages }: PopularDestinationsClien
                     </div>
                   )}
 
-                  {/* Price tag */}
-                  <div className="absolute top-4 right-4 px-4 py-2 bg-white/95 backdrop-blur-sm rounded-full shadow-lg">
-                    <div className="flex items-center text-forest-green font-bold">
-                      <IndianRupee className="h-4 w-4" />
-                      {destination.price}
+
+                  {/* Price, Original Price, and Discount Badges (top right, reversed order) */}
+                  <div className="absolute top-4 right-4 flex flex-col items-end gap-2 z-10">
+                    <div className="bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg flex items-center">
+                      <span className="text-lg md:text-xl font-bold text-saffron flex items-center">
+                        <IndianRupee className="h-4 w-4 mr-0.5" />
+                        {destination.price?.toLocaleString ? destination.price.toLocaleString("en-IN") : destination.price}
+                      </span>
+                      {destination.original_price && destination.original_price > destination.price && (
+                        <span className="text-muted-foreground line-through text-xs ml-1.5">
+                          ₹{destination.original_price?.toLocaleString ? destination.original_price.toLocaleString("en-IN") : destination.original_price}
+                        </span>
+                      )}
                     </div>
+                    {/* Discount Badge */}
+                    {destination.original_price && destination.original_price > destination.price && (
+                      <Badge className="bg-gradient-to-r from-forest-green to-mountain-blue text-white border-0 shadow-lg text-xs w-fit">
+                        {Math.round(((destination.original_price - destination.price) / destination.original_price) * 100)}% OFF
+                      </Badge>
+                    )}
                   </div>
 
                   {/* Title overlay */}

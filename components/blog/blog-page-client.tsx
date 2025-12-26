@@ -154,7 +154,7 @@ export function BlogPageClient({ blogs, categories }: BlogPageClientProps) {
                   variants={staggerContainer}
                   initial="hidden"
                   animate="visible"
-                  className="relative z-10 grid sm:grid-cols-2 gap-4 md:gap-6 min-w-0"
+                  className="relative z-10 flex flex-col gap-4 md:gap-6 min-w-0"
                 >
                   {/* Status helper */}
                   {filteredPosts.length > 0 && (

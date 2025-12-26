@@ -6,7 +6,7 @@ export async function PopularDestinations() {
 
   const { data: packages, error } = await supabase
     .from("packages")
-    .select("id, title, slug, short_description, price, duration, images, is_featured")
+    .select("id, title, slug, short_description, price, original_price, duration, images, is_featured")
     .eq("is_active", true)
     .eq("is_featured", true)
     .order("created_at", { ascending: false })
