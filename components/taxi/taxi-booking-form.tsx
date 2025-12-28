@@ -46,10 +46,19 @@ export function TaxiBookingForm() {
     if (!formData.pickup) newErrors.pickup = "Pickup location is required"
     if (!formData.drop) newErrors.drop = "Drop location is required"
     if (!formData.date) newErrors.date = "Date is required"
-    if (!formData.name) newErrors.name = "Name is required"
-    if (!formData.phone) newErrors.phone = "Phone is required"
-    else if (!/^\d{10}$/.test(formData.phone.replace(/\D/g, ""))) {
-      newErrors.phone = "Please enter a valid 10-digit phone number"
+    if (!formData.name || formData.name.length < 2) newErrors.name = "Name must be at least 2 characters"
+    if (!formData.phone || !/^\d{10}$/.test(formData.phone.replace(/\D/g, ""))) {
+      newErrors.phone = "Valid 10-digit phone is required"
+    }
+    // Subject validation
+    const subject = `Taxi Booking: ${formData.pickup} to ${formData.drop}`
+    if (!subject || subject.length < 5) newErrors.subject = "Subject must be at least 5 characters"
+    // Message validation
+    const message = `Service Type: ${formData.serviceType}\nVehicle: ${formData.vehicleType}\nPickup: ${formData.pickup}\nDrop: ${formData.drop}\nDate: ${formData.date}\nPassengers: ${formData.passengers || "Not specified"}\n\nAdditional Notes: ${formData.message || "None"}`
+    if (!message || message.length < 10) newErrors.message = "Message must be at least 10 characters"
+    // Email validation (optional, but backend expects a valid email string)
+    if (formData.email && !/^.+@.+\..+$/.test(formData.email)) {
+      newErrors.email = "Valid email is required"
     }
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -70,7 +79,7 @@ export function TaxiBookingForm() {
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
-          email: formData.email || "",
+          email: formData.email || "noemail@himachalyatra.com",
           subject: `Taxi Booking: ${formData.pickup} to ${formData.drop}`,
           message: `Service Type: ${formData.serviceType}\nVehicle: ${formData.vehicleType}\nPickup: ${formData.pickup}\nDrop: ${formData.drop}\nDate: ${formData.date}\nPassengers: ${formData.passengers || "Not specified"}\n\nAdditional Notes: ${formData.message || "None"}`,
           serviceType: "taxi",
@@ -104,7 +113,13 @@ export function TaxiBookingForm() {
           window.open(whatsappLink, "_blank")
         }, 1500)
       } else {
-        setErrors({ submit: result.message || "Failed to submit. Please try again." })
+        // Show backend validation errors if present
+        if (result.errors) {
+          const fieldErrors = Object.entries(result.errors).map(([field, msgs]) => `${field}: ${Array.isArray(msgs) ? msgs.join(", ") : msgs}`)
+          setErrors({ submit: fieldErrors.join(" | ") })
+        } else {
+          setErrors({ submit: result.message || "Failed to submit. Please try again." })
+        }
       }
     } catch (error) {
       setErrors({ submit: "Network error. Please try again." })
@@ -115,7 +130,7 @@ export function TaxiBookingForm() {
 
   if (!isMounted) {
     return (
-      <div className="bg-card border border-border rounded-xl p-6 md:p-8 flex items-center justify-center min-h-[600px]">
+      <div className="bg-card border border-border rounded-xl p-6 md:p-8 flex items-center justify-center min-h-150">
         <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
       </div>
     )
@@ -338,7 +353,7 @@ export function TaxiBookingForm() {
             placeholder="Any special requirements..."
             value={formData.message}
             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-            className="pl-10 min-h-[80px]"
+            className="pl-10 min-h-20"
           />
         </div>
       </div>

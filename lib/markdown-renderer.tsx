@@ -81,7 +81,7 @@ export function MarkdownRenderer({ content, className }: MarkdownRendererProps) 
             {children}
           </blockquote>
         ),
-        strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
+        strong: ({ children }) => <strong className="font-semibold text-orange-500">{children}</strong>,
         a: ({ href, children }) => (
           <a
             href={href}

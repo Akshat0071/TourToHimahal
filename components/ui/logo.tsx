@@ -41,7 +41,7 @@ export function Logo({
         )}
       >
         <Image
-          src="/Images/logo.webp"
+          src="/Images/logo1.webp.png"
           alt="TourToHimachal Logo"
           fill
           className="object-contain object-center"

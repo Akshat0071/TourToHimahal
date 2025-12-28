@@ -8,13 +8,18 @@ import { useSettings } from "@/lib/settings-context"
 const quickLinks = [
   { href: "/packages", label: "Tour Packages" },
   { href: "/taxi", label: "Taxi Service" },
-  { href: "/destinations", label: "Destinations" },
   { href: "/diaries", label: "Travel Diaries" },
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact" },
 ]
 
-const destinations = ["Manali", "Shimla", "Dharamshala", "Spiti Valley", "Kasol", "Dalhousie"]
+// Updated destinations for footer with corresponding package slugs
+const destinations = [
+  { name: "Mata Chintpurni - VIP", slug: "mata-chintpurni-mandir-vip-express" },
+  { name: "Divya Mandir Yatra", slug: "divya-mandir-yatra-jwala-ji-baglamukhi-chintpurni" },
+  { name: "4 Mahadev, 1 Shaktipeeth", slug: "4-mahadev-darshan-1-shakti-peeth-chintpurni-spiritual-circuit" },
+  { name: "4 Shaktipeeth, 1 Mahadev", slug: "4-shakti-peeth-1-siddh-peeth-darshan-chintpurni-circuit" },
+]
 
 export function Footer() {
   const { settings } = useSettings()
@@ -136,13 +141,13 @@ export function Footer() {
               </h4>
               <ul className="space-y-2 sm:space-y-3">
                 {destinations.map((destination) => (
-                  <li key={destination}>
+                  <li key={destination.slug}>
                     <Link
-                      href={`/destinations/${destination.toLowerCase().replace(" ", "-")}`}
+                      href={`/packages/${destination.slug}`}
                       className="text-slate-400 hover:text-forest-green transition-colors flex items-center gap-2 group text-xs sm:text-sm md:text-base"
                     >
                       <MapPin className="h-3 w-3 text-forest-green" />
-                      {destination}
+                      {destination.name}
                     </Link>
                   </li>
                 ))}
