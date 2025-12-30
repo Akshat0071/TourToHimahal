@@ -49,7 +49,7 @@ export function DiaryHero({ diary, images }: DiaryHeroProps) {
   const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + displayImages.length) % displayImages.length)
 
   return (
-    <section className="relative min-h-[70vh] flex items-end overflow-hidden">
+    <section className="relative min-h-[70vh] flex items-end overflow-hidden pt-16 md:pt-24 lg:pt-28">
       {/* Background Image */}
       <div className="absolute inset-0">
         <AnimatePresence mode="wait">

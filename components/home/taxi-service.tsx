@@ -169,7 +169,7 @@ export function TaxiService() {
                 asChild
               >
                 <a
-                  href={`https://wa.me/${(settings?.whatsapp_number || "919876543210").replace(/[^0-9]/g, "")}?text=Hi, I want to book a taxi`}
+                  href={`https://wa.me/${(settings?.whatsapp_number || "").replace(/[^0-9]/g, "")}?text=Hi, I want to book a taxi`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

@@ -7,12 +7,12 @@ import { useSettings } from "@/lib/settings-context"
 export function ContactHero() {
   const { settings } = useSettings()
 
-  const contactPhone = settings?.contact_phone || "+91 98765 43210"
-  const whatsappNumber = settings?.whatsapp_number || "+919876543210"
+  const contactPhone = settings?.contact_phone || ""
+  const whatsappNumber = settings?.whatsapp_number || ""
 
   return (
     <StaticHero
-      image="/himalayan-mountains-landscape.jpg"
+      image="Images/contact.png"
       badge="We're Here to Help 24/7"
       title="Let's Create Your Dream Journey"
       subtitle="Have questions? Need a custom itinerary? Want to explore off-the-beaten-path destinations? Our local travel experts are just a message away. We don't just plan trips — we craft unforgettable Himalayan experiences tailored just for you."

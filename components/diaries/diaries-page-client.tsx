@@ -172,7 +172,7 @@ export function DiariesPageClient({ diaries }: DiariesPageClientProps) {
                     variants={staggerContainer}
                     initial="hidden"
                     animate="visible"
-                    className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+                    className="flex flex-col gap-6"
                   >
                     {visibleDiaries.map((diary) => (
                       <DiaryCard key={diary.slug} diary={diary} />

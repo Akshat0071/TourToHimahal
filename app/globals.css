@@ -113,8 +113,8 @@ html {
 
 /* Enhanced color system with more vibrant backgrounds */
 :root {
-  /* Base colors - warm cream background with more color */
-  --background: oklch(0.97 0.015 75);
+  /* Base colors - white background */
+  --background: oklch(1 0 0);
   --foreground: oklch(0.18 0.02 260);
 
   /* Card with warm cream tint */

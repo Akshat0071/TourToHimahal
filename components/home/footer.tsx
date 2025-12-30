@@ -51,7 +51,7 @@ export function Footer() {
     },
   ]
 
-  const contactPhone = settings?.contact_phone || "+91 98765 43210"
+  const contactPhone = settings?.contact_phone || ""
   const contactEmail = settings?.contact_email || "info@tourtohimachal.com"
   const address = settings?.address || "123 Mall Road, Shimla, Himachal Pradesh 171001"
 
@@ -167,17 +167,19 @@ export function Footer() {
                   </div>
                   <span className="text-slate-400 text-xs sm:text-sm md:text-base">{address}</span>
                 </li>
-                <li className="flex items-center gap-2 sm:gap-3 group">
-                  <div className="p-1.5 sm:p-2 bg-forest-green/10 rounded-lg group-hover:bg-forest-green/20 transition-colors shrink-0">
-                    <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-forest-green" />
-                  </div>
-                  <a
-                    href={`tel:${contactPhone.replace(/\s/g, "")}`}
-                    className="text-slate-400 hover:text-forest-green transition-colors text-xs sm:text-sm md:text-base"
-                  >
-                    {contactPhone}
-                  </a>
-                </li>
+                {contactPhone && (
+                  <li className="flex items-center gap-2 sm:gap-3 group">
+                    <div className="p-1.5 sm:p-2 bg-forest-green/10 rounded-lg group-hover:bg-forest-green/20 transition-colors shrink-0">
+                      <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-forest-green" />
+                    </div>
+                    <a
+                      href={`tel:${contactPhone.replace(/\s/g, "")}`}
+                      className="text-slate-400 hover:text-forest-green transition-colors text-xs sm:text-sm md:text-base"
+                    >
+                      {contactPhone}
+                    </a>
+                  </li>
+                )}
                 <li className="flex items-center gap-2 sm:gap-3 group">
                   <div className="p-1.5 sm:p-2 bg-mountain-blue/10 rounded-lg group-hover:bg-mountain-blue/20 transition-colors shrink-0">
                     <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-mountain-blue" />

@@ -68,8 +68,8 @@ export function MapSection() {
                 </div>
                 <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground bg-muted/50 p-2 rounded-lg">
                   <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-mountain-blue shrink-0" />
-                  <a href={`tel:${(settings?.contact_phone || "+919876543210").replace(/\s/g, "")}`} className="hover:text-primary truncate">
-                    {(settings?.contact_phone || "+919876543210").replace(/\D/g, "").slice(-10)}
+                  <a href={`tel:${(settings?.contact_phone || "").replace(/\s/g, "")}`} className="hover:text-primary truncate">
+                    {(settings?.contact_phone || "").replace(/\D/g, "").slice(-10)}
                   </a>
                 </div>
               </div>

@@ -25,8 +25,8 @@ export interface SiteSettings {
 const defaultSettings: SiteSettings = {
   site_name: "TourToHimachal",
   contact_email: "info@tourtohimachal.com",
-  contact_phone: "+91 98765 43210",
-  whatsapp_number: "+919876543210",
+  contact_phone: "",
+  whatsapp_number: "",
   address: "Near Temple Complex, Chintpurni, HP 177106",
   google_maps_embed: "",
   facebook_url: "",
@@ -79,7 +79,17 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         const settingsObj = { ...defaultSettings }
         data.forEach((row: { key: string; value: any }) => {
           if (row.key in settingsObj) {
-            ;(settingsObj as any)[row.key] = row.value
+            // Parse JSON values if they're strings
+            let parsedValue = row.value
+            if (typeof row.value === 'string') {
+              try {
+                parsedValue = JSON.parse(row.value)
+              } catch {
+                // If parsing fails, use the raw value
+                parsedValue = row.value
+              }
+            }
+            ;(settingsObj as any)[row.key] = parsedValue
           }
         })
         setSettings(settingsObj)

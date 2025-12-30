@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Sparkles, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -22,9 +23,10 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { settings, loading } = useSettings()
   const scrollYRef = useRef(0)
+  const pathname = usePathname()
 
-  const whatsappNumber = settings?.whatsapp_number || "+919876543210"
-  const contactPhone = settings?.contact_phone || "+91 98765 43210"
+  const whatsappNumber = settings?.whatsapp_number || ""
+  const contactPhone = settings?.contact_phone || ""
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,40 +87,51 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 text-foreground hover:text-saffron hover:bg-saffron/10"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href))
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    isActive
+                      ? "text-white bg-saffron"
+                      : "text-foreground hover:text-white hover:bg-saffron"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
             {/* Contact Phone */}
-            <div className="text-right">
-              <p className="text-xs text-muted-foreground">Need help?</p>
-              <a
-                href={`tel:${contactPhone.replace(/\s/g, "")}`}
-                className="text-sm font-semibold text-foreground hover:text-saffron transition-colors flex items-center justify-end gap-1"
-              >
-                <Phone className="h-4 w-4" />
-                {contactPhone}
-              </a>
-            </div>
+            {contactPhone && (
+              <div className="text-right">
+                <p className="text-xs text-muted-foreground">Need help?</p>
+                <a
+                  href={`tel:${contactPhone.replace(/\s/g, "")}`}
+                  className="text-sm font-semibold text-foreground hover:text-saffron transition-colors flex items-center justify-end gap-1"
+                >
+                  <Phone className="h-4 w-4" />
+                  {contactPhone}
+                </a>
+              </div>
+            )}
             
-            <Button asChild variant="gradient" size="lg" className="gap-2">
-              <a
-                href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, "")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Sparkles className="h-4 w-4" />
-                Book Now
-              </a>
-            </Button>
+            {whatsappNumber && (
+              <Button asChild variant="gradient" size="lg" className="gap-2">
+                <a
+                  href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Sparkles className="h-4 w-4" />
+                  Book Now
+                </a>
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -175,23 +188,30 @@ export function Header() {
                 <div className="absolute top-20 right-0 w-32 h-32 bg-linear-to-bl from-saffron/10 to-transparent rounded-bl-full pointer-events-none" />
 
                 <nav className="flex flex-col gap-1">
-                  {navLinks.map((link, index) => (
-                    <motion.div
-                      key={link.href}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                    >
-                      <Link
-                        href={link.href}
-                        className="flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl text-sm sm:text-base font-medium text-foreground hover:bg-linear-to-r hover:from-saffron/10 hover:to-golden-yellow/10 hover:text-saffron transition-all"
-                        onClick={() => setIsMobileMenuOpen(false)}
+                  {navLinks.map((link, index) => {
+                    const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href))
+                    return (
+                      <motion.div
+                        key={link.href}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}
                       >
-                        <span className="w-2 h-2 rounded-full bg-linear-to-r from-saffron to-golden-yellow" />
-                        {link.label}
-                      </Link>
-                    </motion.div>
-                  ))}
+                        <Link
+                          href={link.href}
+                          className={`flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl text-sm sm:text-base font-medium transition-all ${
+                            isActive
+                              ? "bg-saffron text-white"
+                              : "text-foreground hover:bg-saffron hover:text-white"
+                          }`}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          <span className={`w-2 h-2 rounded-full ${isActive ? "bg-white" : "bg-linear-to-r from-saffron to-golden-yellow"}`} />
+                          {link.label}
+                        </Link>
+                      </motion.div>
+                    )
+                  })}
                 </nav>
 
                 <div className="mt-auto space-y-3 sm:space-y-4">

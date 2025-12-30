@@ -24,9 +24,9 @@ export function Logo({
   forceColors = false,
 }: LogoProps) {
   const sizes = {
-    sm: { icon: "w-40 h-12", text: "text-base", tagline: "text-[9px]" },
-    md: { icon: "w-56 h-16", text: "text-lg md:text-xl", tagline: "text-[10px] md:text-xs" },
-    lg: { icon: "w-72 h-20", text: "text-xl md:text-2xl", tagline: "text-xs" },
+    sm: { icon: "w-32 h-10 md:w-40 md:h-12", text: "text-base", tagline: "text-[9px]" },
+    md: { icon: "w-40 h-12 md:w-56 md:h-16", text: "text-lg md:text-xl", tagline: "text-[10px] md:text-xs" },
+    lg: { icon: "w-56 h-16 md:w-72 md:h-20", text: "text-xl md:text-2xl", tagline: "text-xs" },
   }
 
   const useColors = forceColors || isScrolled || true

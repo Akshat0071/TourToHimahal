@@ -289,7 +289,7 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
                       </a>
                     </Button>
                     <Button asChild variant="outline" className="w-full gap-2 bg-white/60 border-2 border-saffron/20 hover:bg-saffron/10 hover:border-saffron/40 h-10 text-sm">
-                      <a href={`tel:${(settings?.contact_phone || "+919876543210").replace(/\s/g, "")}`}>
+                      <a href={`tel:${(settings?.contact_phone || "").replace(/\s/g, "")}`}>
                         <Phone className="h-4 w-4" />
                         Call Now
                       </a>

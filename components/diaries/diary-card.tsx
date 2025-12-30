@@ -113,55 +113,58 @@ export function DiaryCard({ diary, featured = false }: DiaryCardProps) {
   }
 
   return (
-    <motion.article variants={fadeInUp}>
-      <Link href={`/diaries/${diary.slug}`}>
+    <motion.article variants={fadeInUp} initial="hidden" animate="visible" className="min-w-0">
+      <Link href={diary.slug ? `/diaries/${diary.slug}` : "#"} className="block min-w-0">
         <motion.div
-          className="group bg-card rounded-xl overflow-hidden shadow-md h-full"
+          className="group bg-card rounded-xl md:rounded-2xl overflow-hidden shadow-md h-full flex flex-col md:flex-row border border-border hover:border-mountain-blue/40 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 min-w-0"
           variants={cardHover}
           initial="rest"
           whileHover="hover"
         >
-          <div className="relative aspect-16/10">
+          {/* Left: Image */}
+          <div className="relative w-full md:w-2/5 flex-shrink-0 overflow-hidden rounded-xl md:rounded-2xl" style={{ aspectRatio: '16/9', display: 'block' }}>
             <Image
               src={imageUrl || "/placeholder.svg"}
               alt={diary.title}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              width={800}
+              height={450}
+              layout="responsive"
+              className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105 rounded-xl md:rounded-2xl block"
+              style={{ objectFit: 'cover', borderRadius: 'inherit' }}
             />
-            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
-            <div className="absolute bottom-4 left-4 right-4">
-              {diary.destination && (
-                <Badge className="bg-white/20 backdrop-blur-sm text-white text-xs">
+            <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/20 to-transparent rounded-xl md:rounded-2xl pointer-events-none" />
+            {diary.destination && (
+              <div className="absolute top-2 left-2 md:top-3 md:left-3">
+                <Badge variant="secondary" className="bg-white/90 text-mountain-blue font-semibold text-[10px] md:text-xs px-2 py-0.5 md:px-2.5 md:py-0.5 shadow-sm">
                   <MapPin className="h-3 w-3 mr-1" />
                   {diary.destination}
                 </Badge>
-              )}
-            </div>
+              </div>
+            )}
           </div>
-          <div className="p-5">
-            <h3 className="text-lg font-serif font-bold text-foreground mb-2 group-hover:text-mountain-blue transition-colors line-clamp-2">
+          {/* Right: Content */}
+          <div className="flex-1 flex flex-col justify-center p-4 md:p-6 lg:p-8 bg-gradient-to-b from-transparent to-white/60">
+            <h3 className="text-lg md:text-2xl font-serif font-bold text-foreground mb-2 group-hover:text-mountain-blue transition-colors line-clamp-2 leading-tight">
               {diary.title}
             </h3>
-            {diary.excerpt && <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{diary.excerpt}</p>}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Image
-                  src={authorAvatar || "/placeholder.svg"}
-                  alt={authorName}
-                  width={28}
-                  height={28}
-                  className="rounded-full"
-                />
-                <span className="text-sm text-muted-foreground">{authorName}</span>
+            {diary.excerpt && (
+              <p className="text-base text-muted-foreground mb-3 md:mb-4 line-clamp-2 flex-1 leading-relaxed">
+                {diary.excerpt}
+              </p>
+            )}
+            <div className="flex items-center justify-between mt-auto pt-2">
+              <div className="flex items-center gap-3 text-xs md:text-sm text-muted-foreground">
+                {diary.readTime && (
+                  <span className="flex items-center gap-1 bg-mountain-blue/10 px-2 py-1 rounded-full">
+                    <Clock className="h-3 w-3" />
+                    {diary.readTime} min
+                  </span>
+                )}
+                {formattedDate && <span>{formattedDate}</span>}
               </div>
-              {formattedDate && (
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                  <span>{formattedDate}</span>
-                </div>
-              )}
-            </div>
-            <div className="mt-4 flex items-center text-mountain-blue text-sm font-medium group-hover:gap-2 transition-all">
-              Read More <ArrowRight className="h-4 w-4 ml-1" />
+              <span className="text-mountain-blue text-xs md:text-sm font-medium flex items-center group-hover:gap-1 transition-all">
+                Read <ArrowRight className="h-3 w-3 md:h-4 md:w-4 ml-1" />
+              </span>
             </div>
           </div>
         </motion.div>

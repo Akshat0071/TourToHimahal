@@ -15,14 +15,14 @@ export function MobileContactBar() {
     >
       <div className="flex gap-3">
         <a
-          href={`tel:${(settings?.contact_phone || "+919876543210").replace(/\s/g, "")}`}
+          href={`tel:${(settings?.contact_phone || "").replace(/\s/g, "")}`}
           className="flex-1 flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3 rounded-xl font-medium"
         >
           <Phone className="w-5 h-5" />
           Call Now
         </a>
         <a
-          href={`https://wa.me/${(settings?.whatsapp_number || "919876543210").replace(/[^0-9]/g, "")}?text=Hi!%20I%20need%20help%20planning%20my%20Himachal%20trip.`}
+          href={`https://wa.me/${(settings?.whatsapp_number || "").replace(/[^0-9]/g, "")}?text=Hi!%20I%20need%20help%20planning%20my%20Himachal%20trip.`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-xl font-medium"

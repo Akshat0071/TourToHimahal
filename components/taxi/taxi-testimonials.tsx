@@ -7,6 +7,8 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { fadeInUp, staggerContainer } from "@/lib/animation-variants"
 import { createClient } from "@/lib/supabase/client"
+import { ReviewForm } from "@/components/home/review-form"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 
 interface Review {
   id: string
@@ -24,6 +26,7 @@ export function TaxiTestimonials() {
   const [canScrollRight, setCanScrollRight] = useState(true)
   const [reviews, setReviews] = useState<Review[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const fetchReviews = async () => {
     try {
@@ -73,7 +76,7 @@ export function TaxiTestimonials() {
   }
 
   return (
-    <section className="py-8 md:py-8 lg:py-12 bg-gradient-to-br from-[oklch(0.96_0.03_220)] via-[oklch(0.97_0.02_200)] to-[oklch(0.98_0.025_180)] relative overflow-hidden">
+    <section className="py-8 md:py-8 lg:py-12 bg-white relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-10 right-10 w-32 md:w-40 h-32 md:h-40 bg-gradient-to-br from-golden-yellow/30 to-saffron/30 rounded-full blur-3xl" />
       <div className="absolute bottom-10 left-10 w-48 md:w-60 h-48 md:h-60 bg-gradient-to-tr from-mountain-blue/20 to-forest-green/20 rounded-full blur-3xl" />
@@ -126,6 +129,18 @@ export function TaxiTestimonials() {
             >
               <ChevronRight className="h-4 w-4 md:h-5 md:w-5" />
             </Button>
+            <div className="ml-4">
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button className="bg-mountain-blue text-white hover:bg-mountain-blue/90">
+                    Write a Review
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-[95vw] md:max-w-md max-h-[90vh] overflow-y-auto rounded-2xl p-4 sm:p-6">
+                  <ReviewForm onSuccess={() => setIsDialogOpen(false)} />
+                </DialogContent>
+              </Dialog>
+            </div>
           </motion.div>
         </motion.div>
 

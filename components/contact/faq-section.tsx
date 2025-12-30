@@ -8,7 +8,7 @@ const faqs = [
   {
     question: "How do I book a tour package?",
     answer:
-      "You can book a tour package by filling out the contact form above, calling us directly at +91 98765 43210, or messaging us on WhatsApp. We'll get back to you within 12 hours with a customized itinerary and quote.",
+      "You can book a tour package by filling out the contact form above, calling us directly, or messaging us on WhatsApp. We'll get back to you within 12 hours with a customized itinerary and quote.",
   },
   {
     question: "What is your cancellation policy?",

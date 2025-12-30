@@ -94,7 +94,7 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
             </a>
           </Button>
           <Button asChild size="lg" variant="secondary" className="gap-2">
-            <a href={`tel:${settings?.contact_phone || "+919876543210"}`}>
+            <a href={`tel:${settings?.contact_phone || ""}`}>
               <Phone className="h-5 w-5" />
               Call Now
             </a>
@@ -264,7 +264,7 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
             >
               <div className="relative w-full h-56 sm:h-64 md:h-72 rounded-2xl overflow-hidden shadow-xl">
                 <Image
-                  src="https://res.cloudinary.com/dabqqymqe/image/upload/v1765972287/uc6q1azohh0a4k4xv72i.jpg"
+                  src="https://res.cloudinary.com/dabqqymqe/image/upload/v1767092549/tbccjb5pnizayzkabfak.webp"
                   alt="Mountain taxi ride"
                   fill
                   className="object-cover"
@@ -275,7 +275,7 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
               </div>
 
               <div className="lg:mt-auto">
-                <h2 className="text-3xl font-serif font-bold text-foreground mb-3 lg:mb-4">Get Your Quote</h2>
+                <h2 className="text-3xl font-bold tracking-tight text-foreground mb-3 lg:mb-4 bg-gradient-to-r from-mountain-blue via-forest-green to-saffron bg-clip-text text-transparent">Get Your Quote</h2>
                 <p className="text-muted-foreground mb-5 lg:mb-6">
                   Fill in your travel details and we will get back to you with the best options. No advance payment
                   required - pay after your trip!
