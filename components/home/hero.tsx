@@ -4,7 +4,7 @@ import { useRef } from "react"
 import Link from "next/link"
 import { motion, useAnimationFrame } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { ChevronRight, Car, MapPin, Star } from "lucide-react"
+import { ChevronRight, Car, MapPin } from "lucide-react"
 
 interface HeroImage {
   url: string
@@ -86,9 +86,7 @@ export function Hero({ images }: HeroProps) {
               transition={{ delay: 0.4 }}
               className="inline-flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-5 py-1.5 sm:py-2 mb-4 md:mb-8 text-[10px] sm:text-xs md:text-sm font-medium text-white bg-linear-to-r from-saffron/30 to-sunset-orange/30 backdrop-blur-md rounded-full border border-white/20 max-w-[90vw]"
             >
-              <Star className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-4 md:w-4 text-golden-yellow fill-golden-yellow shrink-0" />
               <span className="text-center whitespace-nowrap sm:whitespace-normal">Discover the Magic of Himachal</span>
-              <Star className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-4 md:w-4 text-golden-yellow fill-golden-yellow shrink-0" />
             </motion.div>
 
             <motion.h1
@@ -98,7 +96,7 @@ export function Hero({ images }: HeroProps) {
               className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-5 md:mb-9 leading-[1.05] tracking-tight px-2"
             >
               <span className="block whitespace-nowrap">Your Gateway to</span>
-              <span className="block whitespace-nowrap text-transparent bg-clip-text bg-linear-to-r from-golden-yellow via-saffron to-sunset-orange">
+              <span className="block whitespace-nowrap text-[#fc9700]">
                 Himalayan Adventures
               </span>
             </motion.h1>

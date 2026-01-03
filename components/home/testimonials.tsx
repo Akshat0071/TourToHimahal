@@ -109,7 +109,7 @@ export function Testimonials() {
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-foreground mt-2 md:mt-3"
             >
               Happy{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-mountain-blue to-forest-green">
+              <span className="text-forest-green">
                 Travelers
               </span>
             </motion.h2>

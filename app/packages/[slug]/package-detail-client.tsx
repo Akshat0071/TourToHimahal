@@ -93,7 +93,7 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
                     </Badge>
                   )}
                 </div>
-                <h1 className="text-xl sm:text-2xl md:text-4xl font-serif font-bold bg-linear-to-r from-foreground to-saffron bg-clip-text text-transparent mb-4 sm:mb-6">{pkg.title}</h1>
+                <h1 className="text-xl sm:text-2xl md:text-4xl font-serif font-bold text-[#fc9700] mb-4 sm:mb-6">{pkg.title}</h1>
                 <div className="flex flex-wrap items-center gap-2 sm:gap-4 mb-4 sm:mb-6">
                   <div className="flex items-center gap-1.5 sm:gap-2 bg-mountain-blue/10 px-2.5 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm">
                     <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-mountain-blue" />

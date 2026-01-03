@@ -100,14 +100,8 @@ export function WhyChooseUs() {
               key={feature.title}
               variants={fadeInUp}
               whileHover={{ y: -8, scale: 1.02 }}
-              className={`group relative bg-gradient-to-br ${feature.bgColor} p-5 md:p-8 rounded-2xl md:rounded-3xl border-2 border-white/50 hover:border-transparent shadow-md hover:shadow-2xl transition-all duration-500`}
+              className="group relative bg-white p-5 md:p-8 rounded-2xl md:rounded-3xl border-2 border-white/50 shadow-md hover:shadow-2xl transition-all duration-500"
             >
-              {/* Gradient border effect on hover */}
-              <div
-                className={`absolute inset-0 rounded-2xl md:rounded-3xl bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm`}
-              />
-              <div className="absolute inset-[2px] rounded-2xl md:rounded-3xl bg-gradient-to-br from-white to-card -z-10" />
-
               {/* Icon with gradient background */}
               <div
                 className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br ${feature.gradient} rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
@@ -115,7 +109,7 @@ export function WhyChooseUs() {
                 <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-white" />
               </div>
 
-              <h3 className="text-base md:text-xl font-bold text-foreground mb-2 md:mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-mountain-blue group-hover:to-forest-green transition-all duration-300">
+              <h3 className="text-base md:text-xl font-bold text-foreground mb-2 md:mb-3">
                 {feature.title}
               </h3>
               <p className="text-muted-foreground leading-relaxed text-sm md:text-base">{feature.description}</p>

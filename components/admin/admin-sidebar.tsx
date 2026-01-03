@@ -45,6 +45,13 @@ export function AdminSidebar() {
     setMounted(true)
   }, [])
 
+  useEffect(() => {
+    document.body.style.overflow = isMobileOpen ? "hidden" : ""
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [isMobileOpen])
+
   const handleLogout = async () => {
     if (!mounted) return
     await safeSignOut()

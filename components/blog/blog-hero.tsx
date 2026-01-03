@@ -87,7 +87,7 @@ export function BlogHero({ post }: BlogHeroProps) {
       <div className="container mx-auto px-4 py-16 relative z-10">
         <motion.div variants={fadeInUp} initial="hidden" animate="visible" className="max-w-4xl">
           <Badge className="bg-saffron text-white mb-4">{post.category || "Travel"}</Badge>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-white mb-4 text-balance">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#fc9700] mb-4 text-balance">
             {post.title}
           </h1>
           <p className="text-lg text-white/80 mb-6">{post.excerpt}</p>

@@ -93,7 +93,7 @@ export function TravelDiariesClient({ blogs }: TravelDiariesClientProps) {
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-foreground mt-2 md:mt-3"
             >
               Travel{" "}
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-forest-green to-mountain-blue">
+              <span className="text-forest-green">
                 Diaries
               </span>
             </motion.h2>

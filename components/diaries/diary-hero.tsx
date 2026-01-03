@@ -68,7 +68,7 @@ export function DiaryHero({ diary, images }: DiaryHeroProps) {
               className="object-cover"
               priority
             />
-            <div className="absolute inset-0 bg-g-to- linear-black via-black/50 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-black via-black/50 to-transparent" />
           </motion.div>
         </AnimatePresence>
       </div>
@@ -88,7 +88,7 @@ export function DiaryHero({ diary, images }: DiaryHeroProps) {
           )}
 
           {/* Title */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-4 text-balance">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-[#fc9700] mb-4 text-balance">
             {diary.title}
           </h1>
 

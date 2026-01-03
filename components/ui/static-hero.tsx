@@ -3,7 +3,6 @@
 import type React from "react"
 
 import { motion } from "framer-motion"
-import { Star } from "lucide-react"
 
 interface StaticHeroProps {
   image: string
@@ -54,11 +53,7 @@ export function StaticHero({ image, title, subtitle, badge, children }: StaticHe
                 transition={{ delay: 0.3 }}
                 className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-sm font-medium text-white bg-linear-to-r from-saffron/40 to-sunset-orange/40 backdrop-blur-md rounded-full border border-white/30 mt-6 sm:mt-0"
               >
-                <Star className="h-3 w-3 md:h-4 md:w-4 text-golden-yellow fill-golden-yellow" />
-                <span className="bg-linear-to-r from-golden-yellow via-white to-golden-yellow bg-clip-text text-transparent font-semibold text-xs md:text-sm">
-                  {badge}
-                </span>
-                <Star className="h-3 w-3 md:h-4 md:w-4 text-golden-yellow fill-golden-yellow" />
+                <span className="text-white font-semibold text-xs md:text-sm">{badge}</span>
               </motion.div>
             )}
 
@@ -68,9 +63,7 @@ export function StaticHero({ image, title, subtitle, badge, children }: StaticHe
               transition={{ delay: 0.4, duration: 0.8 }}
               className="text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-serif font-bold text-white mb-3 md:mb-4 leading-tight tracking-tight [text-wrap:balance] break-words"
             >
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-white via-golden-yellow to-white">
-                {title}
-              </span>
+              <span className="text-[#fc9700]">{title}</span>
             </motion.h1>
 
             <motion.p

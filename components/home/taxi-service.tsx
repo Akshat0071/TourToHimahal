@@ -113,7 +113,7 @@ export function TaxiService() {
 
             <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-foreground mt-1 sm:mt-2 md:mt-3 mb-1.5 sm:mb-2 md:mb-3 leading-tight">
               Premium{" "}
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-forest-green to-mountain-blue">
+              <span className="text-saffron">
                 Taxi Services
               </span>
             </h2>

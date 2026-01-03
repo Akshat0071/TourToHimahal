@@ -92,7 +92,7 @@ export function PopularDestinationsClient({ packages }: PopularDestinationsClien
             className="text-3xl md:text-5xl font-serif font-bold text-foreground mt-2 md:mt-3 mb-2 md:mb-3"
           >
             Popular{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-mountain-blue to-forest-green">
+            <span className="text-mountain-blue">
               Destinations
             </span>
           </motion.h2>

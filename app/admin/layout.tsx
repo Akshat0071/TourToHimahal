@@ -4,19 +4,10 @@ import type React from "react"
 import { usePathname } from "next/navigation"
 import { AdminSidebar } from "@/components/admin/admin-sidebar"
 import { Toaster } from "@/components/ui/sonner"
-import { useEffect } from "react"
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const isLoginPage = pathname === "/admin/login"
-
-  // 🔒 Lock body scroll ONLY for admin
-  useEffect(() => {
-    document.body.style.overflow = "hidden"
-    return () => {
-      document.body.style.overflow = ""
-    }
-  }, [])
 
   if (isLoginPage) {
     return (
@@ -28,11 +19,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="h-screen overflow-hidden bg-muted/30">
+    <div className="min-h-[100dvh] bg-muted/30">
       <AdminSidebar />
 
-      {/* SINGLE scroll container */}
-      <main className="h-full overflow-y-auto pt-14 lg:pt-0 lg:pl-64">
+      <main className="min-h-[100dvh] pt-14 lg:pt-0 lg:pl-64">
         {children}
       </main>
 

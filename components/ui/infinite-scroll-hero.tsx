@@ -4,7 +4,6 @@ import type React from "react"
 
 import { useRef } from "react"
 import { motion, useAnimationFrame } from "framer-motion"
-import { Star } from "lucide-react"
 
 interface HeroImage {
   url: string
@@ -85,11 +84,7 @@ export function InfiniteScrollHero({ images, title, subtitle, badge, children }:
                 transition={{ delay: 0.3 }}
                 className="inline-flex items-center gap-2 px-4 py-2 mb-6 text-sm font-medium text-white bg-gradient-to-r from-saffron/40 to-sunset-orange/40 backdrop-blur-md rounded-full border border-white/30"
               >
-                <Star className="h-4 w-4 text-golden-yellow fill-golden-yellow" />
-                <span className="bg-gradient-to-r from-golden-yellow via-white to-golden-yellow bg-clip-text text-transparent font-semibold">
-                  {badge}
-                </span>
-                <Star className="h-4 w-4 text-golden-yellow fill-golden-yellow" />
+                <span className="text-white font-semibold">{badge}</span>
               </motion.div>
             )}
 
@@ -99,9 +94,7 @@ export function InfiniteScrollHero({ images, title, subtitle, badge, children }:
               transition={{ delay: 0.4, duration: 0.8 }}
               className="text-3xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 text-balance"
             >
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-golden-yellow to-white">
-                {title}
-              </span>
+              <span className="block text-[#fc9700]">{title}</span>
             </motion.h1>
 
             <motion.p

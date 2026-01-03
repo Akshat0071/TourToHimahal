@@ -70,7 +70,7 @@ export function TravelThemes() {
             className="text-3xl md:text-5xl font-serif font-bold text-foreground mt-3 mb-4"
           >
             Travel{" "}
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-saffron to-sunset-orange">Themes</span>
+            <span className="text-forest-green">Themes</span>
           </motion.h2>
           <motion.p variants={fadeInUp} className="text-muted-foreground max-w-2xl mx-auto text-lg">
             Whether you seek spiritual enlightenment, romantic getaways, or adrenaline-pumping adventures, we have the
