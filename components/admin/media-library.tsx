@@ -6,7 +6,6 @@ import { motion } from "framer-motion"
 import { Upload, Trash2, Copy, ImageIcon, FileText, Check, Folder, Loader2 } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
@@ -39,49 +38,13 @@ const folders = [
 export function MediaLibrary({ media }: MediaLibraryProps) {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [isOpen, setIsOpen] = useState(false)
   const [isUploadOpen, setIsUploadOpen] = useState(false)
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const [filter, setFilter] = useState("all")
   const [isUploading, setIsUploading] = useState(false)
   const [uploadFolder, setUploadFolder] = useState("general")
-  const [formData, setFormData] = useState({
-    name: "",
-    url: "",
-    type: "image",
-    folder: "general",
-    alt_text: "",
-  })
 
   const filteredMedia = filter === "all" ? media : media.filter((m) => m.folder === filter)
-
-  const handleSubmit = async () => {
-    if (!formData.name || !formData.url) {
-      toast.error("Please fill in all required fields")
-      return
-    }
-
-    const supabase = createClient()
-
-    const { error } = await supabase.from("media").insert({
-      ...formData,
-    })
-
-    if (error) {
-      toast.error("Failed to add media")
-    } else {
-      toast.success("Media added successfully")
-      setIsOpen(false)
-      setFormData({
-        name: "",
-        url: "",
-        type: "image",
-        folder: "general",
-        alt_text: "",
-      })
-      router.refresh()
-    }
-  }
 
   const copyUrl = async (id: string, url: string) => {
     await navigator.clipboard.writeText(url)
@@ -269,98 +232,6 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
               </div>
             </DialogContent>
           </Dialog>
-
-          <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger asChild>
-              <Button className="w-full xs:w-auto">
-                <Upload className="w-4 h-4 mr-2" />
-                Add Media
-              </Button>
-            </DialogTrigger>
-          <DialogContent className="w-[calc(100vw-2rem)] sm:w-full max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>Add Media</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
-              {/* Manual URL Entry */}
-              <div className="space-y-2">
-                <Label htmlFor="name">Name *</Label>
-                <Input
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
-                  placeholder="Image name"
-                  className="text-base sm:text-sm"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="url">URL *</Label>
-                <Input
-                  id="url"
-                  value={formData.url}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, url: e.target.value }))}
-                  placeholder="https://..."
-                  className="text-base sm:text-sm"
-                />
-                <p className="text-xs text-muted-foreground">
-                  Paste a Cloudinary URL or any external image URL.
-                </p>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="type">Type</Label>
-                  <Select
-                    value={formData.type}
-                    onValueChange={(value) => setFormData((prev) => ({ ...prev, type: value }))}
-                  >
-                    <SelectTrigger id="type" className="text-base sm:text-sm">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="image">Image</SelectItem>
-                      <SelectItem value="pdf">PDF</SelectItem>
-                      <SelectItem value="video">Video</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="folder">Folder</Label>
-                  <Select
-                    value={formData.folder}
-                    onValueChange={(value) => setFormData((prev) => ({ ...prev, folder: value }))}
-                  >
-                    <SelectTrigger id="folder" className="text-base sm:text-sm">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {folders.map((folder) => (
-                        <SelectItem key={folder.value} value={folder.value}>
-                          {folder.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="alt_text">Alt Text</Label>
-                <Input
-                  id="alt_text"
-                  value={formData.alt_text}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, alt_text: e.target.value }))}
-                  placeholder="Describe the image"
-                  className="text-base sm:text-sm"
-                />
-              </div>
-              <div className="flex flex-col-reverse xs:flex-row justify-end gap-2 pt-4">
-                <Button variant="outline" onClick={() => setIsOpen(false)} className="w-full xs:w-auto">
-                  Cancel
-                </Button>
-                <Button onClick={handleSubmit} className="w-full xs:w-auto">Add Media</Button>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
         </div>
       </div>
 
@@ -369,10 +240,6 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
           <ImageIcon className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
           <h3 className="text-lg font-medium text-foreground mb-2">No media yet</h3>
           <p className="text-muted-foreground mb-4">Upload images and documents to use across your site.</p>
-          <Button onClick={() => setIsOpen(true)}>
-            <Upload className="w-4 h-4 mr-2" />
-            Add Media
-          </Button>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">

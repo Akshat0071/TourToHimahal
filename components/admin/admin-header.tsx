@@ -45,8 +45,7 @@ export function AdminHeader({ title, description }: AdminHeaderProps) {
 
   const handleLogout = async () => {
     await safeSignOut()
-    router.push("/admin/login")
-    router.refresh()
+    window.location.href = "/admin/login"
   }
 
   return (

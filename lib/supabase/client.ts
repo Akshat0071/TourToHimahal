@@ -82,8 +82,38 @@ export async function safeSignOut() {
   if (typeof window === "undefined") return { error: null }
 
   try {
-    const storageKey = `sb-${new URL(process.env.NEXT_PUBLIC_SUPABASE_URL!).hostname.split(".")[0]}-auth-token`
-    localStorage.removeItem(storageKey)
+    const projectRef = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL!).hostname.split(".")[0]
+    const storageKey = `sb-${projectRef}-auth-token`
+
+    // Allow auth calls during sign-out
+    setSigningIn(true)
+    try {
+      const supabase = createClient()
+      await supabase.auth.signOut({ scope: "local" })
+    } catch {
+      // Ignore network/auth errors; we'll still clear client storage/cookies below.
+    } finally {
+      setSigningIn(false)
+    }
+
+    // Remove localStorage session (if used)
+    try {
+      localStorage.removeItem(storageKey)
+    } catch {
+      // ignore
+    }
+
+    // Clear Supabase auth cookies (used by middleware SSR session)
+    // Supabase may chunk cookies: sb-<ref>-auth-token, sb-<ref>-auth-token.0, .1, etc.
+    const cookiePrefix = `sb-${projectRef}-auth-token`
+    const cookies = document.cookie.split(";").map((c) => c.trim())
+    for (const cookie of cookies) {
+      const [name] = cookie.split("=")
+      if (!name) continue
+      if (name === cookiePrefix || name.startsWith(`${cookiePrefix}.`)) {
+        document.cookie = `${name}=; Path=/; Max-Age=0; SameSite=Lax`
+      }
+    }
 
     // Reset singleton so next createClient() gets fresh instance
     browserClient = null

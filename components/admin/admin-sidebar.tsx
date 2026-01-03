@@ -55,8 +55,7 @@ export function AdminSidebar() {
   const handleLogout = async () => {
     if (!mounted) return
     await safeSignOut()
-    router.push("/admin/login")
-    router.refresh()
+    window.location.href = "/admin/login"
   }
 
   const SidebarContent = () => (
