@@ -2,12 +2,8 @@ import type { MetadataRoute } from "next"
 
 function getSiteUrl(): string {
   const configured = process.env.NEXT_PUBLIC_APP_URL?.trim()
-  if (configured) return configured.replace(/\/$/, "")
-
-  const vercelUrl = process.env.VERCEL_URL?.trim()
-  if (vercelUrl) return `https://${vercelUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")}`
-
-  return "http://localhost:3000"
+  const fallback = "https://www.tourtohimachal.in"
+  return (configured || fallback).replace(/\/$/, "")
 }
 
 export default function robots(): MetadataRoute.Robots {
