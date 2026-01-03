@@ -18,6 +18,20 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
 })
 
+const siteMetadataAssets: Pick<Metadata, "icons" | "manifest" | "themeColor"> = {
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: ["/favicon.ico"],
+    apple: ["/apple-icon.png"],
+  },
+  manifest: "/manifest.webmanifest",
+  themeColor: "#ffffff",
+}
+
 // Default fallback metadata
 const defaultMetadata = {
   title: "TourToHimachal - Tours, Travel Packages & Taxi Services",
@@ -34,6 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
       return {
         title: defaultMetadata.title,
         description: defaultMetadata.description,
+        ...siteMetadataAssets,
         keywords:
           "Himachal Pradesh tours, Manali packages, Shimla travel, taxi service Himachal, spiritual tours, honeymoon packages, adventure trekking",
         openGraph: {
@@ -57,6 +72,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return {
       title: metaTitle,
       description: metaDescription,
+      ...siteMetadataAssets,
       keywords:
         "Himachal Pradesh tours, Manali packages, Shimla travel, taxi service Himachal, spiritual tours, honeymoon packages, adventure trekking",
       openGraph: {
@@ -70,6 +86,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return {
       title: defaultMetadata.title,
       description: defaultMetadata.description,
+      ...siteMetadataAssets,
       keywords:
         "Himachal Pradesh tours, Manali packages, Shimla travel, taxi service Himachal, spiritual tours, honeymoon packages, adventure trekking",
       openGraph: {
