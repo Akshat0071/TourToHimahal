@@ -14,6 +14,7 @@ import { Switch } from "@/components/ui/switch"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "sonner"
 import { CloudinaryUploadWidget, UploadedImagePreview, type CloudinaryUploadResult } from "./cloudinary-upload-widget"
+import { registerMedia } from "@/lib/admin/media-client"
 
 interface PackageFormProps {
   initialData?: {
@@ -464,7 +465,23 @@ export function PackageForm({ initialData }: PackageFormProps) {
             {images.length < 5 && (
               <CloudinaryUploadWidget
                 key={images.length}
-                onUploadSuccess={(result: CloudinaryUploadResult) => {
+                onUploadSuccess={async (result: CloudinaryUploadResult) => {
+                  const registered = await registerMedia({
+                    url: result.secure_url,
+                    public_id: result.public_id,
+                    folder: "packages",
+                    name: result.original_filename,
+                    alt_text: result.original_filename,
+                    size: result.bytes,
+                    format: result.format,
+                    resource_type: result.resource_type,
+                  })
+
+                  if (!registered.ok) {
+                    toast.error(registered.error)
+                    return
+                  }
+
                   setImages([...images, result.secure_url])
                   toast.success("Image uploaded successfully!")
                 }}

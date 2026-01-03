@@ -12,6 +12,7 @@ import { Switch } from "@/components/ui/switch"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "sonner"
 import { CloudinaryUploadWidget, UploadedImagePreview, type CloudinaryUploadResult } from "./cloudinary-upload-widget"
+import { registerMedia } from "@/lib/admin/media-client"
 
 interface DiaryFormProps {
   initialData?: {
@@ -208,8 +209,25 @@ export function DiaryForm({ initialData }: DiaryFormProps) {
                   </div>
                 ) : (
                   <CloudinaryUploadWidget
-                    onUploadSuccess={(result: CloudinaryUploadResult) => {
+                    onUploadSuccess={async (result: CloudinaryUploadResult) => {
                       setFormData((prev) => ({ ...prev, cover_image: result.secure_url }))
+
+                      const registered = await registerMedia({
+                        url: result.secure_url,
+                        public_id: result.public_id,
+                        folder: "diaries",
+                        name: result.original_filename,
+                        alt_text: result.original_filename,
+                        size: result.bytes,
+                        format: result.format,
+                        resource_type: result.resource_type,
+                      })
+
+                      if (!registered.ok) {
+                        toast.error(registered.error)
+                        return
+                      }
+
                       toast.success("Image uploaded successfully!")
                     }}
                     onUploadError={(error) => {
@@ -241,8 +259,25 @@ export function DiaryForm({ initialData }: DiaryFormProps) {
                   </div>
                 ) : (
                   <CloudinaryUploadWidget
-                    onUploadSuccess={(result: CloudinaryUploadResult) => {
+                    onUploadSuccess={async (result: CloudinaryUploadResult) => {
                       setFormData((prev) => ({ ...prev, author_avatar: result.secure_url }))
+
+                      const registered = await registerMedia({
+                        url: result.secure_url,
+                        public_id: result.public_id,
+                        folder: "diaries",
+                        name: result.original_filename,
+                        alt_text: result.original_filename,
+                        size: result.bytes,
+                        format: result.format,
+                        resource_type: result.resource_type,
+                      })
+
+                      if (!registered.ok) {
+                        toast.error(registered.error)
+                        return
+                      }
+
                       toast.success("Image uploaded successfully!")
                     }}
                     onUploadError={(error) => {
@@ -279,7 +314,23 @@ export function DiaryForm({ initialData }: DiaryFormProps) {
 
               {gallery.length < 5 && (
                 <CloudinaryUploadWidget
-                  onUploadSuccess={(result: CloudinaryUploadResult) => {
+                  onUploadSuccess={async (result: CloudinaryUploadResult) => {
+                    const registered = await registerMedia({
+                      url: result.secure_url,
+                      public_id: result.public_id,
+                      folder: "diaries",
+                      name: result.original_filename,
+                      alt_text: result.original_filename,
+                      size: result.bytes,
+                      format: result.format,
+                      resource_type: result.resource_type,
+                    })
+
+                    if (!registered.ok) {
+                      toast.error(registered.error)
+                      return
+                    }
+
                     setGallery((prev) => {
                       const next = [...prev, result.secure_url].slice(0, 5)
                       if (!formData.cover_image && next.length > 0) {

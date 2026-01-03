@@ -4,7 +4,6 @@ import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import { Upload, Trash2, Copy, ImageIcon, FileText, Check, Folder, Loader2 } from "lucide-react"
-import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
@@ -56,14 +55,20 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
   const deleteMedia = async (id: string) => {
     if (!confirm("Are you sure you want to delete this media?")) return
 
-    const supabase = createClient()
-    const { error } = await supabase.from("media").delete().eq("id", id)
+    try {
+      const res = await fetch(`/api/admin/media/${id}`, { method: "DELETE" })
+      const data = await res.json().catch(() => null)
 
-    if (error) {
-      toast.error("Failed to delete media")
-    } else {
+      if (!res.ok) {
+        toast.error(data?.error || "Failed to delete media")
+        return
+      }
+
       toast.success("Media deleted successfully")
       router.refresh()
+    } catch (e) {
+      console.error(e)
+      toast.error("Failed to delete media")
     }
   }
 
@@ -111,27 +116,38 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
         fileType = "pdf"
       }
 
-      // Save to database
-      const supabase = createClient()
-      const { error } = await supabase.from("media").insert({
-        name: file.name.replace(/\.[^/.]+$/, ""),
-        url: data.secure_url,
-        type: fileType,
-        folder: uploadFolder,
-        alt_text: file.name,
+      // Register into Media Library (server-side, cookie-authenticated)
+      const registerRes = await fetch("/api/admin/media", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: file.name.replace(/\.[^/.]+$/, ""),
+          url: data.secure_url,
+          public_id: data.public_id,
+          folder: uploadFolder,
+          alt_text: file.name,
+          size: data.bytes,
+          format: data.format,
+          resource_type: data.resource_type,
+          mime_type: file.type,
+          type: fileType,
+        }),
       })
 
-      if (error) {
-        toast.error("Failed to save media to database")
-      } else {
-        toast.success("File uploaded successfully!")
-        setIsUploadOpen(false)
-        setUploadFolder("general")
-        if (fileInputRef.current) {
-          fileInputRef.current.value = ""
-        }
-        router.refresh()
+      const registerData = await registerRes.json().catch(() => null)
+
+      if (!registerRes.ok) {
+        toast.error(registerData?.error || "Failed to save media to database")
+        return
       }
+
+      toast.success("File uploaded successfully!")
+      setIsUploadOpen(false)
+      setUploadFolder("general")
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ""
+      }
+      router.refresh()
     } catch (error) {
       toast.error("Upload failed. Please check your Cloudinary configuration.")
       console.error("Upload error:", error)

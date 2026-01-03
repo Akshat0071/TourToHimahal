@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
 import { CloudinaryUploadWidget, UploadedImagePreview, type CloudinaryUploadResult } from "./cloudinary-upload-widget"
+import { registerMedia } from "@/lib/admin/media-client"
 
 interface Vehicle {
   id: string
@@ -136,6 +137,7 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
           <span className="truncate">Vehicles</span>
         </CardTitle>
         <Dialog
+          modal={false}
           open={isOpen}
           onOpenChange={(open) => {
             setIsOpen(open)
@@ -149,7 +151,10 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
               <span className="xs:hidden">Add Vehicle</span>
             </Button>
           </DialogTrigger>
-          <DialogContent className="w-[calc(100vw-2rem)] sm:w-full max-h-[90vh] overflow-y-auto">
+          <DialogContent
+            className="w-[calc(100vw-2rem)] sm:w-full max-h-[90vh] overflow-y-auto"
+            onInteractOutside={(e) => e.preventDefault()}
+          >
             <DialogHeader>
               <DialogTitle className="text-base sm:text-lg">{editingVehicle ? "Edit Vehicle" : "Add Vehicle"}</DialogTitle>
             </DialogHeader>
@@ -228,6 +233,22 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
                       const url = result.secure_url
                       setFormData((prev) => ({ ...prev, image_url: url }))
 
+                      const registered = await registerMedia({
+                        url,
+                        public_id: result.public_id,
+                        folder: "vehicles",
+                        name: result.original_filename,
+                        alt_text: result.original_filename,
+                        size: result.bytes,
+                        format: result.format,
+                        resource_type: result.resource_type,
+                      })
+
+                      if (!registered.ok) {
+                        toast.error(registered.error)
+                        return
+                      }
+
                       // If editing an existing vehicle, persist immediately for clarity
                       if (editingVehicle?.id) {
                         const supabase = createClient()
@@ -240,7 +261,6 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
                           toast.error("Image uploaded, but failed to save. Please try Update.")
                         } else {
                           toast.success("Image uploaded and saved.")
-                          router.refresh()
                         }
                       } else {
                         toast.success("Image uploaded. Click Add to save.")

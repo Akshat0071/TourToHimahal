@@ -1,8 +1,9 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { Upload, X, Image as ImageIcon, FileText } from "lucide-react"
+import { Upload, X, Image as ImageIcon, FileText, Copy, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
 
 declare global {
   interface Window {
@@ -46,6 +47,77 @@ export function CloudinaryUploadWidget({
   const [isScriptLoaded, setIsScriptLoaded] = useState(false)
   const widgetRef = useRef<any>(null)
 
+  const initWidget = () => {
+    if (widgetRef.current) return
+    if (!window.cloudinary) return
+
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+
+    if (!cloudName || !uploadPreset) return
+
+    widgetRef.current = window.cloudinary.createUploadWidget(
+      {
+        cloudName,
+        uploadPreset,
+        sources: ["local", "url", "camera"],
+        multiple,
+        maxFiles,
+        clientAllowedFormats: acceptedFormats,
+        maxFileSize: 10000000, // 10MB
+        folder,
+        tags: ["website"],
+        resourceType: "auto",
+        showAdvancedOptions: false,
+        croppingAspectRatio: undefined,
+        showCompletedButton: true,
+        styles: {
+          palette: {
+            window: "#FFFFFF",
+            windowBorder: "#90A0B3",
+            tabIcon: "#0078FF",
+            menuIcons: "#5A616A",
+            textDark: "#000000",
+            textLight: "#FFFFFF",
+            link: "#0078FF",
+            action: "#FF620C",
+            inactiveTabIcon: "#0E2F5A",
+            error: "#F44235",
+            inProgress: "#0078FF",
+            complete: "#20B832",
+            sourceBg: "#E4EBF1",
+          },
+        },
+      },
+      (error: any, result: any) => {
+        if (error) {
+          const errorMessage = error?.message || "Upload failed - check upload preset configuration"
+          onUploadError?.({ message: errorMessage, ...error })
+          return
+        }
+
+        if (!result) {
+          return
+        }
+
+        if (result.event === "success") {
+          const uploadResult: CloudinaryUploadResult = {
+            public_id: result.info.public_id,
+            secure_url: result.info.secure_url,
+            url: result.info.url,
+            format: result.info.format,
+            resource_type: result.info.resource_type,
+            width: result.info.width,
+            height: result.info.height,
+            bytes: result.info.bytes,
+            original_filename: result.info.original_filename,
+          }
+          onUploadSuccess(uploadResult)
+        }
+      }
+    )
+  }
+
   useEffect(() => {
     // Check if Cloudinary script is already loaded
     if (window.cloudinary) {
@@ -69,6 +141,14 @@ export function CloudinaryUploadWidget({
       }
     }
   }, [])
+
+  // Pre-initialize widget as soon as the script is available (improves first-click latency).
+  useEffect(() => {
+    if (!isScriptLoaded || !window.cloudinary) return
+    initWidget()
+    // Intentionally run once per component mount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isScriptLoaded])
 
   const openWidget = () => {
     if (!isScriptLoaded || !window.cloudinary) {
@@ -94,83 +174,13 @@ export function CloudinaryUploadWidget({
       return
     }
 
-    console.log("Opening Cloudinary widget with preset:", uploadPreset)
-
     // Create or reuse widget
-    if (!widgetRef.current) {
-      widgetRef.current = window.cloudinary.createUploadWidget(
-        {
-          cloudName,
-          uploadPreset,
-          sources: ["local", "url", "camera"],
-          multiple,
-          maxFiles,
-          clientAllowedFormats: acceptedFormats,
-          maxFileSize: 10000000, // 10MB
-          folder,
-          tags: ["website"],
-          resourceType: "auto",
-          showAdvancedOptions: false,
-          croppingAspectRatio: undefined,
-          showCompletedButton: true,
-          styles: {
-            palette: {
-              window: "#FFFFFF",
-              windowBorder: "#90A0B3",
-              tabIcon: "#0078FF",
-              menuIcons: "#5A616A",
-              textDark: "#000000",
-              textLight: "#FFFFFF",
-              link: "#0078FF",
-              action: "#FF620C",
-              inactiveTabIcon: "#0E2F5A",
-              error: "#F44235",
-              inProgress: "#0078FF",
-              complete: "#20B832",
-              sourceBg: "#E4EBF1",
-            },
-          },
-        },
-        (error: any, result: any) => {
-          // Handle error - even if error object is empty
-          if (error) {
-            console.error("Upload error details:", {
-              error,
-              errorString: JSON.stringify(error),
-              errorKeys: Object.keys(error),
-            })
-            const errorMessage = error?.message || "Upload failed - check upload preset configuration"
-            onUploadError?.({ message: errorMessage, ...error })
-            return
-          }
+    initWidget()
 
-          // Handle abort/close without error
-          if (!result) {
-            console.log("Upload cancelled by user")
-            return
-          }
-
-          if (result.event === "success") {
-            console.log("Upload successful:", result.info)
-            const uploadResult: CloudinaryUploadResult = {
-              public_id: result.info.public_id,
-              secure_url: result.info.secure_url,
-              url: result.info.url,
-              format: result.info.format,
-              resource_type: result.info.resource_type,
-              width: result.info.width,
-              height: result.info.height,
-              bytes: result.info.bytes,
-              original_filename: result.info.original_filename,
-            }
-            console.log("Upload result:", uploadResult)
-            onUploadSuccess(uploadResult)
-          }
-        }
-      )
-    }
-
-    widgetRef.current.open()
+    // Defer one frame to avoid focus/pointer-event timing issues (notably when called from inside Radix dialogs).
+    requestAnimationFrame(() => {
+      widgetRef.current?.open()
+    })
   }
 
   return (
@@ -190,9 +200,22 @@ interface UploadedImagePreviewProps {
 export function UploadedImagePreview({ imageUrl, onRemove, alt = "Uploaded image" }: UploadedImagePreviewProps) {
   const isImage = /\.(jpg|jpeg|png|gif|webp)$/i.test(imageUrl)
   const isPdf = /\.pdf$/i.test(imageUrl)
+  const [copied, setCopied] = useState(false)
+
+  const copyUrl = async () => {
+    try {
+      await navigator.clipboard.writeText(imageUrl)
+      setCopied(true)
+      toast.success("URL copied to clipboard")
+      setTimeout(() => setCopied(false), 2000)
+    } catch (e) {
+      console.error(e)
+      toast.error("Failed to copy URL")
+    }
+  }
 
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block group">
       <div className="relative w-40 h-40 rounded-lg overflow-hidden border border-border bg-muted">
         {isImage ? (
           <img src={imageUrl} alt={alt} className="w-full h-full object-cover" />
@@ -205,13 +228,19 @@ export function UploadedImagePreview({ imageUrl, onRemove, alt = "Uploaded image
             <ImageIcon className="h-16 w-16 text-muted-foreground" />
           </div>
         )}
+
+        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <Button type="button" size="sm" variant="secondary" onClick={copyUrl} className="h-8 w-8 p-0">
+            {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+          </Button>
+        </div>
       </div>
       {onRemove && (
         <Button
           type="button"
           variant="destructive"
           size="icon"
-          className="absolute -top-2 -right-2 h-6 w-6 rounded-full"
+          className="absolute -top-2 -right-2 h-6 w-6 rounded-full z-20"
           onClick={onRemove}
         >
           <X className="h-3 w-3" />
