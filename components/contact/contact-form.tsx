@@ -234,7 +234,7 @@ export function ContactForm() {
         name="honeypot"
         value={formData.honeypot}
         onChange={(e) => setFormData((prev) => ({ ...prev, honeypot: e.target.value }))}
-        className="absolute -left-2499.75 opacity-0"
+        className="sr-only"
         tabIndex={-1}
         autoComplete="off"
         aria-hidden="true"

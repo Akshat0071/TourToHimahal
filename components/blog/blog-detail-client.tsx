@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { format } from "date-fns"
 import { ArrowLeft, Share2, Calendar, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -42,6 +41,12 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
   const [toc, setToc] = useState<TableOfContentsItem[]>([])
   const [activeSection, setActiveSection] = useState<string>("")
   const contentRef = useRef<HTMLDivElement>(null)
+
+  const normalizedAuthor = (post.author ?? "").trim()
+  const displayAuthor =
+    !normalizedAuthor || normalizedAuthor.toLowerCase() === "himachal yatra"
+      ? "TourToHimachal"
+      : normalizedAuthor
 
   const whatsappLink = generateWhatsAppLink(
     {
@@ -142,7 +147,7 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
             <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-muted-foreground border-t border-border pt-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                <span className="font-medium">{post.author}</span>
+                <span className="font-medium">{displayAuthor}</span>
               </div>
               {post.published_at && !isNaN(new Date(post.published_at).getTime()) && (
                 <div className="flex items-center gap-2">
@@ -154,23 +159,6 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
           </article>
         </div>
       </div>
-
-      {/* Featured Image Below Title */}
-      {post.cover_image && (
-        <div className="bg-background">
-          <div className="max-w-6xl mx-auto px-4 py-8">
-            <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-muted shadow-lg">
-              <Image
-                src={post.cover_image}
-                alt={post.title}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Main Content with Sticky Sidebar */}
       <div className="max-w-6xl mx-auto px-4 py-12">

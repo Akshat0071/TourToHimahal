@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { useEffect, useRef, useState } from "react"
+import { useEffect } from "react"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { Header } from "@/components/home/header"
@@ -36,36 +36,11 @@ interface BlogDetailClientProps {
 export function BlogDetailClient({ post, relatedPosts, url }: BlogDetailClientProps) {
   const shareUrl = url
   const markdownContent = post.content || ""
-  const gallery = (post.gallery && post.gallery.length > 0 ? post.gallery : post.cover_image ? [post.cover_image] : []) as string[]
-  const scrollerRef = useRef<HTMLDivElement | null>(null)
-  const [index, setIndex] = useState(0)
-  const [paused, setPaused] = useState(false)
-
-  const scrollBy = (dir: -1 | 1) => {
-    const el = scrollerRef.current
-    if (!el) return
-    const width = el.clientWidth
-    const next = ((index + dir) % gallery.length + gallery.length) % gallery.length
-    el.scrollTo({ left: next * width, behavior: "smooth" })
-    setIndex(next)
-  }
-
-  // Auto-advance every 3 seconds, loop infinitely
-  useEffect(() => {
-    if (gallery.length < 2) return
-    const el = scrollerRef.current
-    if (!el) return
-
-    const id = setInterval(() => {
-      if (paused) return
-      const width = el.clientWidth
-      const next = (index + 1) % gallery.length
-      el.scrollTo({ left: next * width, behavior: "smooth" })
-      setIndex(next)
-    }, 3000)
-
-    return () => clearInterval(id)
-  }, [gallery.length, index, paused])
+  const normalizedAuthor = post.author?.trim()
+  const displayAuthor =
+    !normalizedAuthor || normalizedAuthor.toLowerCase() === "himachal yatra"
+      ? "TourToHimachal"
+      : normalizedAuthor
 
   return (
     <>
@@ -96,7 +71,7 @@ export function BlogDetailClient({ post, relatedPosts, url }: BlogDetailClientPr
                 ))}
               </div>
               <div className="flex items-center gap-3 text-sm text-muted-foreground mb-3">
-                {post.author && <span>{post.author}</span>}
+                {displayAuthor && <span>{displayAuthor}</span>}
                 {post.published_at && <span className="inline-block h-1 w-1 rounded-full bg-muted-foreground/60" />}
                 {post.published_at && (
                   <span>
@@ -118,48 +93,6 @@ export function BlogDetailClient({ post, relatedPosts, url }: BlogDetailClientPr
           <div className="grid gap-10 items-start max-w-[1400px] mx-auto xl:grid-cols-[1fr_minmax(0,768px)_320px_1fr]">
             {/* Left: Image gallery + content (centered column) */}
             <div className="w-full xl:col-start-2 xl:col-span-1">
-              {/* Image gallery at top of content; scrolls with article */}
-              {gallery.length > 0 && (
-                <motion.div variants={fadeInUp} initial="hidden" animate="visible" className="mb-8">
-                  <div className="relative group">
-                    <div
-                      ref={scrollerRef}
-                      className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth rounded-2xl border bg-card shadow"
-                      onMouseEnter={() => setPaused(true)}
-                      onMouseLeave={() => setPaused(false)}
-                      style={{ scrollbarWidth: "none" }}
-                    >
-                      {gallery.map((src, idx) => (
-                        <img
-                          key={idx}
-                          src={src}
-                          alt={`${post.title} ${idx + 1}`}
-                          className="min-w-full snap-start object-cover"
-                        />
-                      ))}
-                    </div>
-                    {gallery.length > 1 && (
-                      <>
-                        <button
-                          aria-label="Previous image"
-                          onClick={() => scrollBy(-1)}
-                          className="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 items-center justify-center rounded-full bg-background/80 backdrop-blur border shadow hover:bg-background transition group-hover:flex"
-                        >
-                          ‹
-                        </button>
-                        <button
-                          aria-label="Next image"
-                          onClick={() => scrollBy(1)}
-                          className="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 items-center justify-center rounded-full bg-background/80 backdrop-blur border shadow hover:bg-background transition group-hover:flex"
-                        >
-                          ›
-                        </button>
-                      </>
-                    )}
-                  </div>
-                </motion.div>
-              )}
-
               {/* Social Share */}
               <motion.div variants={fadeInUp} initial="hidden" animate="visible" className="mb-8 pb-8 border-b">
                 <SocialShare title={post.title} url={shareUrl} />

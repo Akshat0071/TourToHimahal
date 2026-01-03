@@ -63,10 +63,15 @@ export function ContactInfo() {
     }
   })
 
+  const officeHoursText = officeHours
+    .filter((s) => s.day && s.time)
+    .map((s) => `${s.day}: ${s.time}`)
+    .join(" • ")
+
   return (
     <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-4 sm:space-y-6">
       {/* Contact Cards */}
-      <div className="space-y-2 sm:space-y-3">
+      <div className="space-y-6">
         {contactInfo.map((item) => (
           <motion.a
             key={item.label}
@@ -97,39 +102,38 @@ export function ContactInfo() {
       {/* Office Hours */}
       <motion.div
         variants={fadeInUp}
-        className="p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-linear-to-br from-mountain-blue/10 to-forest-green/5 border border-mountain-blue/20"
+        className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-linear-to-br from-mountain-blue/10 to-forest-green/5 border border-mountain-blue/20"
       >
-        <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-          <div className="p-1.5 sm:p-2 bg-mountain-blue/20 rounded-lg">
+        <div className="flex items-start gap-3 sm:gap-4">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-mountain-blue/20 flex items-center justify-center shrink-0">
             <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-mountain-blue" />
           </div>
-          <h3 className="font-semibold text-foreground text-sm sm:text-base">Office Hours</h3>
-        </div>
-        <div className="space-y-1.5 sm:space-y-2">
-          {officeHours.map((schedule, index) => (
-            <div key={index} className="flex justify-between text-xs sm:text-sm">
-              <span className="text-muted-foreground">{schedule.day}</span>
-              <span className="font-medium text-foreground">{schedule.time}</span>
-            </div>
-          ))}
+          <div className="flex-1 min-w-0">
+            <h3 className="font-semibold text-foreground text-sm sm:text-base leading-tight">Office Hours</h3>
+            <p className="mt-1.5 text-xs sm:text-sm text-muted-foreground leading-snug wrap-break-word">
+              {officeHoursText || businessHours}
+            </p>
+          </div>
         </div>
       </motion.div>
 
       {/* Response Time SLA */}
       <motion.div
         variants={fadeInUp}
-        className="p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-linear-to-br from-forest-green/10 to-golden-yellow/5 border border-forest-green/20"
+        className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-linear-to-br from-forest-green/10 to-golden-yellow/5 border border-forest-green/20"
       >
-        <div className="flex items-center gap-2 sm:gap-3 mb-2">
-          <div className="p-1.5 sm:p-2 bg-forest-green/20 rounded-lg">
+        <div className="flex items-start gap-3 sm:gap-4">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-forest-green/20 flex items-center justify-center shrink-0">
             <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-forest-green" />
           </div>
-          <h3 className="font-semibold text-foreground text-sm sm:text-base">Response Guarantee</h3>
+          <div className="flex-1 min-w-0">
+            <h3 className="font-semibold text-foreground text-sm sm:text-base leading-tight">Response Guarantee</h3>
+            <p className="mt-1.5 text-xs sm:text-sm text-muted-foreground leading-snug">
+              We respond within <span className="font-semibold text-forest-green">12 hours</span>. For urgent bookings,
+              use WhatsApp.
+            </p>
+          </div>
         </div>
-        <p className="text-xs sm:text-sm text-muted-foreground">
-          We respond to all inquiries within <span className="font-semibold text-forest-green">12 hours</span>. For
-          urgent bookings, use WhatsApp for instant assistance.
-        </p>
       </motion.div>
 
       {/* Quick WhatsApp CTA */}

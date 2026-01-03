@@ -12,7 +12,7 @@ import { VehicleCard } from "@/components/taxi/vehicle-card"
 import { RouteCard } from "@/components/taxi/route-card"
 import { TaxiBookingForm } from "@/components/taxi/taxi-booking-form"
 import { SafetyFeatures } from "@/components/taxi/safety-features"
-import { TaxiTestimonials } from "@/components/taxi/taxi-testimonials"
+import { Testimonials } from "@/components/home/testimonials"
 import { PackageFAQ } from "@/components/packages/package-faq"
 import { useSettings } from "@/lib/settings-context"
 import { fadeInUp, staggerContainer, slideInLeft, slideInRight } from "@/lib/animation-variants"
@@ -275,7 +275,7 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
               </div>
 
               <div className="lg:mt-auto">
-                <h2 className="text-3xl font-bold tracking-tight text-foreground mb-3 lg:mb-4 bg-gradient-to-r from-mountain-blue via-forest-green to-saffron bg-clip-text text-transparent">Get Your Quote</h2>
+                <h2 className="text-3xl font-bold tracking-tight text-black mb-3 lg:mb-4">Get Your Quote</h2>
                 <p className="text-muted-foreground mb-5 lg:mb-6">
                   Fill in your travel details and we will get back to you with the best options. No advance payment
                   required - pay after your trip!
@@ -312,7 +312,7 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-serif font-bold text-foreground mb-4">Safety & Features</h2>
+            <h2 className="text-3xl font-bold tracking-tight text-black mb-4">Safety & Features</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Your safety is our priority. Here is what we offer with every ride.
             </p>
@@ -322,11 +322,7 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
       </section>
 
       {/* Testimonials */}
-      <section className="py-8 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <TaxiTestimonials />
-        </div>
-      </section>
+      <Testimonials />
 
       {/* FAQ */}
       <section className="py-8">

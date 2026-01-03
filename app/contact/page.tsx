@@ -31,22 +31,34 @@ export default function ContactPage() {
         {/* Contact Form & Info Section */}
         <section className="py-12 sm:py-16 md:py-24">
           <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-5 gap-8 md:gap-12">
-              {/* Contact Info Sidebar - Shows FIRST on mobile */}
-              <div className="lg:col-span-2 order-1 lg:order-2">
-                <h2 className="text-xl sm:text-2xl font-serif font-bold text-foreground mb-4 sm:mb-6">Get in Touch</h2>
-                <ContactInfo />
+            <div className="grid lg:grid-cols-5 lg:items-start gap-8 md:gap-12 max-w-4xl mx-auto lg:max-w-none">
+              {/* Contact Info Sidebar */}
+              <div className="lg:col-span-2 order-1 lg:order-1 flex flex-col">
+                <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col">
+                  <div className="mb-5 sm:mb-6">
+                    <h2 className="text-xl sm:text-2xl font-serif font-bold text-foreground">Get in Touch</h2>
+                    <p className="text-muted-foreground mt-2 text-sm sm:text-base">
+                      Call, WhatsApp, or email us — we typically respond within 12 hours.
+                    </p>
+                  </div>
+                  <div>
+                    <ContactInfo />
+                  </div>
+                </div>
               </div>
 
-              {/* Contact Form - Shows SECOND on mobile */}
-              <div className="lg:col-span-3 order-2 lg:order-1">
-                {/* Heading moved outside the form card */}
-                <h2 className="text-xl sm:text-2xl font-serif font-bold text-foreground mb-2">Send Us a Message</h2>
-                <p className="text-muted-foreground mb-4 sm:mb-6 text-sm sm:text-base">
-                  Fill out the form below and we&apos;ll get back to you within 12 hours.
-                </p>
-                <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 md:p-8">
-                  <ContactForm />
+              {/* Contact Form */}
+              <div className="lg:col-span-3 order-2 lg:order-2 flex flex-col">
+                <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col">
+                  <div className="mb-5 sm:mb-6">
+                    <h2 className="text-xl sm:text-2xl font-serif font-bold text-foreground">Send Us a Message</h2>
+                    <p className="text-muted-foreground mt-2 text-sm sm:text-base">
+                      Fill out the form below and we&apos;ll get back to you within 12 hours.
+                    </p>
+                  </div>
+                  <div>
+                    <ContactForm />
+                  </div>
                 </div>
               </div>
             </div>

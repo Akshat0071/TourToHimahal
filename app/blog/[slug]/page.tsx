@@ -25,6 +25,12 @@ export async function generateMetadata({ params }: BlogDetailPageProps) {
     }
   }
 
+  const normalizedAuthor = (post.author ?? "").trim()
+  const displayAuthor =
+    !normalizedAuthor || normalizedAuthor.toLowerCase() === "himachal yatra"
+      ? "TourToHimachal"
+      : normalizedAuthor
+
   return {
     title: `${post.title} | TourToHimachal Blog`,
     description: post.excerpt,
@@ -34,7 +40,7 @@ export async function generateMetadata({ params }: BlogDetailPageProps) {
       images: post.gallery && post.gallery.length > 0 ? post.gallery : post.cover_image ? [post.cover_image] : [],
       type: "article",
       publishedTime: post.published_at,
-      authors: [post.author],
+      authors: [displayAuthor],
     },
   }
 }
@@ -54,6 +60,12 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
     notFound()
   }
 
+  const normalizedAuthor = (post.author ?? "").trim()
+  const displayAuthor =
+    !normalizedAuthor || normalizedAuthor.toLowerCase() === "himachal yatra"
+      ? "TourToHimachal"
+      : normalizedAuthor
+
   // Fetch related posts from the same category or with similar tags
   const { data: relatedPosts } = await supabase
     .from("blogs")
@@ -72,11 +84,11 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
     datePublished: post.published_at,
     author: {
       "@type": "Person",
-      name: post.author,
+      name: displayAuthor,
     },
     publisher: {
       "@type": "Organization",
-      name: "TouToHimachal",
+      name: "TourToHimachal",
     },
   }
 
