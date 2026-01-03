@@ -264,10 +264,10 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
             >
               <div className="relative w-full h-56 sm:h-64 md:h-72 rounded-2xl overflow-hidden shadow-xl">
                 <Image
-                  src="https://res.cloudinary.com/dabqqymqe/image/upload/v1767092549/tbccjb5pnizayzkabfak.webp"
+                  src="https://res.cloudinary.com/dabqqymqe/image/upload/v1767460899/zg3zaainklv6tgepsoj4.jpg"
                   alt="Mountain taxi ride"
                   fill
-                  className="object-cover"
+                  className="object-cover object-center"
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   priority
                 />

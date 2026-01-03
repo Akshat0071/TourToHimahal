@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -97,7 +98,103 @@ export function LeadsTable({ leads }: LeadsTableProps) {
 
   return (
     <>
-      <div className="bg-background border border-border rounded-xl overflow-x-auto">
+      {/* Mobile cards */}
+      <div className="space-y-3 md:hidden">
+        {leads.map((lead, index) => (
+          <motion.div
+            key={lead.id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.03 }}
+          >
+            <Card>
+              <CardContent className="p-3 space-y-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-xs text-muted-foreground">Reference</p>
+                    <code className="inline-block bg-muted px-2 py-1 rounded text-xs break-all">{lead.reference_number}</code>
+                  </div>
+
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
+                        <MoreHorizontal className="w-4 h-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={() => setSelectedLead(lead)}>
+                        <Eye className="w-4 h-4 mr-2" />
+                        View Details
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem className="text-destructive" onClick={() => deleteLead(lead.id)}>
+                        <Trash2 className="w-4 h-4 mr-2" />
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+
+                <div className="min-w-0">
+                  <p className="font-medium text-foreground truncate">{lead.name}</p>
+                  <p className="text-xs text-muted-foreground truncate">{lead.subject}</p>
+                </div>
+
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <a
+                      href={`mailto:${lead.email}`}
+                      className="p-1.5 rounded-md hover:bg-muted transition-colors"
+                      title={lead.email}
+                    >
+                      <Mail className="w-4 h-4 text-muted-foreground" />
+                    </a>
+                    <a
+                      href={`tel:${lead.phone}`}
+                      className="p-1.5 rounded-md hover:bg-muted transition-colors"
+                      title={lead.phone}
+                    >
+                      <Phone className="w-4 h-4 text-muted-foreground" />
+                    </a>
+                    <a
+                      href={`https://wa.me/${lead.phone.replace(/\D/g, "")}?text=Hi ${lead.name}, thank you for contacting TourToHimachal!`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-1.5 rounded-md bg-[#25D366]/10 hover:bg-[#25D366]/20 transition-colors"
+                      title="WhatsApp"
+                    >
+                      <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                    </a>
+                  </div>
+
+                  <p className="text-xs text-muted-foreground whitespace-nowrap">{format(new Date(lead.created_at), "MMM d")}</p>
+                </div>
+
+                <div className="flex items-center justify-between gap-2">
+                  <Badge variant="outline" className="text-xs">
+                    {serviceLabels[lead.service_type] || lead.service_type}
+                  </Badge>
+
+                  <Select value={lead.status} onValueChange={(value) => updateLeadStatus(lead.id, value)} disabled={isUpdating}>
+                    <SelectTrigger className={`w-32 h-9 text-xs ${statusColors[lead.status]}`}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="new">New</SelectItem>
+                      <SelectItem value="contacted">Contacted</SelectItem>
+                      <SelectItem value="booked">Booked</SelectItem>
+                      <SelectItem value="closed">Closed</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Desktop table */}
+      <div className="hidden md:block bg-background border border-border rounded-xl overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
