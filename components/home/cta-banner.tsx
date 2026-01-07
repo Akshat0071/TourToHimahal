@@ -4,6 +4,8 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { useSettings } from "@/lib/settings-context"
 import { MessageCircle, Phone, ArrowRight, Sparkles } from "lucide-react"
+import Image from "next/image"
+import { optimizeCloudinaryDeliveryUrl } from "@/lib/cloudinary"
 
 export function CTABanner() {
   const { settings } = useSettings()
@@ -11,6 +13,14 @@ export function CTABanner() {
     if (!url) return "/placeholder.svg"
     const trimmed = url.trim()
     const normalized = trimmed.startsWith("/http") ? trimmed.slice(1) : trimmed
+    if (normalized.includes("res.cloudinary.com") || normalized.includes("cloudinary.com")) {
+      return optimizeCloudinaryDeliveryUrl(normalized, {
+        width: 1600,
+        quality: "auto",
+        format: "auto",
+        crop: "limit",
+      })
+    }
     return normalized
   }
 
@@ -18,13 +28,14 @@ export function CTABanner() {
   return (
     <section className="relative overflow-hidden py-12 md:py-16">
       {/* Background image layer */}
-      <img
+      <Image
         src={getImageUrl(
           "https://res.cloudinary.com/daqp8c5fa/image/upload/v1767795901/y1plr2wekvbv7g7yjyk0.webp",
         )}
         alt="panoramic landcape view"
-        aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover"
+        fill
+        className="object-cover"
+        sizes="100vw"
       />
       {/* Background overlay gradient (semi-transparent so image shows) */}
       <div className="from-mountain-blue/70 via-forest-green/50 to-mountain-blue/70 absolute inset-0 bg-linear-to-br" />

@@ -140,6 +140,74 @@ export function isCloudinaryUrl(url: string): boolean {
 }
 
 /**
+ * Optimize an existing Cloudinary delivery URL (res.cloudinary.com) by injecting
+ * transformations like f_auto and q_auto and an optional width.
+ *
+ * This is useful when you already have full URLs (including version folders)
+ * rather than publicIds.
+ */
+export function optimizeCloudinaryDeliveryUrl(
+  url: string,
+  options?: {
+    width?: number
+    crop?: "limit" | "fill" | "fit" | "scale" | "crop" | "thumb" | "pad"
+    quality?: "auto" | number
+    format?: "auto" | "webp" | "avif" | "jpg" | "png"
+    gravity?: "auto" | "center" | "north" | "south" | "east" | "west" | "face"
+  },
+): string {
+  if (!url) return url
+  if (!isCloudinaryUrl(url)) return url
+  if (!url.includes("/image/upload/")) return url
+
+  const width = options?.width
+  const crop = options?.crop ?? (width ? "limit" : undefined)
+  const quality = options?.quality ?? "auto"
+  const format = options?.format ?? "auto"
+  const gravity = options?.gravity
+
+  const transforms: string[] = []
+  if (format) transforms.push(`f_${format}`)
+  if (quality) transforms.push(`q_${quality}`)
+  if (width) transforms.push(`w_${width}`)
+  if (crop) transforms.push(`c_${crop}`)
+  if (gravity) transforms.push(`g_${gravity}`)
+
+  const transformString = transforms.join(",")
+  if (!transformString) return url
+
+  const [prefix, rest] = url.split("/image/upload/")
+  if (!rest) return url
+
+  const restParts = rest.split("/")
+  const first = restParts[0] ?? ""
+
+  const looksLikeVersion = /^v\d+$/.test(first)
+  const looksLikeTransform = first.includes(",") || /^([a-z]{1,2}_[^/]+)$/.test(first)
+
+  // If URL already has a transform segment, prepend missing f_/q_ only if not present.
+  if (looksLikeTransform && !looksLikeVersion) {
+    const existing = first
+    const existingParts = existing.split(",")
+    const hasFormat = existingParts.some((p) => p.startsWith("f_"))
+    const hasQuality = existingParts.some((p) => p.startsWith("q_"))
+    const merged = [
+      ...(hasFormat ? [] : ["f_auto"]),
+      ...(hasQuality ? [] : ["q_auto"]),
+      ...existingParts,
+      ...(width ? [`w_${width}`] : []),
+      ...(crop ? [`c_${crop}`] : []),
+      ...(gravity ? [`g_${gravity}`] : []),
+    ]
+    restParts[0] = Array.from(new Set(merged)).join(",")
+    return `${prefix}/image/upload/${restParts.join("/")}`
+  }
+
+  // Otherwise insert transform segment before the version or publicId
+  return `${prefix}/image/upload/${transformString}/${rest}`
+}
+
+/**
  * Get a blurred placeholder image URL for lazy loading
  * @param publicId - The Cloudinary public ID
  * @returns Blurred placeholder URL

@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useRef } from "react"
 import { motion, useAnimationFrame } from "framer-motion"
+import { optimizeCloudinaryDeliveryUrl } from "@/lib/cloudinary"
 
 interface HeroImage {
   url: string
@@ -22,7 +23,7 @@ interface InfiniteScrollHeroProps {
 function getImageUrl(url: string): string {
   // If it's already a Cloudinary URL, use it directly
   if (url.includes("cloudinary.com") || url.includes("res.cloudinary.com")) {
-    return url
+    return optimizeCloudinaryDeliveryUrl(url, { width: 800, quality: "auto", format: "auto", crop: "limit" })
   }
   // Otherwise return as-is (for local images or placeholders)
   return url || "/placeholder.svg"
@@ -58,6 +59,9 @@ export function InfiniteScrollHero({ images, title, subtitle, badge, children }:
                 alt={image.alt}
                 className="h-full w-full object-cover"
                 crossOrigin="anonymous"
+                loading={index === 0 ? "eager" : "lazy"}
+                decoding="async"
+                fetchPriority={index === 0 ? "high" : "low"}
               />
             </div>
           ))}

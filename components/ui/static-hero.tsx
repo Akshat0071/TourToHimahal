@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { motion } from "framer-motion"
+import { optimizeCloudinaryDeliveryUrl } from "@/lib/cloudinary"
 
 interface StaticHeroProps {
   image: string
@@ -15,7 +16,7 @@ interface StaticHeroProps {
 // Helper function to ensure Cloudinary images work directly
 function getImageUrl(url: string): string {
   if (url.includes("cloudinary.com") || url.includes("res.cloudinary.com")) {
-    return url
+    return optimizeCloudinaryDeliveryUrl(url, { width: 1600, quality: "auto", format: "auto", crop: "limit" })
   }
   return url || "/placeholder.svg"
 }

@@ -57,6 +57,7 @@ export function TaxiService() {
                 alt="Premium Taxi Service"
                 fill
                 className="object-cover"
+                sizes="(min-width: 1024px) 50vw, 100vw"
               />
               {/* Gradient overlay */}
               <div className="from-forest-green/40 to-saffron/20 absolute inset-0 bg-linear-to-tr via-transparent" />

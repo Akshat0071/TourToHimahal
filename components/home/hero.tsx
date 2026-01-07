@@ -5,6 +5,7 @@ import Link from "next/link"
 import { motion, useAnimationFrame } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ChevronRight, Car, MapPin } from "lucide-react"
+import { optimizeCloudinaryDeliveryUrl } from "@/lib/cloudinary"
 
 interface HeroImage {
   url: string
@@ -32,24 +33,13 @@ const defaultHeroImages: HeroImage[] = [
     url: "https://res.cloudinary.com/daqp8c5fa/image/upload/v1767795291/bacq5glu6429fkmwvv6b.webp",
     alt: "Trekking in Himalayas",
   },
-  {
-    url: "https://res.cloudinary.com/daqp8c5fa/image/upload/v1767795350/wjfrlwcmh0ckc16iwwax.webp",
-    alt: "Paragliding in Bir Billing",
-  },
-  {
-    url: "https://res.cloudinary.com/daqp8c5fa/image/upload/v1767794928/himachal-yatra/packages/qdjiffxdixe8uq82gsix.webp",
-    alt: "Jwala Ji Temple",
-  },
-  {
-    url: "https://res.cloudinary.com/daqp8c5fa/image/upload/v1767795397/qmvfm8amve8elw4sjxi8.webp",
-    alt: "Naina Devi Temple",
-  },
 ]
 
 // Helper function to ensure Cloudinary images work directly
 function getImageUrl(url: string): string {
   if (url.includes("cloudinary.com") || url.includes("res.cloudinary.com")) {
-    return url
+    // Each tile is ~300-400px wide; serve a sharper but still lightweight image.
+    return optimizeCloudinaryDeliveryUrl(url, { width: 800, quality: "auto", format: "auto", crop: "limit" })
   }
   return url || "/placeholder.svg"
 }
@@ -84,6 +74,9 @@ export function Hero({ images }: HeroProps) {
                 alt={image.alt}
                 className="h-full w-full object-cover"
                 crossOrigin="anonymous"
+                loading={index === 0 ? "eager" : "lazy"}
+                decoding="async"
+                fetchPriority={index === 0 ? "high" : "low"}
               />
             </div>
           ))}

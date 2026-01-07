@@ -23,6 +23,12 @@ export function Logo({
     lg: "h-16 md:h-20",
   }
 
+  const responsiveSizes = {
+    sm: "(min-width: 768px) 168px, 140px",
+    md: "(min-width: 768px) 224px, 168px",
+    lg: "(min-width: 768px) 280px, 224px",
+  }
+
   const LogoContent = () => (
     <div className={cn("group flex items-center", className)}>
       {/* Full Logo Image container */}
@@ -32,6 +38,7 @@ export function Logo({
         width={560}
         height={160}
         className={cn(sizes[size], "w-auto transition-all duration-300")}
+        sizes={responsiveSizes[size]}
         priority
       />
     </div>
