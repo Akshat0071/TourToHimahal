@@ -51,10 +51,22 @@ export function RelatedPackagesCarousel({ packages, currentSlug }: RelatedPackag
       <div className="mb-6 flex items-center justify-between">
         <h3 className="text-foreground font-serif text-2xl font-bold">Similar Packages</h3>
         <div className="flex gap-2">
-          <Button variant="outline" size="icon" onClick={() => scroll("left")} className="rounded-full">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => scroll("left")}
+            className="rounded-full"
+            aria-label="Scroll left"
+          >
             <ChevronLeft className="h-5 w-5" />
           </Button>
-          <Button variant="outline" size="icon" onClick={() => scroll("right")} className="rounded-full">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => scroll("right")}
+            className="rounded-full"
+            aria-label="Scroll right"
+          >
             <ChevronRight className="h-5 w-5" />
           </Button>
         </div>

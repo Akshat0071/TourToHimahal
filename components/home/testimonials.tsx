@@ -117,6 +117,7 @@ export function Testimonials() {
               onClick={() => scroll("left")}
               disabled={!canScrollLeft}
               className="hover:bg-mountain-blue hover:border-mountain-blue h-10 w-10 rounded-full border-2 hover:text-white disabled:opacity-30 md:h-12 md:w-12"
+              aria-label="Scroll left"
             >
               <ChevronLeft className="h-4 w-4 md:h-5 md:w-5" />
             </Button>
@@ -126,6 +127,7 @@ export function Testimonials() {
               onClick={() => scroll("right")}
               disabled={!canScrollRight}
               className="hover:bg-mountain-blue hover:border-mountain-blue h-10 w-10 rounded-full border-2 hover:text-white disabled:opacity-30 md:h-12 md:w-12"
+              aria-label="Scroll right"
             >
               <ChevronRight className="h-4 w-4 md:h-5 md:w-5" />
             </Button>
@@ -183,7 +185,7 @@ export function Testimonials() {
                     </div>
 
                     <div>
-                      <h4 className="text-sm font-bold text-gray-900">{testimonial.name}</h4>
+                      <p className="text-sm font-bold text-gray-900">{testimonial.name}</p>
                       <div className="flex gap-2 text-xs text-gray-500">
                         {testimonial.city && (
                           <>

@@ -49,10 +49,10 @@ export function RelatedDiaries({ diaries }: RelatedDiariesProps) {
       <div className="mb-6 flex items-center justify-between">
         <h2 className="text-foreground font-serif text-2xl font-bold md:text-3xl">Read Next</h2>
         <div className="hidden gap-2 md:flex">
-          <Button variant="outline" size="icon" onClick={() => scroll("left")}>
+          <Button variant="outline" size="icon" onClick={() => scroll("left")} aria-label="Scroll left">
             <ChevronLeft className="h-4 w-4" />
           </Button>
-          <Button variant="outline" size="icon" onClick={() => scroll("right")}>
+          <Button variant="outline" size="icon" onClick={() => scroll("right")} aria-label="Scroll right">
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>

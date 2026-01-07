@@ -145,10 +145,10 @@ export function TaxiService() {
             </div>
 
             <div className="mb-3 sm:mb-4 md:mb-5">
-              <h4 className="text-foreground mb-1.5 flex items-center gap-1.5 text-xs font-bold sm:mb-2 sm:gap-2 sm:text-sm md:mb-3 md:text-base">
+              <h3 className="text-foreground mb-1.5 flex items-center gap-1.5 text-xs font-bold sm:mb-2 sm:gap-2 sm:text-sm md:mb-3 md:text-base">
                 <MapPin className="text-forest-green h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" />
                 Popular Routes
-              </h4>
+              </h3>
               <div className="flex flex-wrap gap-1 sm:gap-1.5">
                 {routes.map((route) => (
                   <span

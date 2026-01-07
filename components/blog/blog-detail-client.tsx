@@ -215,7 +215,7 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
               {/* All Tags */}
               {post.tags && post.tags.length > 0 && (
                 <div className="space-y-3">
-                  <h4 className="text-foreground font-semibold">Tags:</h4>
+                  <p className="text-foreground font-semibold">Tags:</p>
                   <div className="flex flex-wrap gap-2">
                     {post.tags.map((tag) => (
                       <Badge
@@ -243,9 +243,9 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
                   {relatedPosts.map((relatedPost) => (
                     <Link key={relatedPost.id} href={`/blog/${relatedPost.slug}`}>
                       <div className="group hover:bg-background cursor-pointer space-y-2 rounded-xl p-3 transition-all duration-200 hover:shadow-md">
-                        <h4 className="text-foreground group-hover:text-primary line-clamp-2 text-sm font-medium transition">
+                        <p className="text-foreground group-hover:text-primary line-clamp-2 text-sm font-medium transition">
                           {relatedPost.title}
-                        </h4>
+                        </p>
                         {relatedPost.category && (
                           <p className="text-muted-foreground text-xs font-medium">{relatedPost.category}</p>
                         )}

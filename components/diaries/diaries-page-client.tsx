@@ -219,9 +219,9 @@ export function DiariesPageClient({ diaries }: DiariesPageClientProps) {
                               {String(index + 1).padStart(2, "0")}
                             </span>
                             <div>
-                              <h4 className="text-foreground group-hover:text-mountain-blue line-clamp-2 text-sm font-medium transition-colors">
+                              <p className="text-foreground group-hover:text-mountain-blue line-clamp-2 text-sm font-medium transition-colors">
                                 {diary.title}
-                              </h4>
+                              </p>
                               <span className="text-muted-foreground text-xs">
                                 {diary.region || diary.destination}
                               </span>

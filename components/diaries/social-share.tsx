@@ -67,7 +67,13 @@ export function SocialShare({ title, url }: SocialShareProps) {
             </a>
           </Button>
         ))}
-        <Button variant="outline" size="icon" onClick={copyToClipboard} className="h-9 w-9 bg-transparent">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={copyToClipboard}
+          className="h-9 w-9 bg-transparent"
+          aria-label="Copy link"
+        >
           <Link2 className="h-4 w-4" />
         </Button>
       </div>

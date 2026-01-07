@@ -384,8 +384,10 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
               href={`https://wa.me/${(settings?.whatsapp_number || "919876543210").replace(/[^0-9]/g, "")}`}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Chat on WhatsApp"
             >
               <MessageCircle className="h-5 w-5" />
+              <span className="sr-only">Chat on WhatsApp</span>
             </a>
           </Button>
         </div>

@@ -5,7 +5,6 @@ import { Analytics } from "@vercel/analytics/next"
 import { SettingsProvider } from "@/lib/settings-context"
 import { ScrollToTop } from "@/components/ui/scroll-to-top"
 import { createPublicClient } from "@/lib/supabase/public"
-import { optimizeCloudinaryDeliveryUrl } from "@/lib/cloudinary"
 import "./globals.css"
 
 const montserrat = Montserrat({
@@ -125,30 +124,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseOrigin = supabaseUrl ? new URL(supabaseUrl).origin : null
-
-  // Likely homepage LCP image (used in the home Hero background)
-  const lcpHeroImage = optimizeCloudinaryDeliveryUrl(
-    "https://res.cloudinary.com/daqp8c5fa/image/upload/v1767795277/v7svtjhbjhj6cyadgfhz.webp",
-    { width: 800, quality: "auto", format: "auto", crop: "limit" },
-  )
-
   return (
     <html lang="en">
-      <head>
-        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
-        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
-
-        {supabaseOrigin && (
-          <>
-            <link rel="dns-prefetch" href={supabaseOrigin} />
-            <link rel="preconnect" href={supabaseOrigin} crossOrigin="anonymous" />
-          </>
-        )}
-
-        <link rel="preload" as="image" href={lcpHeroImage} fetchPriority="high" />
-      </head>
       <body className={`${montserrat.variable} font-sans antialiased`}>
         <SettingsProvider>{children}</SettingsProvider>
         <Analytics />

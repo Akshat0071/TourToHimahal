@@ -41,7 +41,7 @@ export function ItineraryAccordion({ itinerary }: ItineraryAccordionProps) {
                 <span className="text-base font-bold text-white">D{item.day}</span>
               </div>
               <div>
-                <h4 className="text-foreground text-sm font-bold md:text-base">{item.title}</h4>
+                <p className="text-foreground text-sm font-bold md:text-base">{item.title}</p>
                 <p className="text-muted-foreground text-xs font-medium">Day {item.day} of your journey</p>
               </div>
             </div>

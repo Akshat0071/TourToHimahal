@@ -101,10 +101,10 @@ export function Footer() {
 
             {/* Quick Links */}
             <div>
-              <h4 className="mb-4 flex items-center gap-2 text-base font-bold sm:mb-6 sm:text-lg">
+              <h3 className="mb-4 flex items-center gap-2 text-base font-bold sm:mb-6 sm:text-lg">
                 <span className="from-saffron to-golden-yellow h-1 w-6 rounded-full bg-gradient-to-r sm:w-8" />
                 Quick Links
-              </h4>
+              </h3>
               <ul className="space-y-2 sm:space-y-3">
                 {quickLinks.map((link) => (
                   <li key={link.href}>
@@ -122,10 +122,10 @@ export function Footer() {
 
             {/* Destinations */}
             <div>
-              <h4 className="mb-4 flex items-center gap-2 text-base font-bold sm:mb-6 sm:text-lg">
+              <h3 className="mb-4 flex items-center gap-2 text-base font-bold sm:mb-6 sm:text-lg">
                 <span className="from-forest-green to-mountain-blue h-1 w-6 rounded-full bg-gradient-to-r sm:w-8" />
                 Top Destinations
-              </h4>
+              </h3>
               <ul className="space-y-2 sm:space-y-3">
                 {destinations.map((destination) => (
                   <li key={destination.slug}>
@@ -143,10 +143,10 @@ export function Footer() {
 
             {/* Contact */}
             <div>
-              <h4 className="mb-4 flex items-center gap-2 text-base font-bold sm:mb-6 sm:text-lg">
+              <h3 className="mb-4 flex items-center gap-2 text-base font-bold sm:mb-6 sm:text-lg">
                 <span className="from-sunset-orange to-temple-red h-1 w-6 rounded-full bg-gradient-to-r sm:w-8" />
                 Contact Us
-              </h4>
+              </h3>
               <ul className="space-y-3 sm:space-y-4">
                 <li className="group flex items-start gap-2 sm:gap-3">
                   <div className="bg-saffron/10 group-hover:bg-saffron/20 shrink-0 rounded-lg p-1.5 transition-colors sm:p-2">
@@ -187,20 +187,20 @@ export function Footer() {
         <div className="border-t border-slate-800">
           <div className="container mx-auto px-4 py-4 sm:py-6">
             <div className="flex flex-col items-center justify-between gap-3 sm:gap-4 md:flex-row">
-              <p className="flex items-center gap-1 text-xs text-slate-500 sm:text-sm">
+              <p className="flex items-center gap-1 text-xs text-slate-300 sm:text-sm">
                 © 2025 TourToHimachal. Made with{" "}
                 <Heart className="text-temple-red fill-temple-red h-3 w-3 sm:h-4 sm:w-4" /> in Himachal
               </p>
               <div className="flex gap-4 sm:gap-6">
                 <Link
                   href="/privacy"
-                  className="hover:text-saffron text-xs text-slate-500 transition-colors sm:text-sm"
+                  className="hover:text-saffron text-xs text-slate-300 transition-colors sm:text-sm"
                 >
                   Privacy Policy
                 </Link>
                 <Link
                   href="/terms"
-                  className="hover:text-saffron text-xs text-slate-500 transition-colors sm:text-sm"
+                  className="hover:text-saffron text-xs text-slate-300 transition-colors sm:text-sm"
                 >
                   Terms of Service
                 </Link>

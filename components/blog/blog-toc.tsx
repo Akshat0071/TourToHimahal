@@ -97,7 +97,7 @@ export function BlogTOC({ content }: BlogTOCProps) {
   return (
     <motion.nav initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="hidden xl:block">
       <div className="bg-muted/50 rounded-xl border p-4 shadow-sm backdrop-blur-sm">
-        <h4 className="text-foreground mb-3 text-sm font-semibold tracking-wide uppercase">On This Page</h4>
+        <h3 className="text-foreground mb-3 text-sm font-semibold tracking-wide uppercase">On This Page</h3>
 
         <ul className="space-y-1.5">
           {tocItems.map((item) => (

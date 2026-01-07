@@ -134,7 +134,7 @@ export function DiaryFilter({
             <div className="border-saffron/20 mt-3 space-y-4 border-t pt-3 sm:mt-4 sm:pt-4">
               {/* Region */}
               <div className="border-golden-yellow/20 rounded-xl border bg-white p-3 sm:rounded-2xl sm:p-4">
-                <h4 className="text-foreground mb-3 text-xs font-semibold sm:text-sm">Region</h4>
+                <p className="text-foreground mb-3 text-xs font-semibold sm:text-sm">Region</p>
                 <div className="flex flex-wrap gap-2">
                   <Badge
                     variant={localRegion === "All" ? "default" : "outline"}
@@ -162,7 +162,7 @@ export function DiaryFilter({
 
               {/* Tags */}
               <div className="border-golden-yellow/20 rounded-xl border bg-white p-3 sm:rounded-2xl sm:p-4">
-                <h4 className="text-foreground mb-3 text-xs font-semibold sm:text-sm">Tags</h4>
+                <p className="text-foreground mb-3 text-xs font-semibold sm:text-sm">Tags</p>
                 <div className="flex flex-wrap gap-2">
                   <Badge
                     variant={localTags.length === 0 ? "default" : "outline"}
@@ -190,7 +190,7 @@ export function DiaryFilter({
 
               {/* Season */}
               <div className="border-golden-yellow/20 rounded-xl border bg-white p-3 sm:rounded-2xl sm:p-4">
-                <h4 className="text-foreground mb-3 text-xs font-semibold sm:text-sm">Season</h4>
+                <p className="text-foreground mb-3 text-xs font-semibold sm:text-sm">Season</p>
                 <div className="flex flex-wrap gap-2">
                   <Badge
                     variant={!localMonth || localMonth === "All" ? "default" : "outline"}

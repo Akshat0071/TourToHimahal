@@ -82,7 +82,7 @@ export function Header() {
     <header className="bg-background/95 border-border fixed top-0 right-0 left-0 z-50 border-b shadow-sm backdrop-blur-md transition-all duration-500">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between md:h-20">
-          <Logo size="lg" className="origin-left scale-x-[1.5] scale-y-[1.3]" />
+          <Logo size="lg" className="origin-left translate-y-1.5 scale-x-[1.5] scale-y-[1.3]" />
 
           {/* Desktop Navigation */}
           <nav className="hidden items-center gap-1 lg:flex">
@@ -171,7 +171,7 @@ export function Header() {
                   size="md"
                   href="/"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="origin-left scale-x-[1.2] scale-y-[1.05]"
+                  className="origin-left translate-y-0.5 scale-x-[1.2] scale-y-[1.05]"
                 />
 
                 {/* Close button */}
