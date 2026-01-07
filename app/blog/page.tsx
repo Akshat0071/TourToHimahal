@@ -1,5 +1,18 @@
+import type { Metadata } from "next"
 import { createPublicClient } from "@/lib/supabase/public"
 import { BlogPageClient } from "@/components/blog/blog-page-client"
+
+export const metadata: Metadata = {
+  title: "Himachal Travel Blog | TourToHimachal — Tips, Guides & Stories",
+  description:
+    "Read travel tips, temple guides, road trip advice, and real stories from across Himachal Pradesh.",
+  openGraph: {
+    title: "Himachal Travel Blog | TourToHimachal",
+    description:
+      "Practical advice and inspiration for your next Himachal journey.",
+    type: "website",
+  },
+}
 
 export const revalidate = 0 // Always fetch fresh data
 

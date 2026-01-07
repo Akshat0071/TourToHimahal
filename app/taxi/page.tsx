@@ -1,5 +1,18 @@
+import type { Metadata } from "next"
 import { createPublicClient } from "@/lib/supabase/public"
 import { TaxiPageClient } from "@/components/taxi/taxi-page-client"
+
+export const metadata: Metadata = {
+  title: "Taxi Service | TourToHimachal — Reliable Cabs & Transparent Fares",
+  description:
+    "Book safe, reliable taxi service across Himachal Pradesh. Airport pickups, inter-city rides, sightseeing tours, and verified drivers with transparent pricing.",
+  openGraph: {
+    title: "Taxi Service | TourToHimachal",
+    description:
+      "Comfortable cabs, professional drivers, and no hidden charges for your Himachal journeys.",
+    type: "website",
+  },
+}
 
 export const revalidate = 0 // Always fetch fresh data
 
