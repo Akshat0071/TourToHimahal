@@ -34,17 +34,17 @@ const faqs = [
 
 export function FAQSection() {
   return (
-    <section className="py-16 md:py-24 bg-muted/30">
+    <section className="bg-muted/30 py-16 md:py-24">
       <div className="container mx-auto px-4">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="max-w-3xl mx-auto"
+          className="mx-auto max-w-3xl"
         >
-          <motion.div variants={fadeInUp} className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">
+          <motion.div variants={fadeInUp} className="mb-12 text-center">
+            <h2 className="text-foreground mb-4 font-serif text-3xl font-bold md:text-4xl">
               Frequently Asked Questions
             </h2>
             <p className="text-muted-foreground">Quick answers to common queries about our services</p>
@@ -56,9 +56,9 @@ export function FAQSection() {
                 <AccordionItem
                   key={index}
                   value={`faq-${index}`}
-                  className="bg-background border border-border rounded-xl px-6 data-[state=open]:shadow-md transition-shadow"
+                  className="bg-background border-border rounded-xl border px-6 transition-shadow data-[state=open]:shadow-md"
                 >
-                  <AccordionTrigger className="text-left font-semibold hover:no-underline py-5">
+                  <AccordionTrigger className="py-5 text-left font-semibold hover:no-underline">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground pb-5">{faq.answer}</AccordionContent>

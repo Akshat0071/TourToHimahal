@@ -27,29 +27,29 @@ export function RouteCard({ route }: RouteCardProps) {
     {
       route: `${route.from_location} to ${route.to_location}`,
     },
-    settings?.whatsapp_number
+    settings?.whatsapp_number,
   )
 
   return (
     <motion.div
       variants={fadeInUp}
-      className="bg-card border border-border rounded-xl p-5 hover:shadow-md transition-shadow"
+      className="bg-card border-border rounded-xl border p-5 transition-shadow hover:shadow-md"
     >
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center gap-3 flex-wrap">
-          <div className="flex items-center gap-2 text-foreground">
-            <MapPin className="h-4 w-4 text-primary" />
+      <div className="mb-4 flex items-start justify-between">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="text-foreground flex items-center gap-2">
+            <MapPin className="text-primary h-4 w-4" />
             <span className="font-medium">{route.from_location}</span>
           </div>
-          <ArrowRight className="h-4 w-4 text-muted-foreground" />
-          <div className="flex items-center gap-2 text-foreground">
-            <MapPin className="h-4 w-4 text-saffron" />
+          <ArrowRight className="text-muted-foreground h-4 w-4" />
+          <div className="text-foreground flex items-center gap-2">
+            <MapPin className="text-saffron h-4 w-4" />
             <span className="font-medium">{route.to_location}</span>
           </div>
         </div>
       </div>
 
-      <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+      <div className="text-muted-foreground mb-4 flex items-center gap-4 text-sm">
         <span>{route.distance_km} km</span>
         <span className="text-border">|</span>
         <div className="flex items-center gap-1">
@@ -60,8 +60,8 @@ export function RouteCard({ route }: RouteCardProps) {
 
       <div className="flex items-center justify-between">
         <div>
-          <span className="text-sm text-muted-foreground">Starting from</span>
-          <p className="text-xl font-bold text-primary">₹{route.base_fare?.toLocaleString()}</p>
+          <span className="text-muted-foreground text-sm">Starting from</span>
+          <p className="text-primary text-xl font-bold">₹{route.base_fare?.toLocaleString()}</p>
         </div>
         <Button asChild className="bg-forest-green hover:bg-forest-green/90 text-white">
           <a href={whatsappLink} target="_blank" rel="noopener noreferrer">

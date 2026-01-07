@@ -106,7 +106,7 @@ export function TaxiBookingForm() {
             phone: formData.phone,
             message: formData.message,
           },
-          settings?.whatsapp_number
+          settings?.whatsapp_number,
         )
 
         setTimeout(() => {
@@ -115,7 +115,9 @@ export function TaxiBookingForm() {
       } else {
         // Show backend validation errors if present
         if (result.errors) {
-          const fieldErrors = Object.entries(result.errors).map(([field, msgs]) => `${field}: ${Array.isArray(msgs) ? msgs.join(", ") : msgs}`)
+          const fieldErrors = Object.entries(result.errors).map(
+            ([field, msgs]) => `${field}: ${Array.isArray(msgs) ? msgs.join(", ") : msgs}`,
+          )
           setErrors({ submit: fieldErrors.join(" | ") })
         } else {
           setErrors({ submit: result.message || "Failed to submit. Please try again." })
@@ -130,8 +132,8 @@ export function TaxiBookingForm() {
 
   if (!isMounted) {
     return (
-      <div className="bg-card border border-border rounded-xl p-6 md:p-8 flex items-center justify-center min-h-150">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      <div className="bg-card border-border flex min-h-150 items-center justify-center rounded-xl border p-6 md:p-8">
+        <Loader2 className="text-muted-foreground h-8 w-8 animate-spin" />
       </div>
     )
   }
@@ -141,16 +143,16 @@ export function TaxiBookingForm() {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-card border border-border rounded-xl p-8 text-center"
+        className="bg-card border-border rounded-xl border p-8 text-center"
         role="alert"
         aria-live="polite"
       >
-        <div className="w-16 h-16 bg-forest-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
-          <Send className="h-8 w-8 text-forest-green" />
+        <div className="bg-forest-green/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+          <Send className="text-forest-green h-8 w-8" />
         </div>
-        <h3 className="text-xl font-semibold text-foreground mb-2">Booking Request Sent!</h3>
+        <h3 className="text-foreground mb-2 text-xl font-semibold">Booking Request Sent!</h3>
         {referenceNumber && (
-          <p className="text-sm font-medium text-foreground bg-muted px-4 py-2 rounded-lg inline-block mb-4">
+          <p className="text-foreground bg-muted mb-4 inline-block rounded-lg px-4 py-2 text-sm font-medium">
             Reference: <span className="text-primary">{referenceNumber}</span>
           </p>
         )}
@@ -186,11 +188,11 @@ export function TaxiBookingForm() {
       initial="hidden"
       animate="visible"
       onSubmit={handleSubmit}
-      className="bg-card border border-border rounded-xl p-6 md:p-8"
+      className="bg-card border-border rounded-xl border p-6 md:p-8"
     >
-      <h3 className="text-xl font-semibold text-foreground mb-6">Book Your Ride</h3>
+      <h3 className="text-foreground mb-6 text-xl font-semibold">Book Your Ride</h3>
 
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-4">
+      <div className="mb-4 grid grid-cols-2 gap-3 sm:gap-4">
         {/* Service Type */}
         <div className="space-y-2">
           <Label htmlFor="serviceType">Service Type *</Label>
@@ -206,7 +208,7 @@ export function TaxiBookingForm() {
               <SelectItem value="round-trip">Round Trip</SelectItem>
             </SelectContent>
           </Select>
-          {errors.serviceType && <p className="text-sm text-destructive">{errors.serviceType}</p>}
+          {errors.serviceType && <p className="text-destructive text-sm">{errors.serviceType}</p>}
         </div>
 
         {/* Vehicle Type */}
@@ -227,16 +229,16 @@ export function TaxiBookingForm() {
               ))}
             </SelectContent>
           </Select>
-          {errors.vehicleType && <p className="text-sm text-destructive">{errors.vehicleType}</p>}
+          {errors.vehicleType && <p className="text-destructive text-sm">{errors.vehicleType}</p>}
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-4">
+      <div className="mb-4 grid grid-cols-2 gap-3 sm:gap-4">
         {/* Pickup */}
         <div className="space-y-2">
           <Label htmlFor="pickup">Pickup Location *</Label>
           <div className="relative">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <MapPin className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               id="pickup"
               placeholder="e.g., Chandigarh Airport"
@@ -246,14 +248,14 @@ export function TaxiBookingForm() {
               aria-invalid={!!errors.pickup}
             />
           </div>
-          {errors.pickup && <p className="text-sm text-destructive">{errors.pickup}</p>}
+          {errors.pickup && <p className="text-destructive text-sm">{errors.pickup}</p>}
         </div>
 
         {/* Drop */}
         <div className="space-y-2">
           <Label htmlFor="drop">Drop Location *</Label>
           <div className="relative">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <MapPin className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               id="drop"
               placeholder="e.g., Shimla Mall Road"
@@ -263,16 +265,16 @@ export function TaxiBookingForm() {
               aria-invalid={!!errors.drop}
             />
           </div>
-          {errors.drop && <p className="text-sm text-destructive">{errors.drop}</p>}
+          {errors.drop && <p className="text-destructive text-sm">{errors.drop}</p>}
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-4">
+      <div className="mb-4 grid grid-cols-2 gap-3 sm:gap-4">
         {/* Date */}
         <div className="space-y-2">
           <Label htmlFor="date">Date *</Label>
           <div className="relative">
-            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Calendar className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               id="date"
               type="date"
@@ -282,16 +284,14 @@ export function TaxiBookingForm() {
               aria-invalid={!!errors.date}
             />
           </div>
-          {errors.date && <p className="text-sm text-destructive">{errors.date}</p>}
+          {errors.date && <p className="text-destructive text-sm">{errors.date}</p>}
         </div>
-
-
 
         {/* Passengers */}
         <div className="space-y-2">
           <Label htmlFor="passengers">Passengers</Label>
           <div className="relative">
-            <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Users className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               id="passengers"
               type="number"
@@ -306,12 +306,12 @@ export function TaxiBookingForm() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-4">
+      <div className="mb-4 grid grid-cols-2 gap-3 sm:gap-4">
         {/* Name */}
         <div className="space-y-2">
           <Label htmlFor="name">Your Name *</Label>
           <div className="relative">
-            <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <User className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               id="name"
               placeholder="Full name"
@@ -321,14 +321,14 @@ export function TaxiBookingForm() {
               aria-invalid={!!errors.name}
             />
           </div>
-          {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
+          {errors.name && <p className="text-destructive text-sm">{errors.name}</p>}
         </div>
 
         {/* Phone */}
         <div className="space-y-2">
           <Label htmlFor="phone">Phone Number *</Label>
           <div className="relative">
-            <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Phone className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               id="phone"
               type="tel"
@@ -339,31 +339,31 @@ export function TaxiBookingForm() {
               aria-invalid={!!errors.phone}
             />
           </div>
-          {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
+          {errors.phone && <p className="text-destructive text-sm">{errors.phone}</p>}
         </div>
       </div>
 
       {/* Message */}
-      <div className="space-y-2 mb-6">
+      <div className="mb-6 space-y-2">
         <Label htmlFor="message">Additional Message (Optional)</Label>
         <div className="relative">
-          <MessageSquare className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+          <MessageSquare className="text-muted-foreground absolute top-3 left-3 h-4 w-4" />
           <Textarea
             id="message"
             placeholder="Any special requirements..."
             value={formData.message}
             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-            className="pl-10 min-h-20"
+            className="min-h-20 pl-10"
           />
         </div>
       </div>
 
-      {errors.submit && <p className="text-sm text-destructive mb-4 text-center">{errors.submit}</p>}
+      {errors.submit && <p className="text-destructive mb-4 text-center text-sm">{errors.submit}</p>}
 
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-forest-green hover:bg-forest-green/90 text-white gap-2"
+        className="bg-forest-green hover:bg-forest-green/90 w-full gap-2 text-white"
         size="lg"
       >
         {isSubmitting ? (
@@ -379,7 +379,7 @@ export function TaxiBookingForm() {
         )}
       </Button>
 
-      <p className="text-xs text-muted-foreground text-center mt-3">
+      <p className="text-muted-foreground mt-3 text-center text-xs">
         Your booking will be saved and we will redirect you to WhatsApp
       </p>
     </motion.form>

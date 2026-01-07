@@ -121,8 +121,8 @@ export function RoutesSection({ routes }: RoutesSectionProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between p-3 sm:p-4 md:p-6">
-        <CardTitle className="flex items-center gap-1 sm:gap-2 text-sm sm:text-base lg:text-lg">
-          <MapPin className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+        <CardTitle className="flex items-center gap-1 text-sm sm:gap-2 sm:text-base lg:text-lg">
+          <MapPin className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
           <span className="truncate">Routes</span>
         </CardTitle>
         <Dialog
@@ -133,20 +133,24 @@ export function RoutesSection({ routes }: RoutesSectionProps) {
           }}
         >
           <DialogTrigger asChild>
-            <Button size="sm" className="text-xs sm:text-sm shrink-0">
-              <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-              <span className="hidden xs:inline">Add Route</span>
+            <Button size="sm" className="shrink-0 text-xs sm:text-sm">
+              <Plus className="mr-1 h-3 w-3 sm:mr-2 sm:h-4 sm:w-4" />
+              <span className="xs:inline hidden">Add Route</span>
               <span className="xs:hidden">Add Route</span>
             </Button>
           </DialogTrigger>
-          <DialogContent className="w-[calc(100vw-2rem)] sm:w-full max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-h-[90vh] w-[calc(100vw-2rem)] overflow-y-auto sm:w-full">
             <DialogHeader>
-              <DialogTitle className="text-base sm:text-lg">{editingRoute ? "Edit Route" : "Add Route"}</DialogTitle>
+              <DialogTitle className="text-base sm:text-lg">
+                {editingRoute ? "Edit Route" : "Add Route"}
+              </DialogTitle>
             </DialogHeader>
             <div className="space-y-3 sm:space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="from" className="text-xs sm:text-sm">From</Label>
+                  <Label htmlFor="from" className="text-xs sm:text-sm">
+                    From
+                  </Label>
                   <Input
                     id="from"
                     className="text-base sm:text-sm"
@@ -156,7 +160,9 @@ export function RoutesSection({ routes }: RoutesSectionProps) {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="to" className="text-xs sm:text-sm">To</Label>
+                  <Label htmlFor="to" className="text-xs sm:text-sm">
+                    To
+                  </Label>
                   <Input
                     id="to"
                     className="text-base sm:text-sm"
@@ -166,20 +172,26 @@ export function RoutesSection({ routes }: RoutesSectionProps) {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="distance" className="text-xs sm:text-sm">Distance (km)</Label>
+                  <Label htmlFor="distance" className="text-xs sm:text-sm">
+                    Distance (km)
+                  </Label>
                   <Input
                     id="distance"
                     type="number"
                     min="0"
                     className="text-base sm:text-sm"
                     value={formData.distance_km}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, distance_km: Number(e.target.value) }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, distance_km: Number(e.target.value) }))
+                    }
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="time" className="text-xs sm:text-sm">Estimated Time</Label>
+                  <Label htmlFor="time" className="text-xs sm:text-sm">
+                    Estimated Time
+                  </Label>
                   <Input
                     id="time"
                     className="text-base sm:text-sm"
@@ -190,7 +202,9 @@ export function RoutesSection({ routes }: RoutesSectionProps) {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="fare" className="text-xs sm:text-sm">Base Fare (₹)</Label>
+                <Label htmlFor="fare" className="text-xs sm:text-sm">
+                  Base Fare (₹)
+                </Label>
                 <Input
                   id="fare"
                   type="number"
@@ -200,11 +214,17 @@ export function RoutesSection({ routes }: RoutesSectionProps) {
                   onChange={(e) => setFormData((prev) => ({ ...prev, base_fare: Number(e.target.value) }))}
                 />
               </div>
-              <div className="flex flex-col xs:flex-row justify-end gap-2 pt-4">
-                <Button variant="outline" onClick={() => setIsOpen(false)} className="w-full xs:w-auto text-xs sm:text-sm">
+              <div className="xs:flex-row flex flex-col justify-end gap-2 pt-4">
+                <Button
+                  variant="outline"
+                  onClick={() => setIsOpen(false)}
+                  className="xs:w-auto w-full text-xs sm:text-sm"
+                >
                   Cancel
                 </Button>
-                <Button onClick={handleSubmit} className="w-full xs:w-auto text-xs sm:text-sm">{editingRoute ? "Update" : "Add"} Route</Button>
+                <Button onClick={handleSubmit} className="xs:w-auto w-full text-xs sm:text-sm">
+                  {editingRoute ? "Update" : "Add"} Route
+                </Button>
               </div>
             </div>
           </DialogContent>
@@ -212,20 +232,20 @@ export function RoutesSection({ routes }: RoutesSectionProps) {
       </CardHeader>
       <CardContent className="p-3 sm:p-4 md:p-6">
         {routes.length === 0 ? (
-          <div className="text-center py-6 sm:py-8">
-            <MapPin className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-2 sm:mb-3" />
-            <p className="text-xs sm:text-sm text-muted-foreground">No routes added yet</p>
+          <div className="py-6 text-center sm:py-8">
+            <MapPin className="text-muted-foreground mx-auto mb-2 h-10 w-10 sm:mb-3 sm:h-12 sm:w-12" />
+            <p className="text-muted-foreground text-xs sm:text-sm">No routes added yet</p>
           </div>
         ) : (
-          <div className="border border-border rounded-lg overflow-hidden overflow-x-auto">
+          <div className="border-border overflow-hidden overflow-x-auto rounded-lg border">
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead className="text-xs sm:text-sm">Route</TableHead>
-                  <TableHead className="hidden md:table-cell text-xs sm:text-sm">Distance</TableHead>
-                  <TableHead className="hidden sm:table-cell text-xs sm:text-sm">Time</TableHead>
+                  <TableHead className="hidden text-xs sm:text-sm md:table-cell">Distance</TableHead>
+                  <TableHead className="hidden text-xs sm:table-cell sm:text-sm">Time</TableHead>
                   <TableHead className="text-xs sm:text-sm">Fare</TableHead>
-                  <TableHead className="hidden xs:table-cell text-xs sm:text-sm">Active</TableHead>
+                  <TableHead className="xs:table-cell hidden text-xs sm:text-sm">Active</TableHead>
                   <TableHead className="text-right text-xs sm:text-sm">Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -236,15 +256,19 @@ export function RoutesSection({ routes }: RoutesSectionProps) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: index * 0.03 }}
-                    className="border-b border-border"
+                    className="border-border border-b"
                   >
-                    <TableCell className="font-medium text-xs sm:text-sm">
+                    <TableCell className="text-xs font-medium sm:text-sm">
                       {route.from_location} → {route.to_location}
                     </TableCell>
-                    <TableCell className="hidden md:table-cell text-xs sm:text-sm">{route.distance_km} km</TableCell>
-                    <TableCell className="hidden sm:table-cell text-xs sm:text-sm">{route.estimated_time}</TableCell>
+                    <TableCell className="hidden text-xs sm:text-sm md:table-cell">
+                      {route.distance_km} km
+                    </TableCell>
+                    <TableCell className="hidden text-xs sm:table-cell sm:text-sm">
+                      {route.estimated_time}
+                    </TableCell>
                     <TableCell className="text-xs sm:text-sm">₹{route.base_fare?.toLocaleString()}</TableCell>
-                    <TableCell className="hidden xs:table-cell">
+                    <TableCell className="xs:table-cell hidden">
                       <Switch
                         checked={route.is_active}
                         onCheckedChange={() => toggleActive(route.id, route.is_active)}
@@ -252,11 +276,21 @@ export function RoutesSection({ routes }: RoutesSectionProps) {
                       />
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button variant="ghost" size="icon" className="h-7 w-7 sm:h-8 sm:w-8" onClick={() => openEdit(route)}>
-                        <Edit className="w-3 h-3 sm:w-4 sm:h-4" />
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 sm:h-8 sm:w-8"
+                        onClick={() => openEdit(route)}
+                      >
+                        <Edit className="h-3 w-3 sm:h-4 sm:w-4" />
                       </Button>
-                      <Button variant="ghost" size="icon" className="h-7 w-7 sm:h-8 sm:w-8" onClick={() => deleteRoute(route.id)}>
-                        <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 text-destructive" />
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 sm:h-8 sm:w-8"
+                        onClick={() => deleteRoute(route.id)}
+                      >
+                        <Trash2 className="text-destructive h-3 w-3 sm:h-4 sm:w-4" />
                       </Button>
                     </TableCell>
                   </motion.tr>

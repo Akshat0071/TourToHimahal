@@ -26,7 +26,7 @@ export function AuthorCard({ author }: AuthorCardProps) {
       viewport={{ once: true }}
       className="bg-muted rounded-xl p-6 md:p-8"
     >
-      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+      <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
         <Image
           src={author.avatar || "/placeholder.svg"}
           alt={author.name}
@@ -35,10 +35,10 @@ export function AuthorCard({ author }: AuthorCardProps) {
           className="rounded-full"
         />
         <div className="text-center sm:text-left">
-          <h3 className="text-xl font-serif font-bold text-foreground mb-2">About the Author</h3>
-          <p className="text-lg font-medium text-foreground mb-2">{author.name}</p>
+          <h3 className="text-foreground mb-2 font-serif text-xl font-bold">About the Author</h3>
+          <p className="text-foreground mb-2 text-lg font-medium">{author.name}</p>
           {author.bio && <p className="text-muted-foreground mb-4">{author.bio}</p>}
-          <div className="flex justify-center sm:justify-start gap-4">
+          <div className="flex justify-center gap-4 sm:justify-start">
             {author.social?.twitter && (
               <a
                 href={author.social.twitter}

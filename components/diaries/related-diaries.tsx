@@ -46,9 +46,9 @@ export function RelatedDiaries({ diaries }: RelatedDiariesProps) {
       viewport={{ once: true }}
       className="py-12"
     >
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl md:text-3xl font-serif font-bold text-foreground">Read Next</h2>
-        <div className="hidden md:flex gap-2">
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="text-foreground font-serif text-2xl font-bold md:text-3xl">Read Next</h2>
+        <div className="hidden gap-2 md:flex">
           <Button variant="outline" size="icon" onClick={() => scroll("left")}>
             <ChevronLeft className="h-4 w-4" />
           </Button>
@@ -60,11 +60,11 @@ export function RelatedDiaries({ diaries }: RelatedDiariesProps) {
 
       <div
         ref={scrollRef}
-        className="flex gap-6 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4"
+        className="scrollbar-hide -mx-4 flex gap-6 overflow-x-auto px-4 pb-4"
         style={{ scrollSnapType: "x mandatory" }}
       >
         {diaries.map((diary) => (
-          <div key={diary.slug} className="flex-shrink-0 w-[320px]" style={{ scrollSnapAlign: "start" }}>
+          <div key={diary.slug} className="w-[320px] flex-shrink-0" style={{ scrollSnapAlign: "start" }}>
             <DiaryCard diary={diary} />
           </div>
         ))}

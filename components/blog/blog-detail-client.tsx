@@ -52,7 +52,7 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
     {
       message: `Check out this article: ${post.title}`,
     },
-    settings?.whatsapp_number
+    settings?.whatsapp_number,
   )
 
   // Extract headings from markdown content to create table of contents
@@ -109,20 +109,20 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
   }
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="bg-background min-h-screen">
       {/* Back Button and Navigation */}
-      <div className="max-w-6xl mx-auto px-4 py-4 sm:py-6">
+      <div className="mx-auto max-w-6xl px-4 py-4 sm:py-6">
         <Link href="/blog">
-          <Button variant="ghost" className="gap-2 mb-4 hover:bg-muted">
-            <ArrowLeft className="w-4 h-4" />
+          <Button variant="ghost" className="hover:bg-muted mb-4 gap-2">
+            <ArrowLeft className="h-4 w-4" />
             Back to Blog
           </Button>
         </Link>
       </div>
 
       {/* Enhanced Hero Section */}
-      <div className="bg-linear-to-b from-slate-50 to-white dark:from-slate-900 dark:to-background">
-        <div className="max-w-6xl mx-auto px-4 py-8 sm:py-12">
+      <div className="dark:to-background bg-linear-to-b from-slate-50 to-white dark:from-slate-900">
+        <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
           <article className="space-y-6">
             {/* Category and Tags */}
             <div className="flex flex-wrap gap-2">
@@ -139,19 +139,19 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
             </div>
 
             {/* Title Only */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-foreground leading-tight">
+            <h1 className="text-foreground font-serif text-4xl leading-tight font-bold sm:text-5xl md:text-6xl">
               {post.title}
             </h1>
 
             {/* Author and Date Metadata */}
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-muted-foreground border-t border-border pt-6">
+            <div className="text-muted-foreground border-border flex flex-wrap items-center gap-4 border-t pt-6 text-sm sm:gap-6">
               <div className="flex items-center gap-2">
-                <User className="w-4 h-4" />
+                <User className="h-4 w-4" />
                 <span className="font-medium">{displayAuthor}</span>
               </div>
               {post.published_at && !isNaN(new Date(post.published_at).getTime()) && (
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
+                  <Calendar className="h-4 w-4" />
                   <span>{format(new Date(post.published_at), "MMM dd, yyyy")}</span>
                 </div>
               )}
@@ -161,13 +161,13 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
       </div>
 
       {/* Main Content with Sticky Sidebar */}
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="grid lg:grid-cols-12 gap-6 lg:gap-8">
+      <div className="mx-auto max-w-6xl px-4 py-12">
+        <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
           {/* Sidebar - On This Page (Sticky) */}
           {toc.length > 0 && (
             <div className="lg:col-span-3">
-              <div className="sticky top-20 bg-muted/50 backdrop-blur-sm rounded-2xl p-6 border border-border/50 max-h-[calc(100vh-100px)] overflow-y-auto">
-                <h3 className="font-semibold text-foreground mb-4 text-sm uppercase tracking-wide">
+              <div className="bg-muted/50 border-border/50 sticky top-20 max-h-[calc(100vh-100px)] overflow-y-auto rounded-2xl border p-6 backdrop-blur-sm">
+                <h3 className="text-foreground mb-4 text-sm font-semibold tracking-wide uppercase">
                   On This Page
                 </h3>
                 <nav className="space-y-2">
@@ -175,9 +175,9 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
                     <button
                       key={item.id}
                       onClick={() => handleTocClick(item.text)}
-                      className={`block w-full text-left px-3 py-2 rounded-lg transition-all duration-200 text-sm ${
+                      className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-all duration-200 ${
                         activeSection === item.text
-                          ? "bg-primary text-primary-foreground font-semibold shadow-lg shadow-primary/50 glow"
+                          ? "bg-primary text-primary-foreground shadow-primary/50 glow font-semibold shadow-lg"
                           : "text-muted-foreground hover:text-foreground hover:bg-background/50"
                       }`}
                       style={{
@@ -195,18 +195,18 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
 
           {/* Main Content Area */}
           <div className={`${toc.length > 0 ? "lg:col-span-6" : "lg:col-span-8"}`}>
-            <div ref={contentRef} className="prose prose-lg max-w-none dark:prose-invert">
+            <div ref={contentRef} className="prose prose-lg dark:prose-invert max-w-none">
               <MarkdownRenderer content={post.content} />
             </div>
 
             {/* Share and Tags Section */}
-            <div className="mt-12 pt-8 border-t border-border space-y-6">
+            <div className="border-border mt-12 space-y-6 border-t pt-8">
               {/* Share Buttons */}
               <div className="flex flex-wrap items-center gap-4">
-                <span className="font-semibold text-foreground">Share:</span>
+                <span className="text-foreground font-semibold">Share:</span>
                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                   <Button size="sm" variant="outline" className="gap-2 hover:bg-[#25D366]/10">
-                    <Share2 className="w-4 h-4" />
+                    <Share2 className="h-4 w-4" />
                     WhatsApp
                   </Button>
                 </a>
@@ -215,10 +215,14 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
               {/* All Tags */}
               {post.tags && post.tags.length > 0 && (
                 <div className="space-y-3">
-                  <h4 className="font-semibold text-foreground">Tags:</h4>
+                  <h4 className="text-foreground font-semibold">Tags:</h4>
                   <div className="flex flex-wrap gap-2">
                     {post.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary" className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition">
+                      <Badge
+                        key={tag}
+                        variant="secondary"
+                        className="hover:bg-primary hover:text-primary-foreground cursor-pointer transition"
+                      >
                         {tag}
                       </Badge>
                     ))}
@@ -231,19 +235,19 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
           {/* Right Sidebar - Related Posts */}
           {relatedPosts && relatedPosts.length > 0 && (
             <div className="lg:col-span-3">
-              <div className="sticky top-20 bg-muted/50 backdrop-blur-sm rounded-2xl p-6 border border-border/50">
-                <h3 className="font-semibold text-foreground mb-4 text-sm uppercase tracking-wide">
+              <div className="bg-muted/50 border-border/50 sticky top-20 rounded-2xl border p-6 backdrop-blur-sm">
+                <h3 className="text-foreground mb-4 text-sm font-semibold tracking-wide uppercase">
                   Related Articles
                 </h3>
                 <div className="space-y-4">
                   {relatedPosts.map((relatedPost) => (
                     <Link key={relatedPost.id} href={`/blog/${relatedPost.slug}`}>
-                      <div className="group cursor-pointer space-y-2 p-3 rounded-xl hover:bg-background transition-all duration-200 hover:shadow-md">
-                        <h4 className="font-medium text-sm text-foreground group-hover:text-primary transition line-clamp-2">
+                      <div className="group hover:bg-background cursor-pointer space-y-2 rounded-xl p-3 transition-all duration-200 hover:shadow-md">
+                        <h4 className="text-foreground group-hover:text-primary line-clamp-2 text-sm font-medium transition">
                           {relatedPost.title}
                         </h4>
                         {relatedPost.category && (
-                          <p className="text-xs text-muted-foreground font-medium">{relatedPost.category}</p>
+                          <p className="text-muted-foreground text-xs font-medium">{relatedPost.category}</p>
                         )}
                       </div>
                     </Link>
@@ -272,4 +276,3 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
     </main>
   )
 }
-

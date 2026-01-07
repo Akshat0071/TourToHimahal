@@ -49,24 +49,24 @@ export function AdminHeader({ title, description }: AdminHeaderProps) {
   }
 
   return (
-    <header className="bg-background border-b border-border px-6 py-4" suppressHydrationWarning>
+    <header className="bg-background border-border border-b px-6 py-4" suppressHydrationWarning>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-foreground">{title}</h1>
-          {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+          <h1 className="text-foreground font-serif text-2xl font-bold">{title}</h1>
+          {description && <p className="text-muted-foreground mt-1 text-sm">{description}</p>}
         </div>
 
         <div className="flex items-center gap-4" suppressHydrationWarning>
           {/* Search */}
-          <div className="hidden md:flex relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input placeholder="Search..." className="pl-9 w-64" />
+          <div className="relative hidden md:flex">
+            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+            <Input placeholder="Search..." className="w-64 pl-9" />
           </div>
 
           {/* Notifications */}
           <Button variant="ghost" size="icon" className="relative">
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full" />
+            <Bell className="h-5 w-5" />
+            <span className="bg-destructive absolute top-1 right-1 h-2 w-2 rounded-full" />
           </Button>
 
           {/* User Menu */}
@@ -74,14 +74,14 @@ export function AdminHeader({ title, description }: AdminHeaderProps) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button id={menuTriggerId} variant="ghost" size="icon" className="rounded-full">
-                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                    <User className="w-4 h-4 text-primary" />
+                  <div className="bg-primary/10 flex h-8 w-8 items-center justify-center rounded-full">
+                    <User className="text-primary h-4 w-4" />
                   </div>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuLabel>
-                  <p className="font-normal text-muted-foreground text-xs">Signed in as</p>
+                  <p className="text-muted-foreground text-xs font-normal">Signed in as</p>
                   <p className="truncate">{userEmail || "Admin"}</p>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />

@@ -13,7 +13,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
-import { CloudinaryUploadWidget, UploadedImagePreview, type CloudinaryUploadResult } from "./cloudinary-upload-widget"
+import {
+  CloudinaryUploadWidget,
+  UploadedImagePreview,
+  type CloudinaryUploadResult,
+} from "./cloudinary-upload-widget"
 import { registerMedia } from "@/lib/admin/media-client"
 
 interface Vehicle {
@@ -132,8 +136,8 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between p-3 sm:p-4 md:p-6">
-        <CardTitle className="flex items-center gap-1 sm:gap-2 text-sm sm:text-base lg:text-lg">
-          <Car className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+        <CardTitle className="flex items-center gap-1 text-sm sm:gap-2 sm:text-base lg:text-lg">
+          <Car className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
           <span className="truncate">Vehicles</span>
         </CardTitle>
         <Dialog
@@ -145,23 +149,27 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
           }}
         >
           <DialogTrigger asChild>
-            <Button size="sm" className="text-xs sm:text-sm shrink-0">
-              <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-              <span className="hidden xs:inline">Add Vehicle</span>
+            <Button size="sm" className="shrink-0 text-xs sm:text-sm">
+              <Plus className="mr-1 h-3 w-3 sm:mr-2 sm:h-4 sm:w-4" />
+              <span className="xs:inline hidden">Add Vehicle</span>
               <span className="xs:hidden">Add Vehicle</span>
             </Button>
           </DialogTrigger>
           <DialogContent
-            className="w-[calc(100vw-2rem)] sm:w-full max-h-[90vh] overflow-y-auto"
+            className="max-h-[90vh] w-[calc(100vw-2rem)] overflow-y-auto sm:w-full"
             onInteractOutside={(e) => e.preventDefault()}
           >
             <DialogHeader>
-              <DialogTitle className="text-base sm:text-lg">{editingVehicle ? "Edit Vehicle" : "Add Vehicle"}</DialogTitle>
+              <DialogTitle className="text-base sm:text-lg">
+                {editingVehicle ? "Edit Vehicle" : "Add Vehicle"}
+              </DialogTitle>
             </DialogHeader>
             <div className="space-y-3 sm:space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="text-xs sm:text-sm">Vehicle Name</Label>
+                  <Label htmlFor="name" className="text-xs sm:text-sm">
+                    Vehicle Name
+                  </Label>
                   <Input
                     id="name"
                     className="text-base sm:text-sm"
@@ -171,7 +179,9 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="type" className="text-xs sm:text-sm">Type</Label>
+                  <Label htmlFor="type" className="text-xs sm:text-sm">
+                    Type
+                  </Label>
                   <Input
                     id="type"
                     className="text-base sm:text-sm"
@@ -181,9 +191,11 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="capacity" className="text-xs sm:text-sm">Passenger Capacity</Label>
+                  <Label htmlFor="capacity" className="text-xs sm:text-sm">
+                    Passenger Capacity
+                  </Label>
                   <Input
                     id="capacity"
                     type="number"
@@ -194,20 +206,26 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="luggage" className="text-xs sm:text-sm">Luggage Capacity</Label>
+                  <Label htmlFor="luggage" className="text-xs sm:text-sm">
+                    Luggage Capacity
+                  </Label>
                   <Input
                     id="luggage"
                     type="number"
                     min="0"
                     className="text-base sm:text-sm"
                     value={formData.luggage_capacity}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, luggage_capacity: Number(e.target.value) }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, luggage_capacity: Number(e.target.value) }))
+                    }
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="features" className="text-xs sm:text-sm">Features (comma separated)</Label>
+                <Label htmlFor="features" className="text-xs sm:text-sm">
+                  Features (comma separated)
+                </Label>
                 <Input
                   id="features"
                   className="text-base sm:text-sm"
@@ -279,11 +297,17 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
                 )}
               </div>
 
-              <div className="flex flex-col xs:flex-row justify-end gap-2 pt-4">
-                <Button variant="outline" onClick={() => setIsOpen(false)} className="w-full xs:w-auto text-xs sm:text-sm">
+              <div className="xs:flex-row flex flex-col justify-end gap-2 pt-4">
+                <Button
+                  variant="outline"
+                  onClick={() => setIsOpen(false)}
+                  className="xs:w-auto w-full text-xs sm:text-sm"
+                >
                   Cancel
                 </Button>
-                <Button onClick={handleSubmit} className="w-full xs:w-auto text-xs sm:text-sm">{editingVehicle ? "Update" : "Add"} Vehicle</Button>
+                <Button onClick={handleSubmit} className="xs:w-auto w-full text-xs sm:text-sm">
+                  {editingVehicle ? "Update" : "Add"} Vehicle
+                </Button>
               </div>
             </div>
           </DialogContent>
@@ -291,23 +315,23 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
       </CardHeader>
       <CardContent className="p-3 sm:p-4 md:p-6">
         {vehicles.length === 0 ? (
-          <div className="text-center py-6 sm:py-8">
-            <Car className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-2 sm:mb-3" />
-            <p className="text-xs sm:text-sm text-muted-foreground">No vehicles added yet</p>
+          <div className="py-6 text-center sm:py-8">
+            <Car className="text-muted-foreground mx-auto mb-2 h-10 w-10 sm:mb-3 sm:h-12 sm:w-12" />
+            <p className="text-muted-foreground text-xs sm:text-sm">No vehicles added yet</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
             {vehicles.map((vehicle, index) => (
               <motion.div
                 key={vehicle.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className="p-3 sm:p-4 border border-border rounded-xl"
+                className="border-border rounded-xl border p-3 sm:p-4"
               >
-                <div className="flex items-start justify-between mb-2 sm:mb-3">
+                <div className="mb-2 flex items-start justify-between sm:mb-3">
                   <div>
-                    <h4 className="font-medium text-xs sm:text-sm text-foreground">{vehicle.name}</h4>
+                    <h4 className="text-foreground text-xs font-medium sm:text-sm">{vehicle.name}</h4>
                     <Badge variant="outline" className="mt-1 text-[10px] sm:text-xs">
                       {vehicle.type}
                     </Badge>
@@ -318,31 +342,41 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
                     className="scale-90 sm:scale-100"
                   />
                 </div>
-                <div className="text-xs sm:text-sm text-muted-foreground space-y-1">
+                <div className="text-muted-foreground space-y-1 text-xs sm:text-sm">
                   <p>
                     {vehicle.capacity} passengers • {vehicle.luggage_capacity || 0} bags
                   </p>
                   {vehicle.features && vehicle.features.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mt-1">
+                    <div className="mt-1 flex flex-wrap gap-1">
                       {vehicle.features.slice(0, 3).map((feature, i) => (
-                        <Badge key={i} variant="secondary" className="text-[10px] px-1 h-5">
+                        <Badge key={i} variant="secondary" className="h-5 px-1 text-[10px]">
                           {feature}
                         </Badge>
                       ))}
                       {vehicle.features.length > 3 && (
-                        <span className="text-[10px] text-muted-foreground self-center">
+                        <span className="text-muted-foreground self-center text-[10px]">
                           +{vehicle.features.length - 3} more
                         </span>
                       )}
                     </div>
                   )}
                 </div>
-                <div className="flex gap-2 mt-2 sm:mt-3">
-                  <Button variant="ghost" size="sm" onClick={() => openEdit(vehicle)} className="h-8 px-2 sm:h-9 sm:px-3">
-                    <Edit className="w-3 h-3 sm:w-4 sm:h-4" />
+                <div className="mt-2 flex gap-2 sm:mt-3">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => openEdit(vehicle)}
+                    className="h-8 px-2 sm:h-9 sm:px-3"
+                  >
+                    <Edit className="h-3 w-3 sm:h-4 sm:w-4" />
                   </Button>
-                  <Button variant="ghost" size="sm" onClick={() => deleteVehicle(vehicle.id)} className="h-8 px-2 sm:h-9 sm:px-3">
-                    <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 text-destructive" />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => deleteVehicle(vehicle.id)}
+                    className="h-8 px-2 sm:h-9 sm:px-3"
+                  >
+                    <Trash2 className="text-destructive h-3 w-3 sm:h-4 sm:w-4" />
                   </Button>
                 </div>
               </motion.div>
@@ -350,6 +384,6 @@ export function VehiclesSection({ vehicles }: VehiclesSectionProps) {
           </div>
         )}
       </CardContent>
-    </Card >
+    </Card>
   )
 }

@@ -72,9 +72,9 @@ export function DiariesTable({ diaries }: DiariesTableProps) {
 
   if (diaries.length === 0) {
     return (
-      <div className="bg-background border border-border rounded-xl p-12 text-center">
-        <BookOpen className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-        <h3 className="text-lg font-medium text-foreground mb-2">No travel diaries yet</h3>
+      <div className="bg-background border-border rounded-xl border p-12 text-center">
+        <BookOpen className="text-muted-foreground mx-auto mb-4 h-16 w-16" />
+        <h3 className="text-foreground mb-2 text-lg font-medium">No travel diaries yet</h3>
         <p className="text-muted-foreground mb-4">Add traveler stories and experiences.</p>
         <Button asChild>
           <Link href="/admin/diaries/new">Add Diary</Link>
@@ -98,32 +98,32 @@ export function DiariesTable({ diaries }: DiariesTableProps) {
               <CardContent className="p-3">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="font-medium text-foreground truncate">{diary.title}</p>
-                    <p className="text-xs text-muted-foreground truncate">/{diary.slug}</p>
+                    <p className="text-foreground truncate font-medium">{diary.title}</p>
+                    <p className="text-muted-foreground truncate text-xs">/{diary.slug}</p>
                   </div>
 
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
-                        <MoreHorizontal className="w-4 h-4" />
+                        <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem asChild>
                         <Link href={`/diaries/${diary.slug}`} target="_blank">
-                          <Eye className="w-4 h-4 mr-2" />
+                          <Eye className="mr-2 h-4 w-4" />
                           Preview
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
                         <Link href={`/admin/diaries/${diary.id}`}>
-                          <Edit className="w-4 h-4 mr-2" />
+                          <Edit className="mr-2 h-4 w-4" />
                           Edit
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem className="text-destructive" onClick={() => deleteDiary(diary.id)}>
-                        <Trash2 className="w-4 h-4 mr-2" />
+                        <Trash2 className="mr-2 h-4 w-4" />
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -131,24 +131,26 @@ export function DiariesTable({ diaries }: DiariesTableProps) {
                 </div>
 
                 <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className="text-xs text-muted-foreground">Author</span>
-                    <span className="text-sm font-medium truncate">{diary.author_name}</span>
+                  <div className="flex min-w-0 items-center gap-2">
+                    <span className="text-muted-foreground text-xs">Author</span>
+                    <span className="truncate text-sm font-medium">{diary.author_name}</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">{format(new Date(diary.created_at), "MMM d, yyyy")}</p>
+                  <p className="text-muted-foreground text-xs">
+                    {format(new Date(diary.created_at), "MMM d, yyyy")}
+                  </p>
                 </div>
 
                 <div className="mt-3 flex flex-col gap-2">
-                  <Badge variant="outline" className="text-xs truncate w-fit max-w-full">
+                  <Badge variant="outline" className="w-fit max-w-full truncate text-xs">
                     {diary.destination || "Various"}
                   </Badge>
 
-                  <div className="flex items-center justify-end gap-2 min-w-0">
+                  <div className="flex min-w-0 items-center justify-end gap-2">
                     <Switch
                       checked={diary.is_published}
                       onCheckedChange={() => togglePublished(diary.id, diary.is_published)}
                     />
-                    <span className="text-sm text-muted-foreground whitespace-nowrap">
+                    <span className="text-muted-foreground text-sm whitespace-nowrap">
                       {diary.is_published ? "Published" : "Draft"}
                     </span>
                   </div>
@@ -160,7 +162,7 @@ export function DiariesTable({ diaries }: DiariesTableProps) {
       </div>
 
       {/* Desktop table */}
-      <div className="hidden md:block bg-background border border-border rounded-xl overflow-hidden">
+      <div className="bg-background border-border hidden overflow-hidden rounded-xl border md:block">
         <Table>
           <TableHeader>
             <TableRow>
@@ -179,12 +181,12 @@ export function DiariesTable({ diaries }: DiariesTableProps) {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.03 }}
-                className="border-b border-border hover:bg-muted/50 transition-colors"
+                className="border-border hover:bg-muted/50 border-b transition-colors"
               >
                 <TableCell>
                   <div>
-                    <p className="font-medium text-foreground">{diary.title}</p>
-                    <p className="text-sm text-muted-foreground">/{diary.slug}</p>
+                    <p className="text-foreground font-medium">{diary.title}</p>
+                    <p className="text-muted-foreground text-sm">/{diary.slug}</p>
                   </div>
                 </TableCell>
                 <TableCell>{diary.author_name}</TableCell>
@@ -197,35 +199,37 @@ export function DiariesTable({ diaries }: DiariesTableProps) {
                       checked={diary.is_published}
                       onCheckedChange={() => togglePublished(diary.id, diary.is_published)}
                     />
-                    <span className="text-sm text-muted-foreground">{diary.is_published ? "Published" : "Draft"}</span>
+                    <span className="text-muted-foreground text-sm">
+                      {diary.is_published ? "Published" : "Draft"}
+                    </span>
                   </div>
                 </TableCell>
-                <TableCell className="text-sm text-muted-foreground">
+                <TableCell className="text-muted-foreground text-sm">
                   {format(new Date(diary.created_at), "MMM d, yyyy")}
                 </TableCell>
                 <TableCell className="text-right">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <MoreHorizontal className="w-4 h-4" />
+                        <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem asChild>
                         <Link href={`/diaries/${diary.slug}`} target="_blank">
-                          <Eye className="w-4 h-4 mr-2" />
+                          <Eye className="mr-2 h-4 w-4" />
                           Preview
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
                         <Link href={`/admin/diaries/${diary.id}`}>
-                          <Edit className="w-4 h-4 mr-2" />
+                          <Edit className="mr-2 h-4 w-4" />
                           Edit
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem className="text-destructive" onClick={() => deleteDiary(diary.id)}>
-                        <Trash2 className="w-4 h-4 mr-2" />
+                        <Trash2 className="mr-2 h-4 w-4" />
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>

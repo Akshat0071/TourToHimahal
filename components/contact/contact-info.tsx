@@ -69,7 +69,12 @@ export function ContactInfo() {
     .join(" • ")
 
   return (
-    <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-4 sm:space-y-6">
+    <motion.div
+      variants={staggerContainer}
+      initial="hidden"
+      animate="visible"
+      className="space-y-4 sm:space-y-6"
+    >
       {/* Contact Cards */}
       <div className="space-y-6">
         {contactInfo.map((item) => (
@@ -79,19 +84,21 @@ export function ContactInfo() {
             target={item.href.startsWith("http") ? "_blank" : undefined}
             rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
             variants={fadeInUp}
-            className={`flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-linear-to-br ${item.bgColor} border border-border hover:border-saffron/30 hover:shadow-lg transition-all group`}
+            className={`flex items-start gap-3 rounded-xl bg-linear-to-br p-3 sm:gap-4 sm:rounded-2xl sm:p-4 ${item.bgColor} border-border hover:border-saffron/30 group border transition-all hover:shadow-lg`}
           >
             <div
-              className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-linear-to-br ${item.color} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-md`}
+              className={`h-10 w-10 rounded-lg bg-linear-to-br sm:h-12 sm:w-12 sm:rounded-xl ${item.color} flex shrink-0 items-center justify-center shadow-md transition-transform group-hover:scale-110`}
             >
-              <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+              <item.icon className="h-4 w-4 text-white sm:h-5 sm:w-5" />
             </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-0.5 sm:gap-2">
-                <p className="text-xs sm:text-sm text-muted-foreground font-medium">{item.label}</p>
-                <span className="text-[10px] sm:text-xs text-muted-foreground hidden sm:block">{item.description}</span>
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
+                <p className="text-muted-foreground text-xs font-medium sm:text-sm">{item.label}</p>
+                <span className="text-muted-foreground hidden text-[10px] sm:block sm:text-xs">
+                  {item.description}
+                </span>
               </div>
-              <p className="font-semibold text-foreground group-hover:text-saffron transition-colors text-sm sm:text-base truncate">
+              <p className="text-foreground group-hover:text-saffron truncate text-sm font-semibold transition-colors sm:text-base">
                 {item.value}
               </p>
             </div>
@@ -102,15 +109,15 @@ export function ContactInfo() {
       {/* Office Hours */}
       <motion.div
         variants={fadeInUp}
-        className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-linear-to-br from-mountain-blue/10 to-forest-green/5 border border-mountain-blue/20"
+        className="from-mountain-blue/10 to-forest-green/5 border-mountain-blue/20 rounded-xl border bg-linear-to-br p-2.5 sm:rounded-2xl sm:p-3"
       >
         <div className="flex items-start gap-3 sm:gap-4">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-mountain-blue/20 flex items-center justify-center shrink-0">
-            <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-mountain-blue" />
+          <div className="bg-mountain-blue/20 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg sm:h-10 sm:w-10 sm:rounded-xl">
+            <Clock className="text-mountain-blue h-4 w-4 sm:h-5 sm:w-5" />
           </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-foreground text-sm sm:text-base leading-tight">Office Hours</h3>
-            <p className="mt-1.5 text-xs sm:text-sm text-muted-foreground leading-snug wrap-break-word">
+          <div className="min-w-0 flex-1">
+            <h3 className="text-foreground text-sm leading-tight font-semibold sm:text-base">Office Hours</h3>
+            <p className="text-muted-foreground mt-1.5 text-xs leading-snug wrap-break-word sm:text-sm">
               {officeHoursText || businessHours}
             </p>
           </div>
@@ -120,17 +127,19 @@ export function ContactInfo() {
       {/* Response Time SLA */}
       <motion.div
         variants={fadeInUp}
-        className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-linear-to-br from-forest-green/10 to-golden-yellow/5 border border-forest-green/20"
+        className="from-forest-green/10 to-golden-yellow/5 border-forest-green/20 rounded-xl border bg-linear-to-br p-2.5 sm:rounded-2xl sm:p-3"
       >
         <div className="flex items-start gap-3 sm:gap-4">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-forest-green/20 flex items-center justify-center shrink-0">
-            <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-forest-green" />
+          <div className="bg-forest-green/20 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg sm:h-10 sm:w-10 sm:rounded-xl">
+            <Shield className="text-forest-green h-4 w-4 sm:h-5 sm:w-5" />
           </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-foreground text-sm sm:text-base leading-tight">Response Guarantee</h3>
-            <p className="mt-1.5 text-xs sm:text-sm text-muted-foreground leading-snug">
-              We respond within <span className="font-semibold text-forest-green">12 hours</span>. For urgent bookings,
-              use WhatsApp.
+          <div className="min-w-0 flex-1">
+            <h3 className="text-foreground text-sm leading-tight font-semibold sm:text-base">
+              Response Guarantee
+            </h3>
+            <p className="text-muted-foreground mt-1.5 text-xs leading-snug sm:text-sm">
+              We respond within <span className="text-forest-green font-semibold">12 hours</span>. For urgent
+              bookings, use WhatsApp.
             </p>
           </div>
         </div>
@@ -141,14 +150,14 @@ export function ContactInfo() {
         <Button
           asChild
           size="lg"
-          className="w-full bg-[#25D366] hover:bg-[#25D366]/90 text-white rounded-full h-11 sm:h-12 text-sm sm:text-base"
+          className="h-11 w-full rounded-full bg-[#25D366] text-sm text-white hover:bg-[#25D366]/90 sm:h-12 sm:text-base"
         >
           <a
             href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, "")}?text=Hi!%20I%20want%20to%20plan%20a%20trip%20to%20Himachal.`}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+            <MessageCircle className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
             Chat on WhatsApp
           </a>
         </Button>

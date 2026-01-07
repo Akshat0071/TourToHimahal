@@ -13,7 +13,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "sonner"
-import { CloudinaryUploadWidget, UploadedImagePreview, type CloudinaryUploadResult } from "./cloudinary-upload-widget"
+import {
+  CloudinaryUploadWidget,
+  UploadedImagePreview,
+  type CloudinaryUploadResult,
+} from "./cloudinary-upload-widget"
 import { registerMedia } from "@/lib/admin/media-client"
 
 interface PackageFormProps {
@@ -77,27 +81,35 @@ export function PackageForm({ initialData }: PackageFormProps) {
   const [exclusionsText, setExclusionsText] = useState(initialData?.exclusions?.join("\n") || "")
 
   const [images, setImages] = useState<string[]>(initialData?.images || [])
-  const [itinerary, setItinerary] = useState<Array<{
-    day: number
-    title: string
-    description: string
-    activities: string[]
-    subtitles?: Array<{ title: string; highlight?: string; description: string; activities: string[] }>
-  }>>([])
+  const [itinerary, setItinerary] = useState<
+    Array<{
+      day: number
+      title: string
+      description: string
+      activities: string[]
+      subtitles?: Array<{ title: string; highlight?: string; description: string; activities: string[] }>
+    }>
+  >([])
 
   useEffect(() => {
     setIsClient(true)
     // Parse itinerary from initialData if it exists
-    if (initialData && typeof initialData === 'object' && 'itinerary' in initialData && initialData.itinerary) {
+    if (
+      initialData &&
+      typeof initialData === "object" &&
+      "itinerary" in initialData &&
+      initialData.itinerary
+    ) {
       try {
-        const parsedItinerary = typeof initialData.itinerary === 'string'
-          ? JSON.parse(initialData.itinerary)
-          : initialData.itinerary
+        const parsedItinerary =
+          typeof initialData.itinerary === "string"
+            ? JSON.parse(initialData.itinerary)
+            : initialData.itinerary
         if (Array.isArray(parsedItinerary)) {
           setItinerary(parsedItinerary)
         }
       } catch (e) {
-        console.error('Failed to parse itinerary:', e)
+        console.error("Failed to parse itinerary:", e)
       }
     }
   }, [])
@@ -124,12 +136,12 @@ export function PackageForm({ initialData }: PackageFormProps) {
       title: "",
       description: "",
       activities: [],
-      subtitles: []
+      subtitles: [],
     }
     setItinerary([...itinerary, newDay])
   }
 
-  const updateItineraryDay = (index: number, field: keyof typeof itinerary[0], value: any) => {
+  const updateItineraryDay = (index: number, field: keyof (typeof itinerary)[0], value: any) => {
     const updated = [...itinerary]
     updated[index] = { ...updated[index], [field]: value }
     setItinerary(updated)
@@ -144,12 +156,17 @@ export function PackageForm({ initialData }: PackageFormProps) {
       title: "",
       highlight: "",
       description: "",
-      activities: []
+      activities: [],
     })
     setItinerary(updated)
   }
 
-  const updateSubtitle = (dayIndex: number, subtitleIndex: number, field: 'title' | 'highlight' | 'description', value: string) => {
+  const updateSubtitle = (
+    dayIndex: number,
+    subtitleIndex: number,
+    field: "title" | "highlight" | "description",
+    value: string,
+  ) => {
     const updated = [...itinerary]
     if (updated[dayIndex].subtitles) {
       updated[dayIndex].subtitles![subtitleIndex][field] = value
@@ -177,7 +194,9 @@ export function PackageForm({ initialData }: PackageFormProps) {
   const removeSubtitleActivity = (dayIndex: number, subtitleIndex: number, activityIndex: number) => {
     const updated = [...itinerary]
     if (updated[dayIndex].subtitles) {
-      updated[dayIndex].subtitles![subtitleIndex].activities = updated[dayIndex].subtitles![subtitleIndex].activities.filter((_, i) => i !== activityIndex)
+      updated[dayIndex].subtitles![subtitleIndex].activities = updated[dayIndex].subtitles![
+        subtitleIndex
+      ].activities.filter((_, i) => i !== activityIndex)
       setItinerary(updated)
     }
   }
@@ -185,7 +204,9 @@ export function PackageForm({ initialData }: PackageFormProps) {
   const removeItineraryDay = (index: number) => {
     const updated = itinerary.filter((_, i) => i !== index)
     // Renumber days
-    updated.forEach((day, i) => { day.day = i + 1 })
+    updated.forEach((day, i) => {
+      day.day = i + 1
+    })
     setItinerary(updated)
   }
 
@@ -217,12 +238,17 @@ export function PackageForm({ initialData }: PackageFormProps) {
       const supabase = createClient()
 
       // Convert textarea strings back to arrays
-      const highlightsArray = highlightsText.split("\n").filter(line => line.trim())
-      const inclusionsArray = inclusionsText.split("\n").filter(line => line.trim())
-      const exclusionsArray = exclusionsText.split("\n").filter(line => line.trim())
+      const highlightsArray = highlightsText.split("\n").filter((line) => line.trim())
+      const inclusionsArray = inclusionsText.split("\n").filter((line) => line.trim())
+      const exclusionsArray = exclusionsText.split("\n").filter((line) => line.trim())
+
+      const normalizedFormData = {
+        ...formData,
+        is_featured: formData.is_active ? formData.is_featured : false,
+      }
 
       const packageData = {
-        ...formData,
+        ...normalizedFormData,
         highlights: highlightsArray,
         inclusions: inclusionsArray,
         exclusions: exclusionsArray,
@@ -260,15 +286,17 @@ export function PackageForm({ initialData }: PackageFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 w-full">
+    <form onSubmit={handleSubmit} className="w-full space-y-4 sm:space-y-6">
       <Card>
         <CardHeader className="p-3 sm:p-6">
           <CardTitle className="text-lg sm:text-xl">Basic Information</CardTitle>
         </CardHeader>
-        <CardContent className="p-3 sm:p-6 space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <CardContent className="space-y-4 p-3 sm:p-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="title" className="text-xs sm:text-sm">Package Title *</Label>
+              <Label htmlFor="title" className="text-xs sm:text-sm">
+                Package Title *
+              </Label>
               <Input
                 id="title"
                 value={formData.title}
@@ -279,7 +307,9 @@ export function PackageForm({ initialData }: PackageFormProps) {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="slug" className="text-xs sm:text-sm">URL Slug *</Label>
+              <Label htmlFor="slug" className="text-xs sm:text-sm">
+                URL Slug *
+              </Label>
               <Input
                 id="slug"
                 value={formData.slug}
@@ -292,7 +322,9 @@ export function PackageForm({ initialData }: PackageFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="short_description" className="text-xs sm:text-sm">Short Description</Label>
+            <Label htmlFor="short_description" className="text-xs sm:text-sm">
+              Short Description
+            </Label>
             <Textarea
               id="short_description"
               value={formData.short_description}
@@ -304,7 +336,9 @@ export function PackageForm({ initialData }: PackageFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description" className="text-xs sm:text-sm">Full Description *</Label>
+            <Label htmlFor="description" className="text-xs sm:text-sm">
+              Full Description *
+            </Label>
             <Textarea
               id="description"
               value={formData.description}
@@ -322,10 +356,12 @@ export function PackageForm({ initialData }: PackageFormProps) {
         <CardHeader className="p-3 sm:p-6">
           <CardTitle className="text-lg sm:text-xl">Pricing & Duration</CardTitle>
         </CardHeader>
-        <CardContent className="p-3 sm:p-6 space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <CardContent className="space-y-4 p-3 sm:p-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div className="space-y-2">
-              <Label htmlFor="price" className="text-xs sm:text-sm">Price (₹) *</Label>
+              <Label htmlFor="price" className="text-xs sm:text-sm">
+                Price (₹) *
+              </Label>
               <Input
                 id="price"
                 type="number"
@@ -338,19 +374,25 @@ export function PackageForm({ initialData }: PackageFormProps) {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="original_price" className="text-xs sm:text-sm">Original Price (₹)</Label>
+              <Label htmlFor="original_price" className="text-xs sm:text-sm">
+                Original Price (₹)
+              </Label>
               <Input
                 id="original_price"
                 type="number"
                 min="0"
                 value={formData.original_price || ""}
-                onChange={(e) => setFormData((prev) => ({ ...prev, original_price: Number(e.target.value) || 0 }))}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, original_price: Number(e.target.value) || 0 }))
+                }
                 placeholder="15999"
                 className="text-base sm:text-sm"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="duration" className="text-xs sm:text-sm">Duration *</Label>
+              <Label htmlFor="duration" className="text-xs sm:text-sm">
+                Duration *
+              </Label>
               <Input
                 id="duration"
                 value={formData.duration}
@@ -362,9 +404,11 @@ export function PackageForm({ initialData }: PackageFormProps) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="region" className="text-xs sm:text-sm">Region</Label>
+              <Label htmlFor="region" className="text-xs sm:text-sm">
+                Region
+              </Label>
               <Input
                 id="region"
                 value={formData.region}
@@ -374,13 +418,17 @@ export function PackageForm({ initialData }: PackageFormProps) {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="min_persons" className="text-xs sm:text-sm">Minimum Persons</Label>
+              <Label htmlFor="min_persons" className="text-xs sm:text-sm">
+                Minimum Persons
+              </Label>
               <Input
                 id="min_persons"
                 type="number"
                 min="1"
                 value={formData.min_persons}
-                onChange={(e) => setFormData((prev) => ({ ...prev, min_persons: Number(e.target.value) || 1 }))}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, min_persons: Number(e.target.value) || 1 }))
+                }
                 placeholder="2"
                 className="text-base sm:text-sm"
               />
@@ -388,7 +436,9 @@ export function PackageForm({ initialData }: PackageFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="category" className="text-xs sm:text-sm">Category</Label>
+            <Label htmlFor="category" className="text-xs sm:text-sm">
+              Category
+            </Label>
             <Select
               value={formData.category}
               onValueChange={(value) => setFormData((prev) => ({ ...prev, category: value }))}
@@ -412,11 +462,11 @@ export function PackageForm({ initialData }: PackageFormProps) {
         <CardHeader className="p-3 sm:p-6">
           <CardTitle className="text-lg sm:text-xl">Package Details</CardTitle>
         </CardHeader>
-        <CardContent className="p-3 sm:p-6 space-y-6">
+        <CardContent className="space-y-6 p-3 sm:p-6">
           {/* Highlights */}
           <div className="space-y-2">
             <Label className="text-xs sm:text-sm">Highlights</Label>
-            <p className="text-xs text-muted-foreground mb-1">Enter each highlight on a new line.</p>
+            <p className="text-muted-foreground mb-1 text-xs">Enter each highlight on a new line.</p>
             <Textarea
               value={highlightsText}
               onChange={(e) => setHighlightsText(e.target.value)}
@@ -429,7 +479,7 @@ export function PackageForm({ initialData }: PackageFormProps) {
           {/* Inclusions */}
           <div className="space-y-2">
             <Label className="text-xs sm:text-sm">Inclusions</Label>
-            <p className="text-xs text-muted-foreground mb-1">Enter each inclusion on a new line.</p>
+            <p className="text-muted-foreground mb-1 text-xs">Enter each inclusion on a new line.</p>
             <Textarea
               value={inclusionsText}
               onChange={(e) => setInclusionsText(e.target.value)}
@@ -442,7 +492,7 @@ export function PackageForm({ initialData }: PackageFormProps) {
           {/* Exclusions */}
           <div className="space-y-2">
             <Label className="text-xs sm:text-sm">Exclusions</Label>
-            <p className="text-xs text-muted-foreground mb-1">Enter each exclusion on a new line.</p>
+            <p className="text-muted-foreground mb-1 text-xs">Enter each exclusion on a new line.</p>
             <Textarea
               value={exclusionsText}
               onChange={(e) => setExclusionsText(e.target.value)}
@@ -459,7 +509,7 @@ export function PackageForm({ initialData }: PackageFormProps) {
         <CardHeader className="p-3 sm:p-6">
           <CardTitle className="text-lg sm:text-xl">Package Images</CardTitle>
         </CardHeader>
-        <CardContent className="p-3 sm:p-6 space-y-4">
+        <CardContent className="space-y-4 p-3 sm:p-6">
           <div className="space-y-2">
             <Label className="text-xs sm:text-sm">Upload Images (up to 5)</Label>
             {images.length < 5 && (
@@ -500,19 +550,19 @@ export function PackageForm({ initialData }: PackageFormProps) {
           </div>
           {images.length > 0 && (
             <div>
-              <p className="text-xs sm:text-sm text-muted-foreground mb-3">
+              <p className="text-muted-foreground mb-3 text-xs sm:text-sm">
                 {images.length} / 5 images uploaded
               </p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4">
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-4">
                 {images.map((imageUrl, index) => (
-                  <div key={index} className="relative group">
+                  <div key={index} className="group relative">
                     <UploadedImagePreview
                       imageUrl={imageUrl}
                       onRemove={() => setImages(images.filter((_, i) => i !== index))}
                       alt={`Package image ${index + 1}`}
                     />
                     {index === 0 && (
-                      <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
+                      <div className="absolute top-2 left-2 rounded bg-blue-500 px-2 py-1 text-xs text-white">
                         Cover
                       </div>
                     )}
@@ -530,22 +580,22 @@ export function PackageForm({ initialData }: PackageFormProps) {
           <div className="flex items-center justify-between">
             <CardTitle>Day-by-Day Itinerary</CardTitle>
             <Button type="button" variant="outline" size="sm" onClick={addItineraryDay}>
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="mr-2 h-4 w-4" />
               Add Day
             </Button>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           {itinerary.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
+            <div className="text-muted-foreground py-8 text-center">
               <p>No itinerary added yet. Click "Add Day" to start building your package itinerary.</p>
             </div>
           ) : (
             itinerary.map((day, dayIndex) => (
               <Card key={dayIndex} className="bg-muted/30">
-                <CardContent className="pt-6 space-y-4">
+                <CardContent className="space-y-4 pt-6">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-semibold text-lg">Day {day.day}</h4>
+                    <h4 className="text-lg font-semibold">Day {day.day}</h4>
                     <Button
                       type="button"
                       variant="ghost"
@@ -553,7 +603,7 @@ export function PackageForm({ initialData }: PackageFormProps) {
                       onClick={() => removeItineraryDay(dayIndex)}
                       className="text-destructive hover:text-destructive"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
 
@@ -562,22 +612,17 @@ export function PackageForm({ initialData }: PackageFormProps) {
                     <Input
                       id={`day-${dayIndex}-title`}
                       value={day.title}
-                      onChange={(e) => updateItineraryDay(dayIndex, 'title', e.target.value)}
+                      onChange={(e) => updateItineraryDay(dayIndex, "title", e.target.value)}
                       placeholder="e.g., Arrival in Manali"
                     />
                   </div>
 
                   {/* Subtitles Section */}
-                  <div className="mt-4 pt-4 border-t border-border space-y-3">
+                  <div className="border-border mt-4 space-y-3 border-t pt-4">
                     <div className="flex items-center justify-between">
                       <Label className="text-base font-semibold">Sub-sections</Label>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => addSubtitle(dayIndex)}
-                      >
-                        <Plus className="w-4 h-4 mr-1" />
+                      <Button type="button" variant="outline" size="sm" onClick={() => addSubtitle(dayIndex)}>
+                        <Plus className="mr-1 h-4 w-4" />
                         Add Sub-section
                       </Button>
                     </div>
@@ -586,7 +631,7 @@ export function PackageForm({ initialData }: PackageFormProps) {
                       <div className="space-y-3">
                         {day.subtitles.map((subtitle, subtitleIndex) => (
                           <Card key={subtitleIndex} className="bg-background border">
-                            <CardContent className="pt-4 space-y-3">
+                            <CardContent className="space-y-3 pt-4">
                               <div className="flex items-center justify-between">
                                 <p className="text-sm font-medium">Sub-section {subtitleIndex + 1}</p>
                                 <Button
@@ -596,26 +641,34 @@ export function PackageForm({ initialData }: PackageFormProps) {
                                   onClick={() => removeSubtitle(dayIndex, subtitleIndex)}
                                   className="text-destructive hover:text-destructive"
                                 >
-                                  <Trash2 className="w-4 h-4" />
+                                  <Trash2 className="h-4 w-4" />
                                 </Button>
                               </div>
 
                               <div className="space-y-2">
-                                <Label htmlFor={`sub-${dayIndex}-${subtitleIndex}-title`}>Sub-section Title *</Label>
+                                <Label htmlFor={`sub-${dayIndex}-${subtitleIndex}-title`}>
+                                  Sub-section Title *
+                                </Label>
                                 <Input
                                   id={`sub-${dayIndex}-${subtitleIndex}-title`}
                                   value={subtitle.title}
-                                  onChange={(e) => updateSubtitle(dayIndex, subtitleIndex, 'title', e.target.value)}
+                                  onChange={(e) =>
+                                    updateSubtitle(dayIndex, subtitleIndex, "title", e.target.value)
+                                  }
                                   placeholder="e.g., Morning Trek to Hadimba Temple"
                                 />
                               </div>
 
                               <div className="space-y-2">
-                                <Label htmlFor={`sub-${dayIndex}-${subtitleIndex}-highlight`}>Highlight / Caution (Optional)</Label>
+                                <Label htmlFor={`sub-${dayIndex}-${subtitleIndex}-highlight`}>
+                                  Highlight / Caution (Optional)
+                                </Label>
                                 <Input
                                   id={`sub-${dayIndex}-${subtitleIndex}-highlight`}
                                   value={subtitle.highlight || ""}
-                                  onChange={(e) => updateSubtitle(dayIndex, subtitleIndex, 'highlight', e.target.value)}
+                                  onChange={(e) =>
+                                    updateSubtitle(dayIndex, subtitleIndex, "highlight", e.target.value)
+                                  }
                                   placeholder="e.g., Bring sun protection, altitude may affect some travelers"
                                 />
                               </div>
@@ -625,7 +678,9 @@ export function PackageForm({ initialData }: PackageFormProps) {
                                 <Textarea
                                   id={`sub-${dayIndex}-${subtitleIndex}-desc`}
                                   value={subtitle.description}
-                                  onChange={(e) => updateSubtitle(dayIndex, subtitleIndex, 'description', e.target.value)}
+                                  onChange={(e) =>
+                                    updateSubtitle(dayIndex, subtitleIndex, "description", e.target.value)
+                                  }
                                   placeholder="Enter each point on a new line..."
                                   rows={3}
                                 />
@@ -654,22 +709,24 @@ export function PackageForm({ initialData }: PackageFormProps) {
                                       input.value = ""
                                     }}
                                   >
-                                    <Plus className="w-4 h-4" />
+                                    <Plus className="h-4 w-4" />
                                   </Button>
                                 </div>
-                                <div className="flex flex-wrap gap-2 mt-2">
+                                <div className="mt-2 flex flex-wrap gap-2">
                                   {subtitle.activities.map((activity, actIndex) => (
                                     <span
                                       key={actIndex}
-                                      className="inline-flex items-center gap-1 bg-background text-foreground px-3 py-1 rounded-full text-sm border"
+                                      className="bg-background text-foreground inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm"
                                     >
                                       {activity}
                                       <button
                                         type="button"
-                                        onClick={() => removeSubtitleActivity(dayIndex, subtitleIndex, actIndex)}
+                                        onClick={() =>
+                                          removeSubtitleActivity(dayIndex, subtitleIndex, actIndex)
+                                        }
                                         className="hover:text-red-500"
                                       >
-                                        <X className="w-3 h-3" />
+                                        <X className="h-3 w-3" />
                                       </button>
                                     </span>
                                   ))}
@@ -680,7 +737,9 @@ export function PackageForm({ initialData }: PackageFormProps) {
                         ))}
                       </div>
                     ) : (
-                      <p className="text-xs text-muted-foreground italic">No sub-sections added yet. Click "Add Sub-section" to add one.</p>
+                      <p className="text-muted-foreground text-xs italic">
+                        No sub-sections added yet. Click "Add Sub-section" to add one.
+                      </p>
                     )}
                   </div>
                 </CardContent>
@@ -695,7 +754,7 @@ export function PackageForm({ initialData }: PackageFormProps) {
           <CardTitle>SEO & Visibility</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="seo_title">SEO Title</Label>
               <Input
@@ -721,7 +780,13 @@ export function PackageForm({ initialData }: PackageFormProps) {
               <Switch
                 id="is_active"
                 checked={formData.is_active}
-                onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, is_active: checked }))}
+                onCheckedChange={(checked) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    is_active: checked,
+                    is_featured: checked ? prev.is_featured : false,
+                  }))
+                }
               />
               <Label htmlFor="is_active">Active (visible on website)</Label>
             </div>
@@ -729,7 +794,14 @@ export function PackageForm({ initialData }: PackageFormProps) {
               <Switch
                 id="is_featured"
                 checked={formData.is_featured}
-                onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, is_featured: checked }))}
+                disabled={!formData.is_active}
+                onCheckedChange={(checked) => {
+                  if (checked && !formData.is_active) {
+                    toast.error("Activate the package before featuring it")
+                    return
+                  }
+                  setFormData((prev) => ({ ...prev, is_featured: checked }))
+                }}
               />
               <Label htmlFor="is_featured">Featured (show on homepage)</Label>
             </div>
@@ -744,12 +816,12 @@ export function PackageForm({ initialData }: PackageFormProps) {
         <Button type="submit" disabled={isSubmitting || !isClient}>
           {isSubmitting ? (
             <>
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Saving...
             </>
           ) : (
             <>
-              <Save className="w-4 h-4 mr-2" />
+              <Save className="mr-2 h-4 w-4" />
               {initialData ? "Update Package" : "Create Package"}
             </>
           )}

@@ -157,17 +157,17 @@ export default function SettingsPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-96">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <div className="flex h-96 items-center justify-center">
+        <Loader2 className="text-primary h-8 w-8 animate-spin" />
       </div>
     )
   }
 
   return (
     <div className="space-y-6 p-4 md:p-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Settings</h1>
+          <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Settings</h1>
           <p className="text-muted-foreground text-sm md:text-base">
             Manage your website configuration. Changes will reflect on the header, footer, and contact pages.
           </p>
@@ -188,7 +188,7 @@ export default function SettingsPage() {
       </div>
 
       <Tabs defaultValue="general" className="space-y-4">
-        <TabsList className="flex flex-wrap h-auto gap-1">
+        <TabsList className="flex h-auto flex-wrap gap-1">
           <TabsTrigger value="general" className="text-xs sm:text-sm">
             General
           </TabsTrigger>
@@ -213,7 +213,9 @@ export default function SettingsPage() {
                 <Building2 className="h-5 w-5" />
                 Business Information
               </CardTitle>
-              <CardDescription>Basic information about your travel business (shown in header & footer)</CardDescription>
+              <CardDescription>
+                Basic information about your travel business (shown in header & footer)
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
@@ -248,7 +250,9 @@ export default function SettingsPage() {
                   onChange={(e) => updateSetting("business_hours", e.target.value)}
                   placeholder="Mon-Sat: 9AM-7PM, Sun: 10AM-5PM"
                 />
-                <p className="text-xs text-muted-foreground">Format: "Day-Day: Time - Time, Day: Time - Time"</p>
+                <p className="text-muted-foreground text-xs">
+                  Format: "Day-Day: Time - Time, Day: Time - Time"
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -261,7 +265,9 @@ export default function SettingsPage() {
                 <Phone className="h-5 w-5" />
                 Contact Details
               </CardTitle>
-              <CardDescription>How customers can reach you (shown in header, footer, and contact page)</CardDescription>
+              <CardDescription>
+                How customers can reach you (shown in header, footer, and contact page)
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
@@ -302,7 +308,7 @@ export default function SettingsPage() {
                   onChange={(e) => updateSetting("whatsapp_number", e.target.value)}
                   placeholder="+919876543210"
                 />
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground text-xs">
                   Include country code without spaces (e.g., +919876543210). Used for "Book Now" buttons.
                 </p>
               </div>
@@ -328,7 +334,7 @@ export default function SettingsPage() {
                   onChange={(e) => updateSetting("google_maps_embed", e.target.value)}
                   placeholder="https://www.google.com/maps/embed?..."
                 />
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground text-xs">
                   Paste the embed URL from Google Maps (Share → Embed a map)
                 </p>
               </div>
@@ -418,7 +424,9 @@ export default function SettingsPage() {
                   onChange={(e) => updateSetting("meta_title", e.target.value)}
                   placeholder="TourToHimachal - Tours, Travel & Taxi Services"
                 />
-                <p className="text-xs text-muted-foreground">{settings.meta_title.length}/60 characters recommended</p>
+                <p className="text-muted-foreground text-xs">
+                  {settings.meta_title.length}/60 characters recommended
+                </p>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="meta_description">Default Meta Description</Label>
@@ -429,7 +437,7 @@ export default function SettingsPage() {
                   placeholder="A brief description of your website..."
                   rows={3}
                 />
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground text-xs">
                   {settings.meta_description.length}/160 characters recommended
                 </p>
               </div>
@@ -450,7 +458,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label htmlFor="maintenance_mode">Maintenance Mode</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Show a maintenance page to visitors while you make updates
                   </p>
                 </div>
@@ -467,7 +475,9 @@ export default function SettingsPage() {
                     <Bell className="h-4 w-4" />
                     Email Notifications
                   </Label>
-                  <p className="text-sm text-muted-foreground">Receive email alerts for new lead submissions</p>
+                  <p className="text-muted-foreground text-sm">
+                    Receive email alerts for new lead submissions
+                  </p>
                 </div>
                 <Switch defaultChecked />
               </div>

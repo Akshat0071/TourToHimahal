@@ -3,6 +3,7 @@
 A Next.js 16 + React 19 project for Himachal tour packages, taxi bookings, blogs, and diaries with Tailwind CSS and Supabase.
 
 ## Features
+
 - Marketing website with Home, Packages, Taxi, Blog, Diaries, Contact pages
 - Admin area scaffolding for content management
 - Cloudinary integrations (media library, uploads)
@@ -10,11 +11,13 @@ A Next.js 16 + React 19 project for Himachal tour packages, taxi bookings, blogs
 - Tailwind CSS 4, Radix UI components, Framer Motion animations
 
 ## Prerequisites
+
 - Node.js 18+ (recommend LTS)
 - npm or pnpm
 - Optional: Supabase account + Cloudinary account
 
 ## Setup
+
 1. Install dependencies:
    ```bash
    npm install
@@ -43,12 +46,14 @@ A Next.js 16 + React 19 project for Himachal tour packages, taxi bookings, blogs
    ```
 
 ## Scripts
+
 - `dev`: start Next.js dev server
 - `build`: production build
 - `start`: run production server
 - `lint`: run ESLint
 
 ## Project Structure
+
 - `app/` Next.js app router pages and routes
 - `components/` UI components (home, contact, admin, blog, etc.)
 - `lib/` utilities (settings context, contact submission, Cloudinary, Whatsapp helpers)
@@ -57,13 +62,16 @@ A Next.js 16 + React 19 project for Himachal tour packages, taxi bookings, blogs
 - `public/` static assets
 
 ## Deploy
+
 - Vercel recommended. Ensure env vars are configured in dashboard.
 - Set `images.unoptimized: true` in `next.config.mjs` (already set) or configure Next Image loader per platform.
 
 ## Notes
+
 - TypeScript is enabled; Next adjusted `tsconfig.json` (jsx: react-jsx and `.next/dev/types` include).
 - Tailwind CSS 4 setup with custom colors like `mountain-blue` and `saffron`.
 - If using pnpm, prefer `pnpm install` and `pnpm dev`.
 
 ## License
+
 Proprietary project files. Do not redistribute without permission.

@@ -63,75 +63,109 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
   }, [pkg.slug])
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="bg-background min-h-screen">
       <Header />
 
       {/* Main Content */}
-      <section className="pt-20 py-4 sm:py-6 md:py-8 bg-linear-to-b from-transparent via-[oklch(0.99_0.015_85)] to-background">
+      <section className="to-background bg-linear-to-b from-transparent via-[oklch(0.99_0.015_85)] py-4 pt-20 sm:py-6 md:py-8">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             {/* Left Content */}
             {/* Left Content */}
-            <div className="lg:col-span-2 space-y-8 lg:mt-20">
+            <div className="space-y-8 lg:col-span-2 lg:mt-20">
               {/* Package Summary */}
-              <motion.div variants={fadeInUp} initial="hidden" animate="visible" className="bg-linear-to-br from-white to-saffron/5 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-saffron/10 shadow-sm">
-                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-3 sm:mb-4">
+              <motion.div
+                variants={fadeInUp}
+                initial="hidden"
+                animate="visible"
+                className="to-saffron/5 border-saffron/10 rounded-2xl border bg-linear-to-br from-white p-4 shadow-sm sm:rounded-3xl sm:p-6 md:p-8"
+              >
+                <div className="mb-3 flex flex-wrap items-center gap-1.5 sm:mb-4 sm:gap-2">
                   {pkg.is_featured && (
-                    <Badge className="bg-linear-to-r from-saffron to-sunset-orange text-white border-0 shadow-md px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm">
+                    <Badge className="from-saffron to-sunset-orange border-0 bg-linear-to-r px-2 py-0.5 text-xs text-white shadow-md sm:px-3 sm:py-1 sm:text-sm">
                       ⭐ Featured
                     </Badge>
                   )}
                   {pkg.category && (
-                    <Badge variant="outline" className="capitalize border-2 border-mountain-blue/30 text-mountain-blue font-semibold px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm">
+                    <Badge
+                      variant="outline"
+                      className="border-mountain-blue/30 text-mountain-blue border-2 px-2 py-0.5 text-xs font-semibold capitalize sm:px-3 sm:py-1 sm:text-sm"
+                    >
                       {pkg.category}
                     </Badge>
                   )}
                   {pkg.region && (
-                    <Badge variant="outline" className="border-2 border-forest-green/30 text-forest-green font-semibold px-3 py-1 flex items-center gap-1">
+                    <Badge
+                      variant="outline"
+                      className="border-forest-green/30 text-forest-green flex items-center gap-1 border-2 px-3 py-1 font-semibold"
+                    >
                       <MapPin className="h-3 w-3" />
                       {pkg.region}
                     </Badge>
                   )}
                 </div>
-                <h1 className="text-xl sm:text-2xl md:text-4xl font-serif font-bold text-[#fc9700] mb-4 sm:mb-6">{pkg.title}</h1>
-                <div className="flex flex-wrap items-center gap-2 sm:gap-4 mb-4 sm:mb-6">
-                  <div className="flex items-center gap-1.5 sm:gap-2 bg-mountain-blue/10 px-2.5 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm">
-                    <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-mountain-blue" />
-                    <span className="font-semibold text-mountain-blue">{pkg.duration}</span>
+                <h1 className="mb-4 font-serif text-xl font-bold text-[#fc9700] sm:mb-6 sm:text-2xl md:text-4xl">
+                  {pkg.title}
+                </h1>
+                <div className="mb-4 flex flex-wrap items-center gap-2 sm:mb-6 sm:gap-4">
+                  <div className="bg-mountain-blue/10 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs sm:gap-2 sm:px-4 sm:py-2 sm:text-sm">
+                    <Clock className="text-mountain-blue h-4 w-4 sm:h-5 sm:w-5" />
+                    <span className="text-mountain-blue font-semibold">{pkg.duration}</span>
                   </div>
-                  <div className="flex items-center gap-1.5 sm:gap-2 bg-forest-green/10 px-2.5 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm">
-                    <Users className="h-4 w-4 sm:h-5 sm:w-5 text-forest-green" />
-                    <span className="font-semibold text-forest-green">Min {(pkg.min_persons ?? 2)} persons</span>
+                  <div className="bg-forest-green/10 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs sm:gap-2 sm:px-4 sm:py-2 sm:text-sm">
+                    <Users className="text-forest-green h-4 w-4 sm:h-5 sm:w-5" />
+                    <span className="text-forest-green font-semibold">
+                      Min {pkg.min_persons ?? 2} persons
+                    </span>
                   </div>
                 </div>
 
                 {/* Hero Slider placed between Title and Description */}
-                <div className="mb-8 rounded-2xl overflow-hidden shadow-lg border border-saffron/20">
-                  <PackageHeroSlider images={pkg.images || []} title={pkg.title} pdfUrl={pkg.itinerary_pdf_url} />
+                <div className="border-saffron/20 mb-8 overflow-hidden rounded-2xl border shadow-lg">
+                  <PackageHeroSlider
+                    images={pkg.images || []}
+                    title={pkg.title}
+                    pdfUrl={pkg.itinerary_pdf_url}
+                  />
                 </div>
 
                 <div>
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-foreground mb-3 sm:mb-4">Overview</h3>
-                  <p className="text-muted-foreground text-sm sm:text-base md:text-lg leading-relaxed">{pkg.description}</p>
+                  <h3 className="text-foreground mb-3 font-serif text-lg font-bold sm:mb-4 sm:text-xl md:text-2xl">
+                    Overview
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed sm:text-base md:text-lg">
+                    {pkg.description}
+                  </p>
                 </div>
               </motion.div>
 
               {/* Highlights */}
               {pkg.highlights && pkg.highlights.length > 0 && (
-                <motion.div variants={slideInLeft} initial="hidden" whileInView="visible" viewport={{ once: true }} className="bg-linear-to-br from-forest-green/5 to-mountain-blue/5 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-forest-green/10">
-                  <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                    <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-full bg-linear-to-br from-forest-green to-mountain-blue flex items-center justify-center">
-                      <Check className="h-4 sm:h-6 w-4 sm:w-6 text-white" />
+                <motion.div
+                  variants={slideInLeft}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  className="from-forest-green/5 to-mountain-blue/5 border-forest-green/10 rounded-2xl border bg-linear-to-br p-4 sm:rounded-3xl sm:p-6 md:p-8"
+                >
+                  <div className="mb-4 flex items-center gap-2 sm:mb-6 sm:gap-3">
+                    <div className="from-forest-green to-mountain-blue flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-br sm:h-10 sm:w-10">
+                      <Check className="h-4 w-4 text-white sm:h-6 sm:w-6" />
                     </div>
-                    <h2 className="text-lg sm:text-2xl md:text-3xl font-serif font-bold text-foreground">Tour Highlights</h2>
+                    <h2 className="text-foreground font-serif text-lg font-bold sm:text-2xl md:text-3xl">
+                      Tour Highlights
+                    </h2>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                     {pkg.highlights.map((highlight, index) => (
-                      <div key={index} className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl border border-forest-green/20 hover:shadow-md hover:border-forest-green/40 transition-all duration-300">
-                        <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-linear-to-br from-forest-green to-mountain-blue flex items-center justify-center shrink-0 mt-0.5">
-                          <Check className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+                      <div
+                        key={index}
+                        className="border-forest-green/20 hover:border-forest-green/40 flex items-start gap-2 rounded-lg border bg-white/80 p-3 backdrop-blur-sm transition-all duration-300 hover:shadow-md sm:gap-3 sm:rounded-xl sm:p-4"
+                      >
+                        <div className="from-forest-green to-mountain-blue mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-linear-to-br sm:h-6 sm:w-6">
+                          <Check className="h-3 w-3 text-white sm:h-4 sm:w-4" />
                         </div>
-                        <span className="text-foreground font-medium text-xs sm:text-sm">{highlight}</span>
+                        <span className="text-foreground text-xs font-medium sm:text-sm">{highlight}</span>
                       </div>
                     ))}
                   </div>
@@ -140,61 +174,70 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
 
               {/* Itinerary */}
               {pkg.itinerary && Array.isArray(pkg.itinerary) && pkg.itinerary.length > 0 && (
-                <motion.div variants={slideInLeft} initial="hidden" whileInView="visible" viewport={{ once: true }} className="bg-linear-to-br from-saffron/5 to-sunset-orange/5 rounded-2xl p-4 sm:p-5 md:p-8 border border-saffron/10">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-full bg-linear-to-br from-saffron to-sunset-orange flex items-center justify-center">
+                <motion.div
+                  variants={slideInLeft}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  className="from-saffron/5 to-sunset-orange/5 border-saffron/10 rounded-2xl border bg-linear-to-br p-4 sm:p-5 md:p-8"
+                >
+                  <div className="mb-6 flex items-center gap-3">
+                    <div className="from-saffron to-sunset-orange flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br">
                       <MapPin className="h-6 w-6 text-white" />
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-serif font-bold text-foreground">Day-by-Day Itinerary</h2>
+                    <h2 className="text-foreground font-serif text-2xl font-bold md:text-3xl">
+                      Day-by-Day Itinerary
+                    </h2>
                   </div>
                   <ItineraryAccordion itinerary={pkg.itinerary} />
                 </motion.div>
               )}
 
               {/* Inclusions & Exclusions */}
-              {((pkg.inclusions && pkg.inclusions.length > 0) || (pkg.exclusions && pkg.exclusions.length > 0)) && (
+              {((pkg.inclusions && pkg.inclusions.length > 0) ||
+                (pkg.exclusions && pkg.exclusions.length > 0)) && (
                 <motion.div
                   variants={slideInRight}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
-                  className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
+                  className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2"
                 >
                   {pkg.inclusions && pkg.inclusions.length > 0 && (
-                    <div className="bg-linear-to-br from-forest-green/5 to-forest-green/10 border-2 border-forest-green/20 rounded-2xl sm:rounded-2xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
-                      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-5">
-                        <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-full bg-forest-green flex items-center justify-center">
-                          <Check className="h-4 sm:h-6 w-4 sm:w-6 text-white" />
+                    <div className="from-forest-green/5 to-forest-green/10 border-forest-green/20 rounded-2xl border-2 bg-linear-to-br p-4 shadow-sm transition-shadow hover:shadow-md sm:rounded-2xl sm:p-6">
+                      <div className="mb-3 flex items-center gap-2 sm:mb-5 sm:gap-3">
+                        <div className="bg-forest-green flex h-8 w-8 items-center justify-center rounded-full sm:h-10 sm:w-10">
+                          <Check className="h-4 w-4 text-white sm:h-6 sm:w-6" />
                         </div>
-                        <h3 className="text-base sm:text-xl font-serif font-bold text-foreground">
+                        <h3 className="text-foreground font-serif text-base font-bold sm:text-xl">
                           What's Included
                         </h3>
                       </div>
                       <ul className="space-y-2 sm:space-y-3">
                         {pkg.inclusions.map((item, index) => (
-                          <li key={index} className="flex items-start gap-2 sm:gap-3 text-foreground">
-                            <Check className="h-4 w-4 sm:h-5 sm:w-5 text-forest-green shrink-0 mt-0.5" />
-                            <span className="text-xs sm:text-sm font-medium">{item}</span>
+                          <li key={index} className="text-foreground flex items-start gap-2 sm:gap-3">
+                            <Check className="text-forest-green mt-0.5 h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
+                            <span className="text-xs font-medium sm:text-sm">{item}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                   )}
                   {pkg.exclusions && pkg.exclusions.length > 0 && (
-                    <div className="bg-linear-to-br from-destructive/5 to-destructive/10 border-2 border-destructive/20 rounded-2xl sm:rounded-2xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
-                      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-5">
-                        <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-full bg-destructive flex items-center justify-center">
-                          <X className="h-4 sm:h-6 w-4 sm:w-6 text-white" />
+                    <div className="from-destructive/5 to-destructive/10 border-destructive/20 rounded-2xl border-2 bg-linear-to-br p-4 shadow-sm transition-shadow hover:shadow-md sm:rounded-2xl sm:p-6">
+                      <div className="mb-3 flex items-center gap-2 sm:mb-5 sm:gap-3">
+                        <div className="bg-destructive flex h-8 w-8 items-center justify-center rounded-full sm:h-10 sm:w-10">
+                          <X className="h-4 w-4 text-white sm:h-6 sm:w-6" />
                         </div>
-                        <h3 className="text-base sm:text-xl font-serif font-bold text-foreground">
+                        <h3 className="text-foreground font-serif text-base font-bold sm:text-xl">
                           What's Not Included
                         </h3>
                       </div>
                       <ul className="space-y-2 sm:space-y-3">
                         {pkg.exclusions.map((item, index) => (
-                          <li key={index} className="flex items-start gap-2 sm:gap-3 text-foreground">
-                            <X className="h-4 w-4 sm:h-5 sm:w-5 text-destructive shrink-0 mt-0.5" />
-                            <span className="text-xs sm:text-sm font-medium">{item}</span>
+                          <li key={index} className="text-foreground flex items-start gap-2 sm:gap-3">
+                            <X className="text-destructive mt-0.5 h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
+                            <span className="text-xs font-medium sm:text-sm">{item}</span>
                           </li>
                         ))}
                       </ul>
@@ -211,52 +254,60 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
                   variants={slideInRight}
                   initial="hidden"
                   animate="visible"
-                  className="bg-linear-to-br from-white via-saffron/5 to-sunset-orange/10 border-2 border-saffron/20 rounded-3xl p-5 shadow-xl"
+                  className="via-saffron/5 to-sunset-orange/10 border-saffron/20 rounded-3xl border-2 bg-linear-to-br from-white p-5 shadow-xl"
                 >
-                  <div className="mb-4 pb-4 border-b border-saffron/20">
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">Tour Price</p>
-                    <div className="flex items-baseline gap-2 mb-1">
-                      <span className="text-3xl font-bold bg-linear-to-r from-saffron to-sunset-orange bg-clip-text text-transparent">₹{pkg.price?.toLocaleString()}</span>
+                  <div className="border-saffron/20 mb-4 border-b pb-4">
+                    <p className="text-muted-foreground mb-1 text-xs font-semibold tracking-wide uppercase">
+                      Tour Price
+                    </p>
+                    <div className="mb-1 flex items-baseline gap-2">
+                      <span className="from-saffron to-sunset-orange bg-linear-to-r bg-clip-text text-3xl font-bold text-transparent">
+                        ₹{pkg.price?.toLocaleString()}
+                      </span>
                       {pkg.original_price && pkg.original_price > pkg.price && (
-                        <span className="text-sm text-muted-foreground line-through">
+                        <span className="text-muted-foreground text-sm line-through">
                           ₹{pkg.original_price.toLocaleString()}
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground">per person</p>
+                    <p className="text-muted-foreground text-xs">per person</p>
                     {pkg.original_price && pkg.original_price > pkg.price && (
-                      <Badge className="mt-2 bg-linear-to-r from-forest-green to-mountain-blue text-white border-0 px-2 py-0.5 text-xs shadow-md">
+                      <Badge className="from-forest-green to-mountain-blue mt-2 border-0 bg-linear-to-r px-2 py-0.5 text-xs text-white shadow-md">
                         🎉 Save ₹{(pkg.original_price - pkg.price).toLocaleString()}
                       </Badge>
                     )}
                   </div>
 
-                  <div className="space-y-2 mb-4 pb-4 border-b border-saffron/20">
-                    <div className="flex items-center gap-2 p-2 bg-white/60 rounded-lg">
-                      <div className="w-8 h-8 rounded-full bg-mountain-blue/10 flex items-center justify-center shrink-0">
-                        <Clock className="h-4 w-4 text-mountain-blue" />
+                  <div className="border-saffron/20 mb-4 space-y-2 border-b pb-4">
+                    <div className="flex items-center gap-2 rounded-lg bg-white/60 p-2">
+                      <div className="bg-mountain-blue/10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
+                        <Clock className="text-mountain-blue h-4 w-4" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-xs text-muted-foreground">Duration</p>
-                        <p className="font-semibold text-sm text-foreground truncate">{pkg.duration}</p>
+                        <p className="text-muted-foreground text-xs">Duration</p>
+                        <p className="text-foreground truncate text-sm font-semibold">{pkg.duration}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 p-2 bg-white/60 rounded-lg">
-                      <div className="w-8 h-8 rounded-full bg-forest-green/10 flex items-center justify-center shrink-0">
-                        <MapPin className="h-4 w-4 text-forest-green" />
+                    <div className="flex items-center gap-2 rounded-lg bg-white/60 p-2">
+                      <div className="bg-forest-green/10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
+                        <MapPin className="text-forest-green h-4 w-4" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-xs text-muted-foreground">Destination</p>
-                        <p className="font-semibold text-sm text-foreground truncate">{pkg.region || "Himachal Pradesh"}</p>
+                        <p className="text-muted-foreground text-xs">Destination</p>
+                        <p className="text-foreground truncate text-sm font-semibold">
+                          {pkg.region || "Himachal Pradesh"}
+                        </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 p-2 bg-white/60 rounded-lg">
-                      <div className="w-8 h-8 rounded-full bg-saffron/10 flex items-center justify-center shrink-0">
-                        <Users className="h-4 w-4 text-saffron" />
+                    <div className="flex items-center gap-2 rounded-lg bg-white/60 p-2">
+                      <div className="bg-saffron/10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
+                        <Users className="text-saffron h-4 w-4" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-xs text-muted-foreground">Group Size</p>
-                        <p className="font-semibold text-sm text-foreground">Min {(pkg.min_persons ?? 2)} persons</p>
+                        <p className="text-muted-foreground text-xs">Group Size</p>
+                        <p className="text-foreground text-sm font-semibold">
+                          Min {pkg.min_persons ?? 2} persons
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -264,31 +315,39 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
                   <div className="space-y-2">
                     <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
                       <DialogTrigger asChild>
-                        <Button className="w-full bg-linear-to-r from-saffron to-sunset-orange hover:from-saffron/90 hover:to-sunset-orange/90 text-white gap-2 shadow-lg hover:shadow-xl transition-all h-10 text-sm">
+                        <Button className="from-saffron to-sunset-orange hover:from-saffron/90 hover:to-sunset-orange/90 h-10 w-full gap-2 bg-linear-to-r text-sm text-white shadow-lg transition-all hover:shadow-xl">
                           📅 Book This Tour
                         </Button>
                       </DialogTrigger>
-                      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
+                      <DialogContent className="max-h-[90vh] max-w-md overflow-y-auto">
                         <DialogHeader>
                           <DialogTitle>Book {pkg.title}</DialogTitle>
                           <DialogDescription>
                             Fill in your details and we'll get back to you within 12 hours.
                           </DialogDescription>
                         </DialogHeader>
-                        <PackageBookingForm packageName={pkg.title} packagePrice={pkg.price} onSuccess={() => { }} />
+                        <PackageBookingForm
+                          packageName={pkg.title}
+                          packagePrice={pkg.price}
+                          onSuccess={() => {}}
+                        />
                       </DialogContent>
                     </Dialog>
 
                     <Button
                       asChild
-                      className="w-full bg-linear-to-r from-forest-green to-mountain-blue hover:from-forest-green/90 hover:to-mountain-blue/90 text-white gap-2 shadow-md hover:shadow-lg transition-all h-10 text-sm"
+                      className="from-forest-green to-mountain-blue hover:from-forest-green/90 hover:to-mountain-blue/90 h-10 w-full gap-2 bg-linear-to-r text-sm text-white shadow-md transition-all hover:shadow-lg"
                     >
                       <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                         <MessageCircle className="h-4 w-4" />
                         WhatsApp Booking
                       </a>
                     </Button>
-                    <Button asChild variant="outline" className="w-full gap-2 bg-white/60 border-2 border-saffron/20 hover:bg-saffron/10 hover:border-saffron/40 h-10 text-sm">
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="border-saffron/20 hover:bg-saffron/10 hover:border-saffron/40 h-10 w-full gap-2 border-2 bg-white/60 text-sm"
+                    >
                       <a href={`tel:${(settings?.contact_phone || "").replace(/\s/g, "")}`}>
                         <Phone className="h-4 w-4" />
                         Call Now
@@ -296,7 +355,7 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
                     </Button>
                   </div>
 
-                  <p className="text-xs text-muted-foreground text-center mt-3">
+                  <p className="text-muted-foreground mt-3 text-center text-xs">
                     No payment required to book. Pay later at your convenience.
                   </p>
                 </motion.div>
@@ -308,7 +367,7 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
 
       {/* Related Packages */}
       {allPackages.length > 1 && (
-        <section className="py-12 bg-muted/30">
+        <section className="bg-muted/30 py-12">
           <div className="container mx-auto px-4">
             <RelatedPackagesCarousel packages={allPackages} currentSlug={pkg.slug} />
           </div>
@@ -316,15 +375,17 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
       )}
 
       {/* Sticky Mobile Booking Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-linear-to-r from-white to-saffron/10 backdrop-blur-md border-t-2 border-saffron/30 p-4 lg:hidden z-50 shadow-2xl">
+      <div className="to-saffron/10 border-saffron/30 fixed right-0 bottom-0 left-0 z-50 border-t-2 bg-linear-to-r from-white p-4 shadow-2xl backdrop-blur-md lg:hidden">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <span className="text-2xl font-bold bg-linear-to-r from-saffron to-sunset-orange bg-clip-text text-transparent">₹{pkg.price?.toLocaleString()}</span>
-            <p className="text-xs text-muted-foreground font-medium">per person</p>
+            <span className="from-saffron to-sunset-orange bg-linear-to-r bg-clip-text text-2xl font-bold text-transparent">
+              ₹{pkg.price?.toLocaleString()}
+            </span>
+            <p className="text-muted-foreground text-xs font-medium">per person</p>
           </div>
           <Button
             onClick={() => setIsBookingOpen(true)}
-            className="flex-1 max-w-50 bg-linear-to-r from-saffron to-sunset-orange hover:from-saffron/90 hover:to-sunset-orange/90 text-white gap-2 shadow-lg"
+            className="from-saffron to-sunset-orange hover:from-saffron/90 hover:to-sunset-orange/90 max-w-50 flex-1 gap-2 bg-linear-to-r text-white shadow-lg"
           >
             📅 Book Now
           </Button>

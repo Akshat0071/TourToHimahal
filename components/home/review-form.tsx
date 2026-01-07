@@ -9,14 +9,7 @@ import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { toast } from "sonner"
 import { DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 
@@ -68,7 +61,7 @@ export function ReviewForm({ onSuccess }: ReviewFormProps) {
         {
           method: "POST",
           body: formDataToSend,
-        }
+        },
       )
 
       if (!response.ok) {
@@ -155,7 +148,7 @@ export function ReviewForm({ onSuccess }: ReviewFormProps) {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <FormField
               control={form.control}
               name="name"
@@ -207,16 +200,16 @@ export function ReviewForm({ onSuccess }: ReviewFormProps) {
                   type="button"
                   variant="outline"
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full h-11 sm:h-10"
+                  className="h-11 w-full sm:h-10"
                 >
                   {file ? (
                     <>
-                      <ImageIcon className="w-4 h-4 mr-2" />
-                      <span className="truncate max-w-[200px]">{file.name}</span>
+                      <ImageIcon className="mr-2 h-4 w-4" />
+                      <span className="max-w-[200px] truncate">{file.name}</span>
                     </>
                   ) : (
                     <>
-                      <Upload className="w-4 h-4 mr-2" />
+                      <Upload className="mr-2 h-4 w-4" />
                       Upload Photo
                     </>
                   )}
@@ -231,7 +224,7 @@ export function ReviewForm({ onSuccess }: ReviewFormProps) {
               </div>
             </FormControl>
             {file && (
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-muted-foreground mt-1 text-xs">
                 Selected: {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
               </p>
             )}
@@ -244,21 +237,22 @@ export function ReviewForm({ onSuccess }: ReviewFormProps) {
               <FormItem>
                 <FormLabel>Rating *</FormLabel>
                 <FormControl>
-                  <div className="flex gap-2 sm:gap-1 justify-center sm:justify-start py-2">
+                  <div className="flex justify-center gap-2 py-2 sm:justify-start sm:gap-1">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
                         type="button"
-                        className="focus:outline-none transition-transform hover:scale-110 p-1"
+                        className="p-1 transition-transform hover:scale-110 focus:outline-none"
                         onMouseEnter={() => setHoverRating(star)}
                         onMouseLeave={() => setHoverRating(0)}
                         onClick={() => field.onChange(star)}
                       >
                         <Star
-                          className={`w-8 h-8 sm:w-8 sm:h-8 ${star <= (hoverRating || field.value)
-                            ? "fill-golden-yellow text-golden-yellow"
-                            : "text-muted-foreground/30"
-                            }`}
+                          className={`h-8 w-8 sm:h-8 sm:w-8 ${
+                            star <= (hoverRating || field.value)
+                              ? "fill-golden-yellow text-golden-yellow"
+                              : "text-muted-foreground/30"
+                          }`}
                         />
                       </button>
                     ))}
@@ -287,7 +281,11 @@ export function ReviewForm({ onSuccess }: ReviewFormProps) {
             )}
           />
 
-          <Button type="submit" className="w-full bg-mountain-blue hover:bg-mountain-blue/90" disabled={isSubmitting}>
+          <Button
+            type="submit"
+            className="bg-mountain-blue hover:bg-mountain-blue/90 w-full"
+            disabled={isSubmitting}
+          >
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

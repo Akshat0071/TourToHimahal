@@ -35,7 +35,7 @@ export default async function LeadsPage({ searchParams }: LeadsPageProps) {
     <div>
       <AdminHeader title="Leads Management" description="View and manage all customer inquiries" />
 
-      <div className="p-6 space-y-6">
+      <div className="space-y-6 p-6">
         <LeadsFilters currentStatus={params.status} currentType={params.type} />
         <LeadsTable leads={leads || []} />
       </div>

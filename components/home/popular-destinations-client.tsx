@@ -1,22 +1,25 @@
 "use client"
 
 import { motion } from "framer-motion"
-import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Clock, IndianRupee, MapPin, ArrowRight } from "lucide-react"
+import { MapPin, ArrowRight } from "lucide-react"
+import { PackageCard } from "@/components/packages/package-card"
 import { fadeInUp, staggerContainer } from "@/lib/animation-variants"
 
 interface Package {
   id: string
   title: string
   slug: string
+  description?: string
   short_description?: string
   price: number
   original_price?: number
   duration: string
+  category?: string
+  region?: string
   images?: string[]
+  is_active: boolean
   is_featured: boolean
 }
 
@@ -25,80 +28,80 @@ interface PopularDestinationsClientProps {
 }
 
 // Fallback data if no packages from database
-const fallbackDestinations = [
+const fallbackDestinations: Package[] = [
   {
-    name: "Manali",
-    image: "/manali-snow-mountains.jpg",
+    id: "fallback-manali",
+    title: "Manali",
+    slug: "manali",
+    short_description: "Explore snow-capped mountains and scenic valleys.",
     duration: "3 Days / 2 Nights",
     price: 8999,
     original_price: 9999,
-    slug: "manali",
+    images: ["/manali-snow-mountains.jpg"],
+    is_active: true,
+    is_featured: true,
   },
   {
-    name: "Shimla",
-    image: "/shimla-hills-colonial.jpg",
+    id: "fallback-shimla",
+    title: "Shimla",
+    slug: "shimla",
+    short_description: "Colonial charm, hills, and beautiful viewpoints.",
     duration: "2 Days / 1 Night",
     price: 5499,
     original_price: 5999,
-    slug: "shimla",
+    images: ["/shimla-hills-colonial.jpg"],
+    is_active: true,
+    is_featured: true,
   },
   {
-    name: "Dharamshala",
-    image: "/dharamshala-monastery.jpg",
+    id: "fallback-dharamshala",
+    title: "Dharamshala",
+    slug: "dharamshala",
+    short_description: "Peaceful monasteries and stunning mountain views.",
     duration: "3 Days / 2 Nights",
     price: 7999,
     original_price: 8999,
-    slug: "dharamshala",
+    images: ["/dharamshala-monastery.jpg"],
+    is_active: true,
+    is_featured: true,
   },
 ]
 
 export function PopularDestinationsClient({ packages }: PopularDestinationsClientProps) {
-  // Use packages from database or fallback
-  const destinations =
-    packages.length > 0
-      ? packages.map((pkg) => ({
-          name: pkg.title,
-          image: pkg.images?.[0] || `/placeholder.svg?height=400&width=600&query=${pkg.title} himachal`,
-          duration: pkg.duration,
-          price: pkg.price,
-          original_price: pkg.original_price,
-          slug: pkg.slug,
-        }))
-      : fallbackDestinations
+  const displayedPackages = packages.length > 0 ? packages : fallbackDestinations
 
   return (
-    <section className="py-8 md:py-8 lg:py-12 relative overflow-hidden">
+    <section className="relative overflow-hidden py-8 md:py-8 lg:py-12">
       {/* Background decorations */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-saffron/10 to-transparent rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-forest-green/10 to-transparent rounded-full blur-3xl" />
+      <div className="from-saffron/10 absolute top-0 right-0 h-96 w-96 rounded-full bg-gradient-to-bl to-transparent blur-3xl" />
+      <div className="from-forest-green/10 absolute bottom-0 left-0 h-96 w-96 rounded-full bg-gradient-to-tr to-transparent blur-3xl" />
 
-      <div className="container mx-auto px-4 relative">
+      <div className="relative container mx-auto px-4">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="text-center mb-8 md:mb-10"
+          className="mb-8 text-center md:mb-10"
         >
           <motion.div
             variants={fadeInUp}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-mountain-blue/10 rounded-full mb-2 md:mb-3"
+            className="bg-mountain-blue/10 mb-2 inline-flex items-center gap-2 rounded-full px-4 py-2 md:mb-3"
           >
-            <MapPin className="h-4 w-4 text-mountain-blue" />
-            <span className="text-sm font-semibold text-mountain-blue uppercase tracking-wider">Explore Himachal</span>
+            <MapPin className="text-mountain-blue h-4 w-4" />
+            <span className="text-mountain-blue text-sm font-semibold tracking-wider uppercase">
+              Explore Himachal
+            </span>
           </motion.div>
           <motion.h2
             variants={fadeInUp}
-            className="text-3xl md:text-5xl font-serif font-bold text-foreground mt-2 md:mt-3 mb-2 md:mb-3"
+            className="text-foreground mt-2 mb-2 font-serif text-3xl font-bold md:mt-3 md:mb-3 md:text-5xl"
           >
-            Popular{" "}
-            <span className="text-mountain-blue">
-              Destinations
-            </span>
+            Popular <span className="text-mountain-blue">Destinations</span>
           </motion.h2>
-          <motion.p variants={fadeInUp} className="text-muted-foreground max-w-2xl mx-auto text-lg mb-2">
-            Discover the most sought-after destinations in Himachal Pradesh, from snow-capped mountains to serene
-            valleys.
+          <motion.p variants={fadeInUp} className="text-muted-foreground mx-auto mb-2 max-w-2xl text-lg">
+            Discover the most sought-after destinations in Himachal Pradesh, from snow-capped mountains to
+            serene valleys.
           </motion.p>
         </motion.div>
 
@@ -107,73 +110,11 @@ export function PopularDestinationsClient({ packages }: PopularDestinationsClien
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6"
+          className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-3 lg:gap-6"
         >
-          {destinations.map((destination, index) => (
-            <motion.div
-              key={destination.name}
-              variants={fadeInUp}
-              whileHover={{ y: -12 }}
-              className="group relative bg-card rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border-2 border-transparent hover:border-saffron/30"
-            >
-              <Link href={`/packages/${destination.slug}`}>
-                {/* Image with overlay */}
-                <div className="relative h-64 overflow-hidden">
-                  <Image
-                    src={destination.image || "/placeholder.svg"}
-                    alt={destination.name}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-
-                  {/* Featured badge */}
-                  {index === 0 && (
-                    <div className="absolute top-4 left-4 px-3 py-1 bg-gradient-to-r from-saffron to-sunset-orange text-white text-xs font-bold rounded-full">
-                      POPULAR
-                    </div>
-                  )}
-
-
-                  {/* Price, Original Price, and Discount Badges (top right, reversed order) */}
-                  <div className="absolute top-4 right-4 flex flex-col items-end gap-2 z-10">
-                    <div className="bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg flex items-center">
-                      <span className="text-lg md:text-xl font-bold text-saffron flex items-center">
-                        <IndianRupee className="h-4 w-4 mr-0.5" />
-                        {destination.price?.toLocaleString ? destination.price.toLocaleString("en-IN") : destination.price}
-                      </span>
-                      {destination.original_price && destination.original_price > destination.price && (
-                        <span className="text-muted-foreground line-through text-xs ml-1.5">
-                          ₹{destination.original_price?.toLocaleString ? destination.original_price.toLocaleString("en-IN") : destination.original_price}
-                        </span>
-                      )}
-                    </div>
-                    {/* Discount Badge */}
-                    {destination.original_price && destination.original_price > destination.price && (
-                      <Badge className="bg-gradient-to-r from-forest-green to-mountain-blue text-white border-0 shadow-lg text-xs w-fit">
-                        {Math.round(((destination.original_price - destination.price) / destination.original_price) * 100)}% OFF
-                      </Badge>
-                    )}
-                  </div>
-
-                  {/* Title overlay */}
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-2xl font-serif font-bold text-white mb-1">{destination.name}</h3>
-                  </div>
-                </div>
-
-                {/* Card footer */}
-                <div className="p-5 flex items-center justify-between bg-gradient-to-r from-background to-muted/30">
-                  <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                    <Clock className="h-4 w-4" />
-                    {destination.duration}
-                  </div>
-                  <Button size="sm" variant="saffron" className="group-hover:translate-x-1 transition-transform">
-                    View Details
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </div>
-              </Link>
+          {displayedPackages.map((pkg) => (
+            <motion.div key={pkg.id} variants={fadeInUp}>
+              <PackageCard pkg={pkg} />
             </motion.div>
           ))}
         </motion.div>
@@ -182,13 +123,13 @@ export function PopularDestinationsClient({ packages }: PopularDestinationsClien
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mt-8 md:mt-10"
+          className="mt-8 text-center md:mt-10"
         >
           <Button
             asChild
             variant="outline"
             size="lg"
-            className="border-2 border-mountain-blue text-mountain-blue hover:bg-mountain-blue hover:text-white bg-transparent"
+            className="border-mountain-blue text-mountain-blue hover:bg-mountain-blue border-2 bg-transparent hover:text-white"
           >
             <Link href="/packages">
               View All Packages

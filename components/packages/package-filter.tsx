@@ -76,7 +76,7 @@ export function PackageFilter({
     setSortBy(localSortBy)
 
     // Apply "Up to" logic for continuous max price filtering
-    // If slider is at max (10000), you might consider treating it as "All" if you want to show higher priced items. 
+    // If slider is at max (10000), you might consider treating it as "All" if you want to show higher priced items.
     // But per user request "price range 500 to 10000", limiting to 10000 is likely desired.
     // If we want "All" behavior at max, we can add: if (priceRange === 10000) setSelectedPrice("All") else ...
     // For now, let's respect the slider as a strict filter.
@@ -92,28 +92,28 @@ export function PackageFilter({
   }
 
   return (
-    <div className="bg-gradient-to-r from-[oklch(0.99_0.02_85)] to-[oklch(0.98_0.025_70)] border-2 border-saffron/20 rounded-xl sm:rounded-2xl lg:rounded-3xl p-3 sm:p-4 lg:p-6 shadow-lg">
-      <div className="hidden lg:block mb-4">
-        <h3 className="text-xl font-serif font-bold text-foreground">Filter & Search</h3>
-        <p className="text-sm text-muted-foreground">Find your perfect package</p>
+    <div className="border-saffron/20 rounded-xl border-2 bg-gradient-to-r from-[oklch(0.99_0.02_85)] to-[oklch(0.98_0.025_70)] p-3 shadow-lg sm:rounded-2xl sm:p-4 lg:rounded-3xl lg:p-6">
+      <div className="mb-4 hidden lg:block">
+        <h3 className="text-foreground font-serif text-xl font-bold">Filter & Search</h3>
+        <p className="text-muted-foreground text-sm">Find your perfect package</p>
       </div>
 
       {/* Unified Search + Filter Toggle */}
-      <div className="flex flex-col lg:flex-row gap-3">
+      <div className="flex flex-col gap-3 lg:flex-row">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 md:h-5 md:w-5 text-saffron" />
+          <Search className="text-saffron absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 md:h-5 md:w-5" />
           <Input
             type="text"
             placeholder="Search packages..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 sm:pl-10 bg-white border-2 border-saffron/20 focus:border-saffron rounded-full lg:rounded-xl h-10 sm:h-11 md:h-12 text-xs sm:text-sm md:text-base pr-12 w-full"
+            className="border-saffron/20 focus:border-saffron h-10 w-full rounded-full border-2 bg-white pr-12 pl-9 text-xs sm:h-11 sm:pl-10 sm:text-sm md:h-12 md:text-base lg:rounded-xl"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground absolute top-1/2 right-3 -translate-y-1/2"
               aria-label="Clear search"
             >
               <X className="h-4 w-4" />
@@ -124,12 +124,12 @@ export function PackageFilter({
         <Button
           onClick={() => setIsFilterOpen(!isFilterOpen)}
           variant="outline"
-          className="lg:w-auto w-full relative rounded-full lg:rounded-xl border-2 border-saffron/30 bg-white hover:bg-saffron/10 h-10 sm:h-11 md:h-12 px-3 sm:px-4 gap-1.5 sm:gap-2 flex justify-center items-center"
+          className="border-saffron/30 hover:bg-saffron/10 relative flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 bg-white px-3 sm:h-11 sm:gap-2 sm:px-4 md:h-12 lg:w-auto lg:rounded-xl"
         >
-          <Filter className="h-4 w-4 sm:h-5 sm:w-5 text-saffron" />
-          <span className="text-xs sm:text-sm font-medium text-foreground">Filters</span>
+          <Filter className="text-saffron h-4 w-4 sm:h-5 sm:w-5" />
+          <span className="text-foreground text-xs font-medium sm:text-sm">Filters</span>
           {hasActiveFilters && (
-            <span className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-gradient-to-r from-saffron to-sunset-orange text-white text-[10px] sm:text-xs font-bold rounded-full flex items-center justify-center">
+            <span className="from-saffron to-sunset-orange absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r text-[10px] font-bold text-white sm:h-5 sm:w-5 sm:text-xs">
               !
             </span>
           )}
@@ -146,12 +146,14 @@ export function PackageFilter({
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <div className="pt-3 sm:pt-4 mt-3 sm:mt-4 border-t border-saffron/20 space-y-3 sm:space-y-4">
+            <div className="border-saffron/20 mt-3 space-y-3 border-t pt-3 sm:mt-4 sm:space-y-4 sm:pt-4">
               {/* Price Range Slider */}
-              <div className="bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-golden-yellow/20">
-                <div className="flex items-center justify-between mb-2 sm:mb-3">
-                  <label className="text-xs sm:text-sm font-semibold text-foreground">Price Range</label>
-                  <span className="text-xs sm:text-sm font-bold text-saffron">₹{priceRange.toLocaleString()}</span>
+              <div className="border-golden-yellow/20 rounded-xl border bg-white p-3 sm:rounded-2xl sm:p-4">
+                <div className="mb-2 flex items-center justify-between sm:mb-3">
+                  <label className="text-foreground text-xs font-semibold sm:text-sm">Price Range</label>
+                  <span className="text-saffron text-xs font-bold sm:text-sm">
+                    ₹{priceRange.toLocaleString()}
+                  </span>
                 </div>
                 <input
                   type="range"
@@ -162,20 +164,20 @@ export function PackageFilter({
                   onChange={(e) => handlePriceChange(Number(e.target.value))}
                   className="price-slider w-full"
                 />
-                <div className="flex justify-between text-[10px] sm:text-xs text-muted-foreground mt-1 sm:mt-2">
+                <div className="text-muted-foreground mt-1 flex justify-between text-[10px] sm:mt-2 sm:text-xs">
                   <span>From ₹500</span>
                   <span>Up to ₹10,000</span>
                 </div>
               </div>
 
               {/* Filter Grid */}
-              <div className="grid grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-2 sm:gap-3">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-1 xl:grid-cols-2">
                 <div className="space-y-1 sm:space-y-2">
-                  <label className="text-[10px] sm:text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  <label className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase sm:text-xs">
                     Region
                   </label>
                   <Select value={localRegion} onValueChange={setLocalRegion}>
-                    <SelectTrigger className="rounded-lg sm:rounded-xl border-2 border-mountain-blue/20 bg-white h-9 sm:h-10 md:h-11 text-xs sm:text-sm">
+                    <SelectTrigger className="border-mountain-blue/20 h-9 rounded-lg border-2 bg-white text-xs sm:h-10 sm:rounded-xl sm:text-sm md:h-11">
                       <SelectValue placeholder="All Regions" />
                     </SelectTrigger>
                     <SelectContent>
@@ -189,11 +191,11 @@ export function PackageFilter({
                 </div>
 
                 <div className="space-y-1 sm:space-y-2">
-                  <label className="text-[10px] sm:text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  <label className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase sm:text-xs">
                     Duration
                   </label>
                   <Select value={localDuration} onValueChange={setLocalDuration}>
-                    <SelectTrigger className="rounded-lg sm:rounded-xl border-2 border-forest-green/20 bg-white h-9 sm:h-10 md:h-11 text-xs sm:text-sm">
+                    <SelectTrigger className="border-forest-green/20 h-9 rounded-lg border-2 bg-white text-xs sm:h-10 sm:rounded-xl sm:text-sm md:h-11">
                       <SelectValue placeholder="Any Duration" />
                     </SelectTrigger>
                     <SelectContent>
@@ -207,11 +209,11 @@ export function PackageFilter({
                 </div>
 
                 <div className="space-y-1 sm:space-y-2">
-                  <label className="text-[10px] sm:text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  <label className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase sm:text-xs">
                     Theme
                   </label>
                   <Select value={localTheme} onValueChange={setLocalTheme}>
-                    <SelectTrigger className="rounded-lg sm:rounded-xl border-2 border-saffron/20 bg-white h-9 sm:h-10 md:h-11 text-xs sm:text-sm">
+                    <SelectTrigger className="border-saffron/20 h-9 rounded-lg border-2 bg-white text-xs sm:h-10 sm:rounded-xl sm:text-sm md:h-11">
                       <SelectValue placeholder="All Themes" />
                     </SelectTrigger>
                     <SelectContent>
@@ -225,11 +227,11 @@ export function PackageFilter({
                 </div>
 
                 <div className="space-y-1 sm:space-y-2">
-                  <label className="text-[10px] sm:text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  <label className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase sm:text-xs">
                     Sort By
                   </label>
                   <Select value={localSortBy} onValueChange={setLocalSortBy}>
-                    <SelectTrigger className="rounded-lg sm:rounded-xl border-2 border-sunset-orange/20 bg-white h-9 sm:h-10 md:h-11 text-xs sm:text-sm">
+                    <SelectTrigger className="border-sunset-orange/20 h-9 rounded-lg border-2 bg-white text-xs sm:h-10 sm:rounded-xl sm:text-sm md:h-11">
                       <SelectValue placeholder="Sort" />
                     </SelectTrigger>
                     <SelectContent>
@@ -242,15 +244,15 @@ export function PackageFilter({
                   </Select>
                 </div>
 
-                <div className="space-y-1 sm:space-y-2 col-span-2 lg:col-span-1 xl:col-span-2">
-                  <label className="text-[10px] sm:text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                <div className="col-span-2 space-y-1 sm:space-y-2 lg:col-span-1 xl:col-span-2">
+                  <label className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase sm:text-xs">
                     Actions
                   </label>
                   <div className="flex gap-2">
                     <Button
                       onClick={applyFilters}
                       variant="gradient"
-                      className="flex-1 rounded-lg sm:rounded-xl h-9 sm:h-10 md:h-11 text-xs sm:text-sm"
+                      className="h-9 flex-1 rounded-lg text-xs sm:h-10 sm:rounded-xl sm:text-sm md:h-11"
                     >
                       Apply
                     </Button>
@@ -258,7 +260,7 @@ export function PackageFilter({
                       <Button
                         variant="outline"
                         onClick={handleClear}
-                        className="rounded-lg sm:rounded-xl border-2 border-temple-red/30 text-temple-red hover:bg-temple-red/10 h-9 sm:h-10 md:h-11 px-3"
+                        className="border-temple-red/30 text-temple-red hover:bg-temple-red/10 h-9 rounded-lg border-2 px-3 sm:h-10 sm:rounded-xl md:h-11"
                       >
                         <X className="h-4 w-4" />
                       </Button>

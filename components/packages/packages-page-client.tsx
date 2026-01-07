@@ -135,16 +135,31 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
     selectedPrice !== "All"
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="bg-background min-h-screen">
       <Header />
 
       <InfiniteScrollHero
         images={[
-          { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765967133/hqjivfndozpkicr5eddz.png", alt: "Himalayan Mountains" },
-          { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765967181/vor6a288gor8vhrmnej1.png", alt: "Mountain Peaks" },
-          { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765970056/irdkpi0rs4cfcdmo985u.png", alt: "Rafting" },
-          { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765967996/nmnqkuvgik8wokp82kiv.jpg", alt: "Chintpurni Temple" },
-          { url: "https://res.cloudinary.com/dabqqymqe/image/upload/v1765967269/flj6ga0vacjary3hscgt.png", alt: "Paragliding" },
+          {
+            url: "https://res.cloudinary.com/daqp8c5fa/image/upload/v1767795277/v7svtjhbjhj6cyadgfhz.webp",
+            alt: "Himalayan Mountains",
+          },
+          {
+            url: "https://res.cloudinary.com/daqp8c5fa/image/upload/v1767795901/y1plr2wekvbv7g7yjyk0.webp",
+            alt: "Mountain Peaks",
+          },
+          {
+            url: "https://res.cloudinary.com/daqp8c5fa/image/upload/v1767796909/m3ugl4axz8mqwscuvf4y.webp",
+            alt: "Rafting",
+          },
+          {
+            url: "https://res.cloudinary.com/daqp8c5fa/image/upload/v1767794969/himachal-yatra/packages/jbngdslx5ivqucojuvx3.webp",
+            alt: "Chintpurni Temple",
+          },
+          {
+            url: "https://res.cloudinary.com/daqp8c5fa/image/upload/v1767795350/wjfrlwcmh0ckc16iwwax.webp",
+            alt: "Paragliding",
+          },
         ]}
         badge="Handcrafted Himalayan Experiences"
         title="Unforgettable Travel Packages"
@@ -152,7 +167,7 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
       />
 
       {/* Mobile Filter Bar - Visible only on mobile/tablet */}
-      <section className="lg:hidden bg-background/95 border-b border-border py-3 sm:py-4">
+      <section className="bg-background/95 border-border border-b py-3 sm:py-4 lg:hidden">
         <div className="container mx-auto px-4">
           <PackageFilter
             searchQuery={searchQuery}
@@ -174,24 +189,26 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
       </section>
 
       {/* Packages Grid with Desktop Sidebar */}
-      <section className="py-6 sm:py-8 md:py-12 lg:py-16 bg-linear-to-b from-background via-[oklch(0.97_0.02_85)] to-background">
+      <section className="from-background to-background bg-linear-to-b via-[oklch(0.97_0.02_85)] py-6 sm:py-8 md:py-12 lg:py-16">
         <div className="container mx-auto px-4">
-          <div className="lg:grid lg:grid-cols-[1fr_320px] xl:grid-cols-[1fr_380px] lg:gap-8">
+          <div className="lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 xl:grid-cols-[1fr_380px]">
             {/* Main Content */}
             <div>
-              <div className="flex items-center justify-between mb-4 sm:mb-6 md:mb-8">
-                <p className="text-xs sm:text-sm md:text-base text-muted-foreground">
-                  Showing <span className="font-semibold text-saffron">{displayedPackages.length}</span> of{" "}
+              <div className="mb-4 flex items-center justify-between sm:mb-6 md:mb-8">
+                <p className="text-muted-foreground text-xs sm:text-sm md:text-base">
+                  Showing <span className="text-saffron font-semibold">{displayedPackages.length}</span> of{" "}
                   <span className="font-semibold">{filteredPackages.length}</span> packages
                 </p>
               </div>
 
               {filteredPackages.length === 0 ? (
-                <div className="text-center py-8 sm:py-12 md:py-16 bg-linear-to-br from-muted/50 to-muted/30 rounded-2xl sm:rounded-3xl">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4 bg-saffron/10 rounded-full flex items-center justify-center">
-                    <MapPin className="h-8 w-8 sm:h-10 sm:w-10 text-saffron" />
+                <div className="from-muted/50 to-muted/30 rounded-2xl bg-linear-to-br py-8 text-center sm:rounded-3xl sm:py-12 md:py-16">
+                  <div className="bg-saffron/10 mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full sm:mb-4 sm:h-20 sm:w-20">
+                    <MapPin className="text-saffron h-8 w-8 sm:h-10 sm:w-10" />
                   </div>
-                  <h3 className="text-base sm:text-lg md:text-xl font-semibold text-foreground mb-2">No packages found</h3>
+                  <h3 className="text-foreground mb-2 text-base font-semibold sm:text-lg md:text-xl">
+                    No packages found
+                  </h3>
                   <p className="text-muted-foreground mb-4 text-xs sm:text-sm md:text-base">
                     Try adjusting your filters or search query
                   </p>
@@ -204,7 +221,7 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
                   variants={staggerContainer}
                   initial="hidden"
                   animate="visible"
-                  className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6"
+                  className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6"
                 >
                   {displayedPackages.map((pkg) => (
                     <PackageCard key={pkg.id} pkg={pkg} />
@@ -213,12 +230,12 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
               )}
 
               {hasMore && (
-                <div className="text-center mt-6 sm:mt-8 md:mt-12">
+                <div className="mt-6 text-center sm:mt-8 md:mt-12">
                   <Button
                     variant="outline"
                     size="lg"
                     onClick={() => setVisibleCount((prev) => prev + ITEMS_PER_PAGE)}
-                    className="rounded-full border-2 border-saffron text-saffron hover:bg-saffron hover:text-white text-sm sm:text-base"
+                    className="border-saffron text-saffron hover:bg-saffron rounded-full border-2 text-sm hover:text-white sm:text-base"
                   >
                     Load More Packages
                   </Button>

@@ -5,7 +5,10 @@ import { MediaLibrary } from "@/components/admin/media-library"
 export default async function MediaPage() {
   const supabase = await createClient()
 
-  const { data: media, error } = await supabase.from("media").select("*").order("created_at", { ascending: false })
+  const { data: media, error } = await supabase
+    .from("media")
+    .select("*")
+    .order("created_at", { ascending: false })
 
   if (error) {
     console.error("Error fetching media:", error)

@@ -51,7 +51,7 @@ export function BlogTOC({ content }: BlogTOCProps) {
 
       // Find the heading that's currently in view
       let currentId = ""
-      
+
       for (let i = tocItems.length - 1; i >= 0; i--) {
         const heading = document.getElementById(tocItems[i].id)
         if (heading) {
@@ -95,30 +95,21 @@ export function BlogTOC({ content }: BlogTOCProps) {
   }
 
   return (
-    <motion.nav
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      className="hidden xl:block"
-    >
-      <div className="rounded-xl border bg-muted/50 backdrop-blur-sm p-4 shadow-sm">
-        <h4 className="mb-3 text-sm font-semibold uppercase tracking-wide text-foreground">
-          On This Page
-        </h4>
+    <motion.nav initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="hidden xl:block">
+      <div className="bg-muted/50 rounded-xl border p-4 shadow-sm backdrop-blur-sm">
+        <h4 className="text-foreground mb-3 text-sm font-semibold tracking-wide uppercase">On This Page</h4>
 
         <ul className="space-y-1.5">
           {tocItems.map((item) => (
-            <li
-              key={item.id}
-              style={{ paddingLeft: `${(item.level - 2) * 12}px` }}
-            >
+            <li key={item.id} style={{ paddingLeft: `${(item.level - 2) * 12}px` }}>
               <a
                 href={`#${item.id}`}
                 onClick={(e) => onClickItem(e, item.id)}
                 className={cn(
                   "block rounded-md px-2 py-1.5 text-sm transition-all",
                   activeId === item.id
-                    ? "text-mountain-blue font-medium bg-mountain-blue/10 ring-1 ring-mountain-blue/30 drop-shadow-[0_0_8px_rgba(59,130,246,0.45)]"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "text-mountain-blue bg-mountain-blue/10 ring-mountain-blue/30 font-medium ring-1 drop-shadow-[0_0_8px_rgba(59,130,246,0.45)]"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 {item.text}

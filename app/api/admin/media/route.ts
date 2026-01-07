@@ -3,7 +3,11 @@ import { createClient } from "@/lib/supabase/server"
 
 export const runtime = "nodejs"
 
-function inferMediaType(input: { resource_type?: string; format?: string; mime_type?: string }): "image" | "pdf" | "video" {
+function inferMediaType(input: {
+  resource_type?: string
+  format?: string
+  mime_type?: string
+}): "image" | "pdf" | "video" {
   const format = (input.format || "").toLowerCase()
   const resourceType = (input.resource_type || "").toLowerCase()
   const mimeType = (input.mime_type || "").toLowerCase()
@@ -25,7 +29,11 @@ export async function POST(req: Request) {
   }
 
   // Ensure the session belongs to an admin.
-  const { data: adminProfile } = await supabase.from("admin_profiles").select("id").eq("id", user.id).maybeSingle()
+  const { data: adminProfile } = await supabase
+    .from("admin_profiles")
+    .select("id")
+    .eq("id", user.id)
+    .maybeSingle()
   if (!adminProfile) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 })
   }
@@ -54,16 +62,27 @@ export async function POST(req: Request) {
   // De-dupe by public_id (preferred) and then by url.
   // Note: some DBs may not have the `public_id` column yet.
   if (publicId && typeof publicId === "string") {
-    const existingByPublicId = await supabase.from("media").select("id,url,public_id").eq("public_id", publicId).maybeSingle()
+    const existingByPublicId = await supabase
+      .from("media")
+      .select("id,url,public_id")
+      .eq("public_id", publicId)
+      .maybeSingle()
     if (existingByPublicId.data) {
       return NextResponse.json({ media: existingByPublicId.data }, { status: 200 })
     }
-    if (existingByPublicId.error?.code === "42703" || /public_id/i.test(existingByPublicId.error?.message || "")) {
+    if (
+      existingByPublicId.error?.code === "42703" ||
+      /public_id/i.test(existingByPublicId.error?.message || "")
+    ) {
       // Column missing; ignore public_id de-dupe.
     }
   }
 
-  const { data: existingByUrl } = await supabase.from("media").select("id,url,public_id").eq("url", url).maybeSingle()
+  const { data: existingByUrl } = await supabase
+    .from("media")
+    .select("id,url,public_id")
+    .eq("url", url)
+    .maybeSingle()
   if (existingByUrl) {
     return NextResponse.json({ media: existingByUrl }, { status: 200 })
   }
@@ -102,7 +121,10 @@ export async function POST(req: Request) {
   }
 
   // Fallback if `public_id` column doesn't exist.
-  if (insertWithPublicId.error?.code === "42703" || /public_id/i.test(insertWithPublicId.error?.message || "")) {
+  if (
+    insertWithPublicId.error?.code === "42703" ||
+    /public_id/i.test(insertWithPublicId.error?.message || "")
+  ) {
     const insertWithoutPublicId = await supabase
       .from("media")
       .insert({

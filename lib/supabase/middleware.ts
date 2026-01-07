@@ -19,7 +19,9 @@ export async function updateSession(request: NextRequest) {
           supabaseResponse = NextResponse.next({
             request,
           })
-          cookiesToSet.forEach(({ name, value, options }) => supabaseResponse.cookies.set(name, value, options))
+          cookiesToSet.forEach(({ name, value, options }) =>
+            supabaseResponse.cookies.set(name, value, options),
+          )
         },
       },
     },
@@ -38,7 +40,11 @@ export async function updateSession(request: NextRequest) {
         // If user is already logged in and is admin, redirect to dashboard
         if (user && !userError) {
           try {
-            const { data: adminProfile } = await supabase.from("admin_profiles").select("id").eq("id", user.id).single()
+            const { data: adminProfile } = await supabase
+              .from("admin_profiles")
+              .select("id")
+              .eq("id", user.id)
+              .single()
 
             if (adminProfile) {
               const url = request.nextUrl.clone()

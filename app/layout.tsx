@@ -1,21 +1,16 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Poppins, Playfair_Display } from "next/font/google"
+import { Montserrat } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { SettingsProvider } from "@/lib/settings-context"
 import { ScrollToTop } from "@/components/ui/scroll-to-top"
 import { createPublicClient } from "@/lib/supabase/public"
 import "./globals.css"
 
-const poppins = Poppins({
+const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-poppins",
-})
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-montserrat",
 })
 
 const siteMetadataAssets: Pick<Metadata, "icons" | "manifest"> = {
@@ -64,7 +59,10 @@ export async function generateMetadata(): Promise<Metadata> {
     }
 
     const supabase = createPublicClient()
-    const { data, error } = await supabase.from("settings").select("key, value").in("key", ["meta_title", "meta_description", "site_name"])
+    const { data, error } = await supabase
+      .from("settings")
+      .select("key, value")
+      .in("key", ["meta_title", "meta_description", "site_name"])
 
     if (error || !data || data.length === 0) {
       return {
@@ -128,7 +126,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${playfair.variable} font-sans antialiased`}>
+      <body className={`${montserrat.variable} font-sans antialiased`}>
         <SettingsProvider>{children}</SettingsProvider>
         <Analytics />
         <ScrollToTop />

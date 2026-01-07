@@ -14,9 +14,8 @@ function sha1(input: string) {
 async function cloudinaryDestroy(args: {
   publicId: string
   resourceType: CloudinaryResourceType
-}): Promise<{ ok: boolean; result?: string; error?: string }>
-{
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+}): Promise<{ ok: boolean; result?: string; error?: string }> {
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME || process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
   const apiKey = process.env.CLOUDINARY_API_KEY
   const apiSecret = process.env.CLOUDINARY_API_SECRET
 
@@ -24,7 +23,7 @@ async function cloudinaryDestroy(args: {
     return {
       ok: false,
       error:
-        "Cloudinary admin credentials are missing. Set NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET.",
+        "Cloudinary admin credentials are missing. Set CLOUDINARY_CLOUD_NAME (or NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME), CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET.",
     }
   }
 
@@ -83,7 +82,10 @@ async function removeUrlFromArrayColumn(args: {
     const next = arr.filter((x) => x !== url)
     if (next.length === arr.length) continue
 
-    const { error: updateError } = await supabase.from(table).update({ [column]: next }).eq("id", row.id)
+    const { error: updateError } = await supabase
+      .from(table)
+      .update({ [column]: next })
+      .eq("id", row.id)
     if (!updateError) updated += 1
   }
 
@@ -104,20 +106,22 @@ export async function DELETE(_req: Request, ctx: { params: Promise<{ id: string 
   }
 
   // Ensure the session belongs to an admin.
-  const { data: adminProfile } = await supabase.from("admin_profiles").select("id").eq("id", user.id).maybeSingle()
+  const { data: adminProfile } = await supabase
+    .from("admin_profiles")
+    .select("id")
+    .eq("id", user.id)
+    .maybeSingle()
   if (!adminProfile) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 })
   }
 
   // `public_id` may not exist yet in some DBs. Try selecting it; fallback if column missing.
-  let media:
-    | {
-        id: string
-        url: string
-        type: string
-        public_id?: string | null
-      }
-    | null = null
+  let media: {
+    id: string
+    url: string
+    type: string
+    public_id?: string | null
+  } | null = null
 
   const withPublicId = await supabase.from("media").select("id,url,public_id,type").eq("id", id).single()
   if (withPublicId.data) {
@@ -158,13 +162,33 @@ export async function DELETE(_req: Request, ctx: { params: Promise<{ id: string 
   }
 
   // 2) Remove references across known DB columns.
-  const [{ count: vehiclesCount }, { count: blogsCoverCount }, { count: diariesCoverCount }, { count: diariesAvatarCount }] =
-    await Promise.all([
-      supabase.from("vehicles").update({ image_url: null }).eq("image_url", url).select("id", { count: "exact", head: true }),
-      supabase.from("blogs").update({ cover_image: null }).eq("cover_image", url).select("id", { count: "exact", head: true }),
-      supabase.from("diaries").update({ cover_image: null }).eq("cover_image", url).select("id", { count: "exact", head: true }),
-      supabase.from("diaries").update({ author_avatar: null }).eq("author_avatar", url).select("id", { count: "exact", head: true }),
-    ])
+  const [
+    { count: vehiclesCount },
+    { count: blogsCoverCount },
+    { count: diariesCoverCount },
+    { count: diariesAvatarCount },
+  ] = await Promise.all([
+    supabase
+      .from("vehicles")
+      .update({ image_url: null })
+      .eq("image_url", url)
+      .select("id", { count: "exact", head: true }),
+    supabase
+      .from("blogs")
+      .update({ cover_image: null })
+      .eq("cover_image", url)
+      .select("id", { count: "exact", head: true }),
+    supabase
+      .from("diaries")
+      .update({ cover_image: null })
+      .eq("cover_image", url)
+      .select("id", { count: "exact", head: true }),
+    supabase
+      .from("diaries")
+      .update({ author_avatar: null })
+      .eq("author_avatar", url)
+      .select("id", { count: "exact", head: true }),
+  ])
 
   const [blogsGalleryUpdated, diariesGalleryUpdated, packagesImagesUpdated] = await Promise.all([
     removeUrlFromArrayColumn({ supabase, table: "blogs", column: "gallery", url }),

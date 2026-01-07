@@ -101,7 +101,7 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
         {
           method: "POST",
           body: formDataToSend,
-        }
+        },
       )
 
       if (!response.ok) {
@@ -158,9 +158,9 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
 
   return (
     <div className="space-y-6" suppressHydrationWarning>
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div className="flex items-center gap-3">
-          <Folder className="w-5 h-5 text-muted-foreground" />
+          <Folder className="text-muted-foreground h-5 w-5" />
           <Select value={filter} onValueChange={setFilter}>
             <SelectTrigger className="w-35 sm:w-45">
               <SelectValue placeholder="All folders" />
@@ -176,15 +176,15 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
           </Select>
         </div>
 
-        <div className="flex flex-col xs:flex-row gap-2 w-full sm:w-auto">
+        <div className="xs:flex-row flex w-full flex-col gap-2 sm:w-auto">
           <Dialog open={isUploadOpen} onOpenChange={setIsUploadOpen}>
             <DialogTrigger asChild>
-              <Button className="w-full xs:w-auto">
-                <Upload className="w-4 h-4 mr-2" />
+              <Button className="xs:w-auto w-full">
+                <Upload className="mr-2 h-4 w-4" />
                 Upload Media
               </Button>
             </DialogTrigger>
-            <DialogContent className="w-[calc(100vw-2rem)] sm:w-full max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-h-[90vh] w-[calc(100vw-2rem)] overflow-y-auto sm:w-full">
               <DialogHeader>
                 <DialogTitle>Upload Media to Cloudinary</DialogTitle>
               </DialogHeader>
@@ -224,24 +224,28 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
                     >
                       {isUploading ? (
                         <>
-                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                           Uploading...
                         </>
                       ) : (
                         <>
-                          <Upload className="w-4 h-4 mr-2" />
+                          <Upload className="mr-2 h-4 w-4" />
                           Choose File
                         </>
                       )}
                     </Button>
                   </div>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-muted-foreground text-xs">
                     Supported: JPG, PNG, WebP, GIF, PDF (Max 50MB)
                   </p>
                 </div>
 
-                <div className="flex flex-col-reverse xs:flex-row justify-end gap-2 pt-4">
-                  <Button variant="outline" onClick={() => setIsUploadOpen(false)} className="w-full xs:w-auto">
+                <div className="xs:flex-row flex flex-col-reverse justify-end gap-2 pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => setIsUploadOpen(false)}
+                    className="xs:w-auto w-full"
+                  >
                     Close
                   </Button>
                 </div>
@@ -252,13 +256,13 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
       </div>
 
       {filteredMedia.length === 0 ? (
-        <div className="bg-background border border-border rounded-xl p-12 text-center">
-          <ImageIcon className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-foreground mb-2">No media yet</h3>
+        <div className="bg-background border-border rounded-xl border p-12 text-center">
+          <ImageIcon className="text-muted-foreground mx-auto mb-4 h-16 w-16" />
+          <h3 className="text-foreground mb-2 text-lg font-medium">No media yet</h3>
           <p className="text-muted-foreground mb-4">Upload images and documents to use across your site.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 md:gap-5 lg:grid-cols-4">
           {filteredMedia.map((item, index) => (
             <motion.div
               key={item.id}
@@ -266,25 +270,25 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.03 }}
             >
-              <Card className="overflow-hidden group">
+              <Card className="group overflow-hidden">
                 <CardContent className="p-0">
-                  <div className="aspect-square relative bg-muted">
+                  <div className="bg-muted relative aspect-square">
                     {item.type === "image" ? (
                       <img
                         src={item.url || "/placeholder.svg"}
                         alt={item.alt_text || item.name}
-                        className="w-full h-full object-cover"
+                        className="h-full w-full object-cover"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement
-                          target.src = "/broken-image.png"
+                          target.src = "/Images/logo.webp"
                         }}
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <FileText className="w-16 h-16 text-muted-foreground" />
+                      <div className="flex h-full w-full items-center justify-center">
+                        <FileText className="text-muted-foreground h-16 w-16" />
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                    <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/60 opacity-0 transition-opacity group-hover:opacity-100">
                       <Button
                         size="sm"
                         variant="secondary"
@@ -292,9 +296,9 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
                         className="h-8 w-8 p-0"
                       >
                         {copiedId === item.id ? (
-                          <Check className="w-4 h-4 text-green-500" />
+                          <Check className="h-4 w-4 text-green-500" />
                         ) : (
-                          <Copy className="w-4 h-4" />
+                          <Copy className="h-4 w-4" />
                         )}
                       </Button>
                       <Button
@@ -303,13 +307,15 @@ export function MediaLibrary({ media }: MediaLibraryProps) {
                         onClick={() => deleteMedia(item.id)}
                         className="h-8 w-8 p-0"
                       >
-                        <Trash2 className="w-4 h-4 text-destructive" />
+                        <Trash2 className="text-destructive h-4 w-4" />
                       </Button>
                     </div>
                   </div>
                   <div className="p-2 sm:p-3">
-                    <p className="text-xs sm:text-sm font-medium truncate">{item.name}</p>
-                    <p className="text-[10px] sm:text-xs text-muted-foreground capitalize truncate">{item.folder}</p>
+                    <p className="truncate text-xs font-medium sm:text-sm">{item.name}</p>
+                    <p className="text-muted-foreground truncate text-[10px] capitalize sm:text-xs">
+                      {item.folder}
+                    </p>
                   </div>
                 </CardContent>
               </Card>

@@ -85,50 +85,50 @@ export function BlogPageClient({ blogs, categories }: BlogPageClientProps) {
     setVisibleCount(ITEMS_PER_PAGE)
   }, [selectedCategory, searchQuery])
 
-
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-background overflow-x-hidden">
+      <main className="bg-background min-h-screen overflow-x-hidden">
         <div className="mt-16">
           <StaticHero
-          image="/Images/blog.png"
-          badge="Expert Insights & Local Secrets"
-          title="Your Ultimate Himachal Guide"
-          subtitle="Go beyond the tourist trail with our comprehensive travel guides. From budget itineraries to luxury escapes, from monsoon trekking tips to winter road safety — we've got the insider knowledge to make your trip extraordinary."
+            image="/Images/blog.png"
+            badge="Expert Insights & Local Secrets"
+            title="Your Ultimate Himachal Guide"
+            subtitle="Go beyond the tourist trail with our comprehensive travel guides. From budget itineraries to luxury escapes, from monsoon trekking tips to winter road safety — we've got the insider knowledge to make your trip extraordinary."
           />
         </div>
 
         {/* Featured section removed as requested */}
 
         {/* Main Content */}
-        <section className="relative z-10 py-10 md:py-16 pb-20 md:pb-24 bg-linear-to-b from-background via-[oklch(0.97_0.02_85)] to-background overflow-hidden">
+        <section className="from-background to-background relative z-10 overflow-hidden bg-linear-to-b via-[oklch(0.97_0.02_85)] py-10 pb-20 md:py-16 md:pb-24">
           <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-3 gap-6 md:gap-8 items-start min-w-0">
+            <div className="grid min-w-0 items-start gap-6 md:gap-8 lg:grid-cols-3">
               {/* Main Column */}
-              <div className="lg:col-span-2 min-w-0">
+              <div className="min-w-0 lg:col-span-2">
                 {/* Search */}
                 <div className="mb-4 md:mb-8">
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 md:h-4 md:w-4 text-mountain-blue" />
+                    <Search className="text-mountain-blue absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 md:h-4 md:w-4" />
                     <Input
                       type="text"
                       placeholder="Search articles..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-9 md:pl-10 rounded-full border-2 border-mountain-blue/20 focus:border-mountain-blue h-10 md:h-12 text-sm md:text-base"
+                      className="border-mountain-blue/20 focus:border-mountain-blue h-10 rounded-full border-2 pl-9 text-sm md:h-12 md:pl-10 md:text-base"
                     />
                   </div>
                 </div>
 
                 {/* Category Filter - Horizontal scroll on mobile (non-sticky for small screens) */}
-                <div className="flex gap-2 mb-4 md:mb-8 overflow-x-auto pb-2 scrollbar-hide py-2 md:py-0 md:overflow-visible md:pb-0">
+                <div className="scrollbar-hide mb-4 flex gap-2 overflow-x-auto py-2 pb-2 md:mb-8 md:overflow-visible md:py-0 md:pb-0">
                   <Badge
                     variant={selectedCategory === null ? "default" : "outline"}
-                    className={`cursor-pointer shrink-0 rounded-full px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm transition-all ${selectedCategory === null
-                        ? "bg-linear-to-r from-mountain-blue to-forest-green text-white shadow-md"
-                        : "border-2 hover:bg-mountain-blue/10"
-                      }`}
+                    className={`shrink-0 cursor-pointer rounded-full px-3 py-1.5 text-xs transition-all md:px-4 md:py-2 md:text-sm ${
+                      selectedCategory === null
+                        ? "from-mountain-blue to-forest-green bg-linear-to-r text-white shadow-md"
+                        : "hover:bg-mountain-blue/10 border-2"
+                    }`}
                     onClick={() => handleCategoryClick(null)}
                   >
                     All
@@ -137,10 +137,11 @@ export function BlogPageClient({ blogs, categories }: BlogPageClientProps) {
                     <Badge
                       key={category}
                       variant={selectedCategory === category ? "default" : "outline"}
-                      className={`cursor-pointer shrink-0 rounded-full px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm transition-all ${selectedCategory === category
-                          ? "bg-linear-to-r from-mountain-blue to-forest-green text-white shadow-md"
-                          : "border-2 hover:bg-mountain-blue/10"
-                        }`}
+                      className={`shrink-0 cursor-pointer rounded-full px-3 py-1.5 text-xs transition-all md:px-4 md:py-2 md:text-sm ${
+                        selectedCategory === category
+                          ? "from-mountain-blue to-forest-green bg-linear-to-r text-white shadow-md"
+                          : "hover:bg-mountain-blue/10 border-2"
+                      }`}
                       onClick={() => handleCategoryClick(category)}
                     >
                       {category}
@@ -150,16 +151,17 @@ export function BlogPageClient({ blogs, categories }: BlogPageClientProps) {
 
                 {/* Posts Grid */}
                 <motion.div
-                  key={`${selectedCategory ?? 'all'}-${searchQuery}-${visibleCount}`}
+                  key={`${selectedCategory ?? "all"}-${searchQuery}-${visibleCount}`}
                   variants={staggerContainer}
                   initial="hidden"
                   animate="visible"
-                  className="relative z-10 flex flex-col gap-4 md:gap-6 min-w-0"
+                  className="relative z-10 flex min-w-0 flex-col gap-4 md:gap-6"
                 >
                   {/* Status helper */}
                   {filteredPosts.length > 0 && (
-                    <div className="sm:col-span-2 text-xs md:text-sm text-muted-foreground">
-                      Showing <span className="font-semibold text-saffron">{visiblePosts.length}</span> of {filteredPosts.length}
+                    <div className="text-muted-foreground text-xs sm:col-span-2 md:text-sm">
+                      Showing <span className="text-saffron font-semibold">{visiblePosts.length}</span> of{" "}
+                      {filteredPosts.length}
                     </div>
                   )}
                   {visiblePosts.map((post) => (
@@ -169,7 +171,7 @@ export function BlogPageClient({ blogs, categories }: BlogPageClientProps) {
 
                 {/* No Results */}
                 {filteredPosts.length === 0 && (
-                  <div className="text-center py-12 md:py-16 bg-linear-to-br from-muted/50 to-muted/30 rounded-3xl">
+                  <div className="from-muted/50 to-muted/30 rounded-3xl bg-linear-to-br py-12 text-center md:py-16">
                     <p className="text-muted-foreground mb-4">No posts found matching your search.</p>
                     <Button
                       variant="outline"
@@ -191,13 +193,13 @@ export function BlogPageClient({ blogs, categories }: BlogPageClientProps) {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true }}
-                    className="text-center mt-8 md:mt-12"
+                    className="mt-8 text-center md:mt-12"
                   >
                     <Button
                       variant="outline"
                       size="lg"
                       onClick={() => setVisibleCount((prev) => prev + ITEMS_PER_PAGE)}
-                      className="rounded-full border-2 border-mountain-blue text-mountain-blue hover:bg-mountain-blue hover:text-white"
+                      className="border-mountain-blue text-mountain-blue hover:bg-mountain-blue rounded-full border-2 hover:text-white"
                     >
                       Load More Posts
                     </Button>

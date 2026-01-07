@@ -88,9 +88,9 @@ export function LeadsTable({ leads }: LeadsTableProps) {
 
   if (leads.length === 0) {
     return (
-      <div className="bg-background border border-border rounded-xl p-12 text-center">
-        <Inbox className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-        <h3 className="text-lg font-medium text-foreground mb-2">No leads found</h3>
+      <div className="bg-background border-border rounded-xl border p-12 text-center">
+        <Inbox className="text-muted-foreground mx-auto mb-4 h-16 w-16" />
+        <h3 className="text-foreground mb-2 text-lg font-medium">No leads found</h3>
         <p className="text-muted-foreground">When customers submit inquiries, they will appear here.</p>
       </div>
     )
@@ -108,27 +108,29 @@ export function LeadsTable({ leads }: LeadsTableProps) {
             transition={{ delay: index * 0.03 }}
           >
             <Card>
-              <CardContent className="p-3 space-y-3">
+              <CardContent className="space-y-3 p-3">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="text-xs text-muted-foreground">Reference</p>
-                    <code className="inline-block bg-muted px-2 py-1 rounded text-xs break-all">{lead.reference_number}</code>
+                    <p className="text-muted-foreground text-xs">Reference</p>
+                    <code className="bg-muted inline-block rounded px-2 py-1 text-xs break-all">
+                      {lead.reference_number}
+                    </code>
                   </div>
 
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
-                        <MoreHorizontal className="w-4 h-4" />
+                        <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem onClick={() => setSelectedLead(lead)}>
-                        <Eye className="w-4 h-4 mr-2" />
+                        <Eye className="mr-2 h-4 w-4" />
                         View Details
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem className="text-destructive" onClick={() => deleteLead(lead.id)}>
-                        <Trash2 className="w-4 h-4 mr-2" />
+                        <Trash2 className="mr-2 h-4 w-4" />
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -136,38 +138,40 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                 </div>
 
                 <div className="min-w-0">
-                  <p className="font-medium text-foreground truncate">{lead.name}</p>
-                  <p className="text-xs text-muted-foreground truncate">{lead.subject}</p>
+                  <p className="text-foreground truncate font-medium">{lead.name}</p>
+                  <p className="text-muted-foreground truncate text-xs">{lead.subject}</p>
                 </div>
 
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     <a
                       href={`mailto:${lead.email}`}
-                      className="p-1.5 rounded-md hover:bg-muted transition-colors"
+                      className="hover:bg-muted rounded-md p-1.5 transition-colors"
                       title={lead.email}
                     >
-                      <Mail className="w-4 h-4 text-muted-foreground" />
+                      <Mail className="text-muted-foreground h-4 w-4" />
                     </a>
                     <a
                       href={`tel:${lead.phone}`}
-                      className="p-1.5 rounded-md hover:bg-muted transition-colors"
+                      className="hover:bg-muted rounded-md p-1.5 transition-colors"
                       title={lead.phone}
                     >
-                      <Phone className="w-4 h-4 text-muted-foreground" />
+                      <Phone className="text-muted-foreground h-4 w-4" />
                     </a>
                     <a
                       href={`https://wa.me/${lead.phone.replace(/\D/g, "")}?text=Hi ${lead.name}, thank you for contacting TourToHimachal!`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-1.5 rounded-md bg-[#25D366]/10 hover:bg-[#25D366]/20 transition-colors"
+                      className="rounded-md bg-[#25D366]/10 p-1.5 transition-colors hover:bg-[#25D366]/20"
                       title="WhatsApp"
                     >
-                      <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                      <MessageCircle className="h-4 w-4 text-[#25D366]" />
                     </a>
                   </div>
 
-                  <p className="text-xs text-muted-foreground whitespace-nowrap">{format(new Date(lead.created_at), "MMM d")}</p>
+                  <p className="text-muted-foreground text-xs whitespace-nowrap">
+                    {format(new Date(lead.created_at), "MMM d")}
+                  </p>
                 </div>
 
                 <div className="flex items-center justify-between gap-2">
@@ -175,8 +179,12 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                     {serviceLabels[lead.service_type] || lead.service_type}
                   </Badge>
 
-                  <Select value={lead.status} onValueChange={(value) => updateLeadStatus(lead.id, value)} disabled={isUpdating}>
-                    <SelectTrigger className={`w-32 h-9 text-xs ${statusColors[lead.status]}`}>
+                  <Select
+                    value={lead.status}
+                    onValueChange={(value) => updateLeadStatus(lead.id, value)}
+                    disabled={isUpdating}
+                  >
+                    <SelectTrigger className={`h-9 w-32 text-xs ${statusColors[lead.status]}`}>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -194,7 +202,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
       </div>
 
       {/* Desktop table */}
-      <div className="hidden md:block bg-background border border-border rounded-xl overflow-x-auto">
+      <div className="bg-background border-border hidden overflow-x-auto rounded-xl border md:block">
         <Table>
           <TableHeader>
             <TableRow>
@@ -203,7 +211,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
               <TableHead className="text-xs sm:text-sm">Contact</TableHead>
               <TableHead className="text-center text-xs sm:text-sm">Type</TableHead>
               <TableHead className="text-center text-xs sm:text-sm">Status</TableHead>
-              <TableHead className="text-center text-xs sm:text-sm whitespace-nowrap">Date</TableHead>
+              <TableHead className="text-center text-xs whitespace-nowrap sm:text-sm">Date</TableHead>
               <TableHead className="text-right text-xs sm:text-sm">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -214,46 +222,52 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.03 }}
-                className="border-b border-border hover:bg-muted/50 transition-colors"
+                className="border-border hover:bg-muted/50 border-b transition-colors"
               >
                 <TableCell className="text-[10px] sm:text-xs">
-                  <code className="bg-muted px-1 sm:px-2 py-0.5 sm:py-1 rounded">{lead.reference_number}</code>
+                  <code className="bg-muted rounded px-1 py-0.5 sm:px-2 sm:py-1">
+                    {lead.reference_number}
+                  </code>
                 </TableCell>
                 <TableCell className="text-xs sm:text-sm">
                   <div>
-                    <p className="font-medium text-foreground truncate">{lead.name}</p>
-                    <p className="text-[10px] sm:text-xs text-muted-foreground truncate max-w-30 sm:max-w-50">{lead.subject}</p>
+                    <p className="text-foreground truncate font-medium">{lead.name}</p>
+                    <p className="text-muted-foreground max-w-30 truncate text-[10px] sm:max-w-50 sm:text-xs">
+                      {lead.subject}
+                    </p>
                   </div>
                 </TableCell>
                 <TableCell className="text-xs sm:text-sm">
                   <div className="flex items-center gap-1 sm:gap-2">
                     <a
                       href={`mailto:${lead.email}`}
-                      className="p-1 sm:p-1.5 rounded-md hover:bg-muted transition-colors shrink-0"
+                      className="hover:bg-muted shrink-0 rounded-md p-1 transition-colors sm:p-1.5"
                       title={lead.email}
                     >
-                      <Mail className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground" />
+                      <Mail className="text-muted-foreground h-3 w-3 sm:h-4 sm:w-4" />
                     </a>
                     <a
                       href={`tel:${lead.phone}`}
-                      className="p-1 sm:p-1.5 rounded-md hover:bg-muted transition-colors shrink-0"
+                      className="hover:bg-muted shrink-0 rounded-md p-1 transition-colors sm:p-1.5"
                       title={lead.phone}
                     >
-                      <Phone className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground" />
+                      <Phone className="text-muted-foreground h-3 w-3 sm:h-4 sm:w-4" />
                     </a>
                     <a
                       href={`https://wa.me/${lead.phone.replace(/\D/g, "")}?text=Hi ${lead.name}, thank you for contacting TourToHimachal!`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-1 sm:p-1.5 rounded-md bg-[#25D366]/10 hover:bg-[#25D366]/20 transition-colors shrink-0"
+                      className="shrink-0 rounded-md bg-[#25D366]/10 p-1 transition-colors hover:bg-[#25D366]/20 sm:p-1.5"
                       title="WhatsApp"
                     >
-                      <MessageCircle className="w-3 h-3 sm:w-4 sm:h-4 text-[#25D366]" />
+                      <MessageCircle className="h-3 w-3 text-[#25D366] sm:h-4 sm:w-4" />
                     </a>
                   </div>
                 </TableCell>
                 <TableCell className="text-center text-xs sm:text-sm">
-                  <Badge variant="outline" className="text-[10px] sm:text-xs">{serviceLabels[lead.service_type] || lead.service_type}</Badge>
+                  <Badge variant="outline" className="text-[10px] sm:text-xs">
+                    {serviceLabels[lead.service_type] || lead.service_type}
+                  </Badge>
                 </TableCell>
                 <TableCell className="text-center text-xs sm:text-sm">
                   <Select
@@ -261,7 +275,9 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                     onValueChange={(value) => updateLeadStatus(lead.id, value)}
                     disabled={isUpdating}
                   >
-                    <SelectTrigger className={`mx-auto w-24 sm:w-28 h-7 sm:h-8 text-[10px] sm:text-xs ${statusColors[lead.status]}`}>
+                    <SelectTrigger
+                      className={`mx-auto h-7 w-24 text-[10px] sm:h-8 sm:w-28 sm:text-xs ${statusColors[lead.status]}`}
+                    >
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -272,24 +288,24 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                     </SelectContent>
                   </Select>
                 </TableCell>
-                <TableCell className="text-center text-[10px] sm:text-sm text-muted-foreground whitespace-nowrap">
+                <TableCell className="text-muted-foreground text-center text-[10px] whitespace-nowrap sm:text-sm">
                   {format(new Date(lead.created_at), "MMM d")}
                 </TableCell>
                 <TableCell className="text-right">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="icon" className="h-7 w-7 sm:h-8 sm:w-8">
-                        <MoreHorizontal className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <MoreHorizontal className="h-3 w-3 sm:h-4 sm:w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem onClick={() => setSelectedLead(lead)}>
-                        <Eye className="w-4 h-4 mr-2" />
+                        <Eye className="mr-2 h-4 w-4" />
                         View Details
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem className="text-destructive" onClick={() => deleteLead(lead.id)}>
-                        <Trash2 className="w-4 h-4 mr-2" />
+                        <Trash2 className="mr-2 h-4 w-4" />
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -303,55 +319,55 @@ export function LeadsTable({ leads }: LeadsTableProps) {
 
       {/* Lead Details Modal */}
       <Dialog open={!!selectedLead} onOpenChange={() => setSelectedLead(null)}>
-        <DialogContent className="w-[calc(100vw-2rem)] sm:w-full max-h-[90vh] overflow-y-auto max-w-lg">
+        <DialogContent className="max-h-[90vh] w-[calc(100vw-2rem)] max-w-lg overflow-y-auto sm:w-full">
           <DialogHeader>
             <DialogTitle>Lead Details</DialogTitle>
             <DialogDescription>Reference: {selectedLead?.reference_number}</DialogDescription>
           </DialogHeader>
           {selectedLead && (
             <div className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <p className="text-xs sm:text-sm text-muted-foreground">Name</p>
-                  <p className="font-medium text-sm sm:text-base">{selectedLead.name}</p>
+                  <p className="text-muted-foreground text-xs sm:text-sm">Name</p>
+                  <p className="text-sm font-medium sm:text-base">{selectedLead.name}</p>
                 </div>
                 <div>
-                  <p className="text-xs sm:text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium text-xs sm:text-base break-all">{selectedLead.email}</p>
+                  <p className="text-muted-foreground text-xs sm:text-sm">Email</p>
+                  <p className="text-xs font-medium break-all sm:text-base">{selectedLead.email}</p>
                 </div>
                 <div>
-                  <p className="text-xs sm:text-sm text-muted-foreground">Phone</p>
-                  <p className="font-medium text-sm sm:text-base">{selectedLead.phone}</p>
+                  <p className="text-muted-foreground text-xs sm:text-sm">Phone</p>
+                  <p className="text-sm font-medium sm:text-base">{selectedLead.phone}</p>
                 </div>
                 <div>
-                  <p className="text-xs sm:text-sm text-muted-foreground">Service Type</p>
-                  <p className="font-medium text-sm sm:text-base capitalize">{selectedLead.service_type}</p>
+                  <p className="text-muted-foreground text-xs sm:text-sm">Service Type</p>
+                  <p className="text-sm font-medium capitalize sm:text-base">{selectedLead.service_type}</p>
                 </div>
               </div>
               <div>
-                <p className="text-xs sm:text-sm text-muted-foreground">Subject</p>
-                <p className="font-medium text-sm sm:text-base">{selectedLead.subject}</p>
+                <p className="text-muted-foreground text-xs sm:text-sm">Subject</p>
+                <p className="text-sm font-medium sm:text-base">{selectedLead.subject}</p>
               </div>
               <div>
-                <p className="text-xs sm:text-sm text-muted-foreground">Message</p>
-                <p className="text-foreground whitespace-pre-wrap bg-muted p-2 sm:p-3 rounded-lg text-xs sm:text-sm">
+                <p className="text-muted-foreground text-xs sm:text-sm">Message</p>
+                <p className="text-foreground bg-muted rounded-lg p-2 text-xs whitespace-pre-wrap sm:p-3 sm:text-sm">
                   {selectedLead.message}
                 </p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-2 pt-4">
-                <Button asChild className="bg-[#25D366] hover:bg-[#25D366]/90 text-sm flex-1">
+              <div className="flex flex-col gap-2 pt-4 sm:flex-row">
+                <Button asChild className="flex-1 bg-[#25D366] text-sm hover:bg-[#25D366]/90">
                   <a
                     href={`https://wa.me/${selectedLead.phone.replace(/\D/g, "")}?text=Hi ${selectedLead.name}, thank you for contacting TourToHimachal regarding your ${selectedLead.service_type} inquiry!`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <MessageCircle className="w-4 h-4 mr-2" />
+                    <MessageCircle className="mr-2 h-4 w-4" />
                     WhatsApp
                   </a>
                 </Button>
-                <Button variant="outline" asChild className="text-sm flex-1 bg-transparent">
+                <Button variant="outline" asChild className="flex-1 bg-transparent text-sm">
                   <a href={`mailto:${selectedLead.email}`}>
-                    <Mail className="w-4 h-4 mr-2" />
+                    <Mail className="mr-2 h-4 w-4" />
                     Email
                   </a>
                 </Button>

@@ -24,7 +24,10 @@ export default async function DashboardPage() {
     recentLeadsResult,
   ] = await Promise.all([
     supabase.from("leads").select("id", { count: "exact", head: true }),
-    supabase.from("leads").select("id", { count: "exact", head: true }).gte("created_at", today.toISOString()),
+    supabase
+      .from("leads")
+      .select("id", { count: "exact", head: true })
+      .gte("created_at", today.toISOString()),
     supabase.from("leads").select("id", { count: "exact", head: true }).eq("service_type", "package"),
     supabase.from("leads").select("id", { count: "exact", head: true }).eq("service_type", "taxi"),
     supabase.from("packages").select("id", { count: "exact", head: true }).eq("is_active", true),
@@ -53,11 +56,11 @@ export default async function DashboardPage() {
     <div>
       <AdminHeader title="Dashboard" description="Welcome back! Here's an overview of your business." />
 
-      <div className="p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6">
+      <div className="space-y-4 p-3 sm:space-y-6 sm:p-4 md:p-6">
         {/* Stats Cards */}
         <DashboardStats stats={stats} />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
+        <div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
           {/* Recent Leads */}
           <div className="md:col-span-2">
             <RecentLeads leads={recentLeads} />

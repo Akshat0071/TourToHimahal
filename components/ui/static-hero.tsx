@@ -22,7 +22,7 @@ function getImageUrl(url: string): string {
 
 export function StaticHero({ image, title, subtitle, badge, children }: StaticHeroProps) {
   return (
-    <section className="relative min-h-[40vh] min-h-[40svh] overflow-hidden flex items-center pt-16 md:pt-24 lg:pt-28">
+    <section className="relative flex min-h-[40svh] min-h-[40vh] items-center overflow-hidden pt-16 md:pt-24 lg:pt-28">
       {/* Static Background Image */}
       <div className="absolute inset-0">
         <img
@@ -35,7 +35,7 @@ export function StaticHero({ image, title, subtitle, badge, children }: StaticHe
 
       {/* Dark Gradient Overlay */}
       <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-black/70" />
-      <div className="absolute inset-0 bg-linear-to-r from-mountain-blue/20 via-transparent to-saffron/20" />
+      <div className="from-mountain-blue/20 to-saffron/20 absolute inset-0 bg-linear-to-r via-transparent" />
 
       {/* Content */}
       <div className="relative z-10 w-full">
@@ -44,16 +44,16 @@ export function StaticHero({ image, title, subtitle, badge, children }: StaticHe
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="max-w-4xl mx-auto text-center"
+            className="mx-auto max-w-4xl text-center"
           >
             {badge && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.3 }}
-                className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-sm font-medium text-white bg-linear-to-r from-saffron/40 to-sunset-orange/40 backdrop-blur-md rounded-full border border-white/30 mt-6 sm:mt-0"
+                className="from-saffron/40 to-sunset-orange/40 mt-6 mb-4 inline-flex items-center gap-2 rounded-full border border-white/30 bg-linear-to-r px-4 py-2 text-sm font-medium text-white backdrop-blur-md sm:mt-0"
               >
-                <span className="text-white font-semibold text-xs md:text-sm">{badge}</span>
+                <span className="text-xs font-semibold text-white md:text-sm">{badge}</span>
               </motion.div>
             )}
 
@@ -61,7 +61,7 @@ export function StaticHero({ image, title, subtitle, badge, children }: StaticHe
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-serif font-bold text-white mb-3 md:mb-4 leading-tight tracking-tight [text-wrap:balance] break-words"
+              className="mb-3 font-serif text-xl leading-tight font-bold tracking-tight [text-wrap:balance] break-words text-white sm:text-2xl md:mb-4 md:text-4xl lg:text-5xl xl:text-6xl"
             >
               <span className="text-[#fc9700]">{title}</span>
             </motion.h1>
@@ -70,7 +70,7 @@ export function StaticHero({ image, title, subtitle, badge, children }: StaticHe
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
-              className="text-xs sm:text-sm md:text-base lg:text-lg text-white/90 max-w-3xl mx-auto text-pretty leading-relaxed mt-2 sm:mt-0"
+              className="mx-auto mt-2 max-w-3xl text-xs leading-relaxed text-pretty text-white/90 sm:mt-0 sm:text-sm md:text-base lg:text-lg"
             >
               {subtitle}
             </motion.p>

@@ -11,7 +11,11 @@ import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "sonner"
-import { CloudinaryUploadWidget, UploadedImagePreview, type CloudinaryUploadResult } from "./cloudinary-upload-widget"
+import {
+  CloudinaryUploadWidget,
+  UploadedImagePreview,
+  type CloudinaryUploadResult,
+} from "./cloudinary-upload-widget"
 import { registerMedia } from "@/lib/admin/media-client"
 
 interface DiaryFormProps {
@@ -37,12 +41,18 @@ export function DiaryForm({ initialData }: DiaryFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isClient, setIsClient] = useState(false)
 
+  const initialGallery =
+    initialData?.gallery && initialData.gallery.length > 0
+      ? initialData.gallery
+      : initialData?.cover_image
+        ? [initialData.cover_image]
+        : []
+
   const [formData, setFormData] = useState({
     title: initialData?.title || "",
     slug: initialData?.slug || "",
     content: initialData?.content || "",
     excerpt: initialData?.excerpt || "",
-    cover_image: initialData?.cover_image || "",
     author_name: initialData?.author_name || "",
     author_avatar: initialData?.author_avatar || "",
     destination: initialData?.destination || "",
@@ -50,7 +60,7 @@ export function DiaryForm({ initialData }: DiaryFormProps) {
     seo_title: initialData?.seo_title || "",
     seo_description: initialData?.seo_description || "",
   })
-  const [gallery, setGallery] = useState<string[]>(initialData?.gallery || [])
+  const [gallery, setGallery] = useState<string[]>(initialGallery)
 
   useEffect(() => {
     setIsClient(true)
@@ -88,8 +98,10 @@ export function DiaryForm({ initialData }: DiaryFormProps) {
 
       const diaryData = {
         ...formData,
+        cover_image: gallery[0] || null,
         gallery,
-        published_at: formData.is_published && !initialData?.is_published ? new Date().toISOString() : undefined,
+        published_at:
+          formData.is_published && !initialData?.is_published ? new Date().toISOString() : undefined,
       }
 
       let error
@@ -118,13 +130,13 @@ export function DiaryForm({ initialData }: DiaryFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-4xl">
+    <form onSubmit={handleSubmit} className="max-w-4xl space-y-6">
       <Card>
         <CardHeader>
           <CardTitle>Diary Content</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="title">Title *</Label>
               <Input
@@ -147,7 +159,7 @@ export function DiaryForm({ initialData }: DiaryFormProps) {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="author_name">Author Name *</Label>
               <Input
@@ -192,113 +204,59 @@ export function DiaryForm({ initialData }: DiaryFormProps) {
             />
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Cover Image</Label>
-              <div className="space-y-4">
-                {formData.cover_image ? (
-                  <div className="space-y-2">
-                    <UploadedImagePreview
-                      imageUrl={formData.cover_image}
-                      onRemove={() => setFormData((prev) => ({ ...prev, cover_image: "" }))}
-                      alt={formData.title}
-                    />
-                    <p className="text-xs text-muted-foreground break-all">
-                      URL: {formData.cover_image}
-                    </p>
-                  </div>
-                ) : (
-                  <CloudinaryUploadWidget
-                    onUploadSuccess={async (result: CloudinaryUploadResult) => {
-                      setFormData((prev) => ({ ...prev, cover_image: result.secure_url }))
-
-                      const registered = await registerMedia({
-                        url: result.secure_url,
-                        public_id: result.public_id,
-                        folder: "diaries",
-                        name: result.original_filename,
-                        alt_text: result.original_filename,
-                        size: result.bytes,
-                        format: result.format,
-                        resource_type: result.resource_type,
-                      })
-
-                      if (!registered.ok) {
-                        toast.error(registered.error)
-                        return
-                      }
-
-                      toast.success("Image uploaded successfully!")
-                    }}
-                    onUploadError={(error) => {
-                      console.error("Upload failed:", error)
-                      toast.error("Failed to upload image")
-                    }}
-                    folder="himachal-yatra/diaries/covers"
-                    maxFiles={1}
-                    acceptedFormats={["jpg", "jpeg", "png", "webp"]}
-                    buttonText="Upload Cover Image"
-                    buttonVariant="outline"
+          <div className="space-y-2">
+            <Label>Author Avatar</Label>
+            <div className="space-y-4">
+              {formData.author_avatar ? (
+                <div className="space-y-2">
+                  <UploadedImagePreview
+                    imageUrl={formData.author_avatar}
+                    onRemove={() => setFormData((prev) => ({ ...prev, author_avatar: "" }))}
+                    alt={formData.author_name}
                   />
-                )}
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label>Author Avatar</Label>
-              <div className="space-y-4">
-                {formData.author_avatar ? (
-                  <div className="space-y-2">
-                    <UploadedImagePreview
-                      imageUrl={formData.author_avatar}
-                      onRemove={() => setFormData((prev) => ({ ...prev, author_avatar: "" }))}
-                      alt={formData.author_name}
-                    />
-                    <p className="text-xs text-muted-foreground break-all">
-                      URL: {formData.author_avatar}
-                    </p>
-                  </div>
-                ) : (
-                  <CloudinaryUploadWidget
-                    onUploadSuccess={async (result: CloudinaryUploadResult) => {
-                      setFormData((prev) => ({ ...prev, author_avatar: result.secure_url }))
+                  <p className="text-muted-foreground text-xs break-all">URL: {formData.author_avatar}</p>
+                </div>
+              ) : (
+                <CloudinaryUploadWidget
+                  onUploadSuccess={async (result: CloudinaryUploadResult) => {
+                    setFormData((prev) => ({ ...prev, author_avatar: result.secure_url }))
 
-                      const registered = await registerMedia({
-                        url: result.secure_url,
-                        public_id: result.public_id,
-                        folder: "diaries",
-                        name: result.original_filename,
-                        alt_text: result.original_filename,
-                        size: result.bytes,
-                        format: result.format,
-                        resource_type: result.resource_type,
-                      })
+                    const registered = await registerMedia({
+                      url: result.secure_url,
+                      public_id: result.public_id,
+                      folder: "diaries",
+                      name: result.original_filename,
+                      alt_text: result.original_filename,
+                      size: result.bytes,
+                      format: result.format,
+                      resource_type: result.resource_type,
+                    })
 
-                      if (!registered.ok) {
-                        toast.error(registered.error)
-                        return
-                      }
+                    if (!registered.ok) {
+                      toast.error(registered.error)
+                      return
+                    }
 
-                      toast.success("Image uploaded successfully!")
-                    }}
-                    onUploadError={(error) => {
-                      console.error("Upload failed:", error)
-                      toast.error("Failed to upload image")
-                    }}
-                    folder="himachal-yatra/diaries"
-                    maxFiles={1}
-                    acceptedFormats={["jpg", "jpeg", "png", "webp"]}
-                    buttonText="Upload Avatar"
-                    buttonVariant="outline"
-                  />
-                )}
-              </div>
+                    toast.success("Image uploaded successfully!")
+                  }}
+                  onUploadError={(error) => {
+                    console.error("Upload failed:", error)
+                    toast.error("Failed to upload image")
+                  }}
+                  folder="himachal-yatra/diaries/authors"
+                  maxFiles={1}
+                  acceptedFormats={["jpg", "jpeg", "png", "webp"]}
+                  buttonText="Upload Author Avatar"
+                  buttonVariant="outline"
+                />
+              )}
             </div>
           </div>
 
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label>Gallery Images (up to 5)</Label>
-              <span className="text-xs text-muted-foreground">First image is used in cards</span>
+              <span className="text-muted-foreground text-xs">First image is used in cards</span>
             </div>
             <div className="space-y-3">
               <div className="flex flex-wrap gap-3">
@@ -333,9 +291,6 @@ export function DiaryForm({ initialData }: DiaryFormProps) {
 
                     setGallery((prev) => {
                       const next = [...prev, result.secure_url].slice(0, 5)
-                      if (!formData.cover_image && next.length > 0) {
-                        setFormData((prevData) => ({ ...prevData, cover_image: next[0] }))
-                      }
                       return next
                     })
                     toast.success("Image added to gallery")
@@ -362,7 +317,7 @@ export function DiaryForm({ initialData }: DiaryFormProps) {
           <CardTitle>SEO & Publishing</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="seo_title">SEO Title</Label>
               <Input
@@ -401,12 +356,12 @@ export function DiaryForm({ initialData }: DiaryFormProps) {
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? (
             <>
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Saving...
             </>
           ) : (
             <>
-              <Save className="w-4 h-4 mr-2" />
+              <Save className="mr-2 h-4 w-4" />
               {initialData ? "Update Diary" : "Create Diary"}
             </>
           )}

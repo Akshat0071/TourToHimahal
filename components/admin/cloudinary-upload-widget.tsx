@@ -114,7 +114,7 @@ export function CloudinaryUploadWidget({
           }
           onUploadSuccess(uploadResult)
         }
-      }
+      },
     )
   }
 
@@ -197,7 +197,11 @@ interface UploadedImagePreviewProps {
   alt?: string
 }
 
-export function UploadedImagePreview({ imageUrl, onRemove, alt = "Uploaded image" }: UploadedImagePreviewProps) {
+export function UploadedImagePreview({
+  imageUrl,
+  onRemove,
+  alt = "Uploaded image",
+}: UploadedImagePreviewProps) {
   const isImage = /\.(jpg|jpeg|png|gif|webp)$/i.test(imageUrl)
   const isPdf = /\.pdf$/i.test(imageUrl)
   const [copied, setCopied] = useState(false)
@@ -215,23 +219,23 @@ export function UploadedImagePreview({ imageUrl, onRemove, alt = "Uploaded image
   }
 
   return (
-    <div className="relative inline-block group">
-      <div className="relative w-40 h-40 rounded-lg overflow-hidden border border-border bg-muted">
+    <div className="group relative inline-block">
+      <div className="border-border bg-muted relative h-40 w-40 overflow-hidden rounded-lg border">
         {isImage ? (
-          <img src={imageUrl} alt={alt} className="w-full h-full object-cover" />
+          <img src={imageUrl} alt={alt} className="h-full w-full object-cover" />
         ) : isPdf ? (
-          <div className="flex items-center justify-center h-full">
-            <FileText className="h-16 w-16 text-muted-foreground" />
+          <div className="flex h-full items-center justify-center">
+            <FileText className="text-muted-foreground h-16 w-16" />
           </div>
         ) : (
-          <div className="flex items-center justify-center h-full">
-            <ImageIcon className="h-16 w-16 text-muted-foreground" />
+          <div className="flex h-full items-center justify-center">
+            <ImageIcon className="text-muted-foreground h-16 w-16" />
           </div>
         )}
 
-        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity group-hover:opacity-100">
           <Button type="button" size="sm" variant="secondary" onClick={copyUrl} className="h-8 w-8 p-0">
-            {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+            {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
           </Button>
         </div>
       </div>
@@ -240,7 +244,7 @@ export function UploadedImagePreview({ imageUrl, onRemove, alt = "Uploaded image
           type="button"
           variant="destructive"
           size="icon"
-          className="absolute -top-2 -right-2 h-6 w-6 rounded-full z-20"
+          className="absolute -top-2 -right-2 z-20 h-6 w-6 rounded-full"
           onClick={onRemove}
         >
           <X className="h-3 w-3" />

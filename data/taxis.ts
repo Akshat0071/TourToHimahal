@@ -196,7 +196,8 @@ export const taxiFaqs = [
   },
   {
     question: "What about extra kilometers?",
-    answer: "Extra kilometers beyond the package are charged at the per-km rate for the selected vehicle type.",
+    answer:
+      "Extra kilometers beyond the package are charged at the per-km rate for the selected vehicle type.",
   },
   {
     question: "Do you provide child seats?",

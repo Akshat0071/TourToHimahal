@@ -7,70 +7,33 @@ import { cn } from "@/lib/utils"
 interface LogoProps {
   className?: string
   size?: "sm" | "md" | "lg"
-  variant?: "full" | "icon"
-  isScrolled?: boolean
   href?: string | null
   onClick?: () => void
-  forceColors?: boolean
 }
 
 export function Logo({
   className,
   size = "md",
-  variant = "full",
-  isScrolled = false,
   href = "/",
   onClick,
-  forceColors = false,
 }: LogoProps) {
   const sizes = {
-    sm: { icon: "w-32 h-10 md:w-40 md:h-12", text: "text-base", tagline: "text-[9px]" },
-    md: { icon: "w-40 h-12 md:w-56 md:h-16", text: "text-lg md:text-xl", tagline: "text-[10px] md:text-xs" },
-    lg: { icon: "w-56 h-16 md:w-72 md:h-20", text: "text-xl md:text-2xl", tagline: "text-xs" },
+    sm: "h-10 md:h-12",
+    md: "h-12 md:h-16",
+    lg: "h-16 md:h-20",
   }
 
-  const useColors = forceColors || isScrolled || true
-
   const LogoContent = () => (
-    <div className={cn("flex items-center gap-2 md:gap-3 group", className)}>
+    <div className={cn("group flex items-center", className)}>
       {/* Full Logo Image container */}
-      <div
-        className={cn(
-          sizes[size].icon,
-          "relative transition-all duration-300",
-        )}
-      >
-        <Image
-          src="/Images/logo1.webp.png"
-          alt="TourToHimachal Logo"
-          fill
-          className="object-contain object-center"
-          priority
-        />
-      </div>
-
-      {/* Text hidden as it is included in the logo image
-      {variant === "full" && (
-        <div className="flex flex-col leading-tight">
-          <span
-            className={cn(
-              sizes[size].text,
-              "font-serif font-bold tracking-tight transition-colors",
-              isScrolled ? "text-foreground" : "text-foreground",
-            )}
-          >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-saffron via-golden-yellow to-sunset-orange">
-              Tour
-            </span>
-            <span className="text-mountain-blue">To</span>
-            <span className="text-forest-green">Himachal</span>
-          </span>
-          <span className={cn(sizes[size].tagline, "font-medium tracking-[0.15em] uppercase text-saffron")}>
-            Your Himalayan Journey
-          </span>
-        </div>
-      )}
-      */}
+      <Image
+        src="/Images/logot.webp"
+        alt="TourToHimachal Logo"
+        width={560}
+        height={160}
+        className={cn(sizes[size], "w-auto transition-all duration-300")}
+        priority
+      />
     </div>
   )
 

@@ -15,7 +15,8 @@ export const metadata: Metadata = {
   keywords: "contact tourtohimachal, chintpurni travel agency, himachal tour booking, taxi service contact",
   openGraph: {
     title: "Contact Us | TourToHimachal",
-    description: "Plan your perfect Himachal trip with us. Contact our travel experts for personalized assistance.",
+    description:
+      "Plan your perfect Himachal trip with us. Contact our travel experts for personalized assistance.",
     type: "website",
   },
 }
@@ -31,12 +32,12 @@ export default function ContactPage() {
         {/* Contact Form & Info Section */}
         <section className="py-12 sm:py-16 md:py-24">
           <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-5 lg:items-start gap-8 md:gap-12 max-w-4xl mx-auto lg:max-w-none">
+            <div className="mx-auto grid max-w-4xl gap-8 md:gap-12 lg:max-w-none lg:grid-cols-5 lg:items-start">
               {/* Contact Info Sidebar */}
-              <div className="lg:col-span-2 order-1 lg:order-1 flex flex-col">
-                <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col">
+              <div className="order-1 flex flex-col lg:order-1 lg:col-span-2">
+                <div className="bg-card border-border flex flex-col rounded-2xl border p-4 sm:p-6 md:p-8">
                   <div className="mb-5 sm:mb-6">
-                    <h2 className="text-xl sm:text-2xl font-serif font-bold text-foreground">Get in Touch</h2>
+                    <h2 className="text-foreground font-serif text-xl font-bold sm:text-2xl">Get in Touch</h2>
                     <p className="text-muted-foreground mt-2 text-sm sm:text-base">
                       Call, WhatsApp, or email us — we typically respond within 12 hours.
                     </p>
@@ -48,10 +49,12 @@ export default function ContactPage() {
               </div>
 
               {/* Contact Form */}
-              <div className="lg:col-span-3 order-2 lg:order-2 flex flex-col">
-                <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col">
+              <div className="order-2 flex flex-col lg:order-2 lg:col-span-3">
+                <div className="bg-card border-border flex flex-col rounded-2xl border p-4 sm:p-6 md:p-8">
                   <div className="mb-5 sm:mb-6">
-                    <h2 className="text-xl sm:text-2xl font-serif font-bold text-foreground">Send Us a Message</h2>
+                    <h2 className="text-foreground font-serif text-xl font-bold sm:text-2xl">
+                      Send Us a Message
+                    </h2>
                     <p className="text-muted-foreground mt-2 text-sm sm:text-base">
                       Fill out the form below and we&apos;ll get back to you within 12 hours.
                     </p>

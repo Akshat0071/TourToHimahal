@@ -41,7 +41,10 @@ export function PackagesTable({ packages }: PackagesTableProps) {
 
   const toggleActive = async (id: string, currentValue: boolean) => {
     const supabase = createClient()
-    const { error } = await supabase.from("packages").update({ is_active: !currentValue }).eq("id", id)
+    const nextIsActive = !currentValue
+    const updateData = nextIsActive ? { is_active: true } : { is_active: false, is_featured: false }
+
+    const { error } = await supabase.from("packages").update(updateData).eq("id", id)
 
     if (error) {
       toast.error("Failed to update package")
@@ -51,7 +54,12 @@ export function PackagesTable({ packages }: PackagesTableProps) {
     }
   }
 
-  const toggleFeatured = async (id: string, currentValue: boolean) => {
+  const toggleFeatured = async (id: string, currentValue: boolean, isActive: boolean) => {
+    if (!isActive && !currentValue) {
+      toast.error("Activate the package before featuring it")
+      return
+    }
+
     const supabase = createClient()
     const { error } = await supabase.from("packages").update({ is_featured: !currentValue }).eq("id", id)
 
@@ -79,9 +87,9 @@ export function PackagesTable({ packages }: PackagesTableProps) {
 
   if (packages.length === 0) {
     return (
-      <div className="bg-background border border-border rounded-xl p-12 text-center">
-        <PackageIcon className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-        <h3 className="text-lg font-medium text-foreground mb-2">No packages yet</h3>
+      <div className="bg-background border-border rounded-xl border p-12 text-center">
+        <PackageIcon className="text-muted-foreground mx-auto mb-4 h-16 w-16" />
+        <h3 className="text-foreground mb-2 text-lg font-medium">No packages yet</h3>
         <p className="text-muted-foreground mb-4">Create your first tour package to get started.</p>
         <Button asChild>
           <Link href="/admin/packages/new">Create Package</Link>
@@ -105,32 +113,32 @@ export function PackagesTable({ packages }: PackagesTableProps) {
               <CardContent className="p-3">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="font-medium text-foreground truncate">{pkg.title}</p>
-                    <p className="text-xs text-muted-foreground truncate">/{pkg.slug}</p>
+                    <p className="text-foreground truncate font-medium">{pkg.title}</p>
+                    <p className="text-muted-foreground truncate text-xs">/{pkg.slug}</p>
                   </div>
 
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
-                        <MoreHorizontal className="w-4 h-4" />
+                        <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem asChild>
                         <Link href={`/packages/${pkg.slug}`} target="_blank">
-                          <Eye className="w-4 h-4 mr-2" />
+                          <Eye className="mr-2 h-4 w-4" />
                           Preview
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
                         <Link href={`/admin/packages/${pkg.id}`}>
-                          <Edit className="w-4 h-4 mr-2" />
+                          <Edit className="mr-2 h-4 w-4" />
                           Edit
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem className="text-destructive" onClick={() => deletePackage(pkg.id)}>
-                        <Trash2 className="w-4 h-4 mr-2" />
+                        <Trash2 className="mr-2 h-4 w-4" />
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -138,34 +146,40 @@ export function PackagesTable({ packages }: PackagesTableProps) {
                 </div>
 
                 <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
-                  <div className="rounded-lg border border-border p-2">
-                    <p className="text-[11px] text-muted-foreground">Price</p>
+                  <div className="border-border rounded-lg border p-2">
+                    <p className="text-muted-foreground text-[11px]">Price</p>
                     <p className="font-medium">₹{pkg.price.toLocaleString()}</p>
                     {pkg.original_price && (
-                      <p className="text-[11px] text-muted-foreground line-through">₹{pkg.original_price.toLocaleString()}</p>
+                      <p className="text-muted-foreground text-[11px] line-through">
+                        ₹{pkg.original_price.toLocaleString()}
+                      </p>
                     )}
                   </div>
-                  <div className="rounded-lg border border-border p-2">
-                    <p className="text-[11px] text-muted-foreground">Duration</p>
-                    <p className="font-medium truncate">{pkg.duration}</p>
+                  <div className="border-border rounded-lg border p-2">
+                    <p className="text-muted-foreground text-[11px]">Duration</p>
+                    <p className="truncate font-medium">{pkg.duration}</p>
                   </div>
                 </div>
 
                 <div className="mt-3 flex items-center justify-between gap-3">
-                  <Badge variant="outline" className="text-xs truncate">
+                  <Badge variant="outline" className="truncate text-xs">
                     {pkg.category || "General"}
                   </Badge>
 
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-muted-foreground">Active</span>
-                      <Switch checked={pkg.is_active} onCheckedChange={() => toggleActive(pkg.id, pkg.is_active)} />
+                      <span className="text-muted-foreground text-xs">Active</span>
+                      <Switch
+                        checked={pkg.is_active}
+                        onCheckedChange={() => toggleActive(pkg.id, pkg.is_active)}
+                      />
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-muted-foreground">Featured</span>
+                      <span className="text-muted-foreground text-xs">Featured</span>
                       <Switch
                         checked={pkg.is_featured}
-                        onCheckedChange={() => toggleFeatured(pkg.id, pkg.is_featured)}
+                        disabled={!pkg.is_active}
+                        onCheckedChange={() => toggleFeatured(pkg.id, pkg.is_featured, pkg.is_active)}
                       />
                     </div>
                   </div>
@@ -177,7 +191,7 @@ export function PackagesTable({ packages }: PackagesTableProps) {
       </div>
 
       {/* Desktop table */}
-      <div className="hidden md:block bg-background border border-border rounded-xl overflow-x-auto">
+      <div className="bg-background border-border hidden overflow-x-auto rounded-xl border md:block">
         <Table>
           <TableHeader>
             <TableRow>
@@ -197,55 +211,66 @@ export function PackagesTable({ packages }: PackagesTableProps) {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.03 }}
-                className="border-b border-border hover:bg-muted/50 transition-colors"
+                className="border-border hover:bg-muted/50 border-b transition-colors"
               >
                 <TableCell className="text-xs sm:text-sm">
                   <div>
-                    <p className="font-medium text-foreground truncate">{pkg.title}</p>
-                    <p className="text-[10px] sm:text-xs text-muted-foreground truncate">/{pkg.slug}</p>
+                    <p className="text-foreground truncate font-medium">{pkg.title}</p>
+                    <p className="text-muted-foreground truncate text-[10px] sm:text-xs">/{pkg.slug}</p>
                   </div>
                 </TableCell>
                 <TableCell className="text-xs sm:text-sm">
                   <div>
                     <p className="font-medium">₹{pkg.price.toLocaleString()}</p>
                     {pkg.original_price && (
-                      <p className="text-[10px] sm:text-xs text-muted-foreground line-through">₹{pkg.original_price.toLocaleString()}</p>
+                      <p className="text-muted-foreground text-[10px] line-through sm:text-xs">
+                        ₹{pkg.original_price.toLocaleString()}
+                      </p>
                     )}
                   </div>
                 </TableCell>
-                <TableCell className="text-xs sm:text-sm whitespace-nowrap">{pkg.duration}</TableCell>
+                <TableCell className="text-xs whitespace-nowrap sm:text-sm">{pkg.duration}</TableCell>
                 <TableCell className="text-xs sm:text-sm">
-                  <Badge variant="outline" className="text-[10px] sm:text-xs">{pkg.category || "General"}</Badge>
+                  <Badge variant="outline" className="text-[10px] sm:text-xs">
+                    {pkg.category || "General"}
+                  </Badge>
                 </TableCell>
                 <TableCell className="text-center">
-                  <Switch checked={pkg.is_active} onCheckedChange={() => toggleActive(pkg.id, pkg.is_active)} />
+                  <Switch
+                    checked={pkg.is_active}
+                    onCheckedChange={() => toggleActive(pkg.id, pkg.is_active)}
+                  />
                 </TableCell>
                 <TableCell className="text-center">
-                  <Switch checked={pkg.is_featured} onCheckedChange={() => toggleFeatured(pkg.id, pkg.is_featured)} />
+                  <Switch
+                    checked={pkg.is_featured}
+                    disabled={!pkg.is_active}
+                    onCheckedChange={() => toggleFeatured(pkg.id, pkg.is_featured, pkg.is_active)}
+                  />
                 </TableCell>
                 <TableCell className="text-right">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="icon" className="h-7 w-7 sm:h-8 sm:w-8">
-                        <MoreHorizontal className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <MoreHorizontal className="h-3 w-3 sm:h-4 sm:w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem asChild>
                         <Link href={`/packages/${pkg.slug}`} target="_blank">
-                          <Eye className="w-4 h-4 mr-2" />
+                          <Eye className="mr-2 h-4 w-4" />
                           Preview
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
                         <Link href={`/admin/packages/${pkg.id}`}>
-                          <Edit className="w-4 h-4 mr-2" />
+                          <Edit className="mr-2 h-4 w-4" />
                           Edit
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem className="text-destructive" onClick={() => deletePackage(pkg.id)}>
-                        <Trash2 className="w-4 h-4 mr-2" />
+                        <Trash2 className="mr-2 h-4 w-4" />
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>

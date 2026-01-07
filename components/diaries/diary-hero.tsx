@@ -25,14 +25,13 @@ export function DiaryHero({ diary, images }: DiaryHeroProps) {
   const displayImages = images.length > 0 ? images : ["/placeholder.svg"]
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const formattedDate = new Date(diary.travel_date || diary.published_at || new Date().toISOString()).toLocaleDateString(
-    "en-US",
-    {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    },
-  )
+  const formattedDate = new Date(
+    diary.travel_date || diary.published_at || new Date().toISOString(),
+  ).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  })
 
   // Auto-advance every 1.5s when multiple images exist
   useEffect(() => {
@@ -49,7 +48,7 @@ export function DiaryHero({ diary, images }: DiaryHeroProps) {
   const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + displayImages.length) % displayImages.length)
 
   return (
-    <section className="relative min-h-[70vh] flex items-end overflow-hidden pt-16 md:pt-24 lg:pt-28">
+    <section className="relative flex min-h-[70vh] items-end overflow-hidden pt-16 md:pt-24 lg:pt-28">
       {/* Background Image */}
       <div className="absolute inset-0">
         <AnimatePresence mode="wait">
@@ -74,11 +73,11 @@ export function DiaryHero({ diary, images }: DiaryHeroProps) {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 py-16 relative z-10">
+      <div className="relative z-10 container mx-auto px-4 py-16">
         <motion.div variants={fadeInUp} initial="hidden" animate="visible" className="max-w-4xl">
           {/* Tags */}
           {diary.tags && diary.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="mb-4 flex flex-wrap gap-2">
               {diary.tags.map((tag) => (
                 <Badge key={tag} className="bg-saffron/90 text-white capitalize">
                   {tag}
@@ -88,7 +87,7 @@ export function DiaryHero({ diary, images }: DiaryHeroProps) {
           )}
 
           {/* Title */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-[#fc9700] mb-4 text-balance">
+          <h1 className="mb-4 font-serif text-4xl font-bold text-balance text-[#fc9700] md:text-5xl lg:text-6xl">
             {diary.title}
           </h1>
 
@@ -128,7 +127,7 @@ export function DiaryHero({ diary, images }: DiaryHeroProps) {
         <div className="absolute inset-x-0 bottom-6 flex items-center justify-between px-6 md:px-10">
           <button
             onClick={prevSlide}
-            className="w-11 h-11 rounded-full bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-white/30 transition-colors"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
             aria-label="Previous image"
           >
             <ChevronLeft className="h-5 w-5" />
@@ -143,7 +142,7 @@ export function DiaryHero({ diary, images }: DiaryHeroProps) {
           </div>
           <button
             onClick={nextSlide}
-            className="w-11 h-11 rounded-full bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-white/30 transition-colors"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
             aria-label="Next image"
           >
             <ChevronRight className="h-5 w-5" />

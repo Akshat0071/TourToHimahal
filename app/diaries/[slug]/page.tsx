@@ -91,7 +91,12 @@ export default async function DiaryDetailPage({ params }: DiaryDetailPageProps) 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <DiaryDetailClient diary={diary} relatedDiaries={relatedDiaries || []} popularDiaries={popularDiaries || []} url={diaryUrl} />
+      <DiaryDetailClient
+        diary={diary}
+        relatedDiaries={relatedDiaries || []}
+        popularDiaries={popularDiaries || []}
+        url={diaryUrl}
+      />
     </>
   )
 }

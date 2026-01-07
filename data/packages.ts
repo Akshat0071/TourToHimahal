@@ -35,7 +35,8 @@ export const packages: Package[] = [
     id: "1",
     slug: "manali-adventure-escape",
     title: "Manali Adventure Escape",
-    excerpt: "Experience the thrill of Solang Valley, Rohtang Pass and riverside camping in the heart of Kullu-Manali.",
+    excerpt:
+      "Experience the thrill of Solang Valley, Rohtang Pass and riverside camping in the heart of Kullu-Manali.",
     description:
       "Embark on an unforgettable adventure through the stunning landscapes of Manali. This package offers the perfect blend of adrenaline-pumping activities and serene mountain experiences. From paragliding over Solang Valley to exploring the majestic Rohtang Pass, every moment promises to be extraordinary.",
     region: "Manali",
@@ -176,7 +177,8 @@ export const packages: Package[] = [
       {
         day: 1,
         title: "Arrival in Dharamshala",
-        description: "Arrive and transfer to McLeodganj. Evening visit to the main square and Tibetan market.",
+        description:
+          "Arrive and transfer to McLeodganj. Evening visit to the main square and Tibetan market.",
         activities: ["Transfer to hotel", "Tibetan market visit", "Evening stroll"],
       },
       {
@@ -189,7 +191,8 @@ export const packages: Package[] = [
       {
         day: 3,
         title: "Nature & Culture",
-        description: "Morning trek to Bhagsu Waterfall. Visit Dharamshala Cricket Stadium and explore local cafes.",
+        description:
+          "Morning trek to Bhagsu Waterfall. Visit Dharamshala Cricket Stadium and explore local cafes.",
         activities: ["Bhagsu trek", "Cricket Stadium", "Cafe hopping", "Sunset point"],
       },
       {
@@ -304,7 +307,8 @@ export const packages: Package[] = [
     id: "4",
     slug: "spiti-valley-expedition",
     title: "Spiti Valley Expedition",
-    excerpt: "Journey through the cold desert mountain valley with ancient monasteries and stunning landscapes.",
+    excerpt:
+      "Journey through the cold desert mountain valley with ancient monasteries and stunning landscapes.",
     description:
       "Venture into one of India's most remote and beautiful regions. Spiti Valley, the 'Middle Land' between Tibet and India, offers lunar landscapes, ancient Buddhist monasteries, and an adventure of a lifetime.",
     region: "Spiti",
@@ -330,7 +334,14 @@ export const packages: Package[] = [
       "Dhankar Monastery",
       "Pin Valley",
     ],
-    inclusions: ["8 nights accommodation", "All meals", "4x4 vehicle", "Permits", "Guide", "Camping equipment"],
+    inclusions: [
+      "8 nights accommodation",
+      "All meals",
+      "4x4 vehicle",
+      "Permits",
+      "Guide",
+      "Camping equipment",
+    ],
     exclusions: ["Personal gear", "Travel insurance (mandatory)", "Tips", "Flights"],
     itinerary: [
       {
@@ -430,7 +441,13 @@ export const packages: Package[] = [
       "Manikaran Gurudwara",
       "Chalal village walk",
     ],
-    inclusions: ["3 nights accommodation", "All meals during trek", "Trek guide", "Camping equipment", "Bonfire"],
+    inclusions: [
+      "3 nights accommodation",
+      "All meals during trek",
+      "Trek guide",
+      "Camping equipment",
+      "Bonfire",
+    ],
     exclusions: ["Transport to Kasol", "Personal expenses", "Porter charges"],
     itinerary: [
       {
@@ -487,7 +504,13 @@ export const packages: Package[] = [
       "https://res.cloudinary.com/demo/image/upload/v1/valley1.jpg",
       "https://res.cloudinary.com/demo/image/upload/v1/hero_mountain1.jpg",
     ],
-    highlights: ["Khajjiar meadows", "Kalatop Wildlife Sanctuary", "Dainkund Peak", "St. John's Church", "Panchpula"],
+    highlights: [
+      "Khajjiar meadows",
+      "Kalatop Wildlife Sanctuary",
+      "Dainkund Peak",
+      "St. John's Church",
+      "Panchpula",
+    ],
     inclusions: ["2 nights accommodation", "Daily breakfast", "All transfers", "Sightseeing"],
     exclusions: ["Lunch and dinner", "Personal expenses", "Activity charges"],
     itinerary: [

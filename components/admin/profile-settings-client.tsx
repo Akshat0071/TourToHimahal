@@ -101,8 +101,8 @@ export function ProfileSettingsClient({ userEmail, initialFullName }: ProfileSet
       <AdminHeader title="Profile" description="Manage your account settings" />
 
       <div className="p-3 sm:p-4 md:p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
-          <Card className="lg:sticky lg:top-6 h-fit">
+        <div className="grid grid-cols-1 gap-3 sm:gap-4 md:gap-6 lg:grid-cols-3">
+          <Card className="h-fit lg:sticky lg:top-6">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <User className="h-5 w-5" />
@@ -116,12 +116,12 @@ export function ProfileSettingsClient({ userEmail, initialFullName }: ProfileSet
                   <AvatarFallback className="text-lg sm:text-xl">{initials}</AvatarFallback>
                 </Avatar>
                 <div className="min-w-0 space-y-1">
-                  <p className="font-medium truncate">{fullName || "Admin User"}</p>
-                  <p className="text-sm text-muted-foreground flex items-center gap-1 min-w-0">
+                  <p className="truncate font-medium">{fullName || "Admin User"}</p>
+                  <p className="text-muted-foreground flex min-w-0 items-center gap-1 text-sm">
                     <Mail className="h-3 w-3 shrink-0" />
                     <span className="truncate">{userEmail}</span>
                   </p>
-                  <p className="text-xs text-muted-foreground flex items-center gap-1">
+                  <p className="text-muted-foreground flex items-center gap-1 text-xs">
                     <Shield className="h-3 w-3" />
                     Administrator
                   </p>
@@ -132,12 +132,14 @@ export function ProfileSettingsClient({ userEmail, initialFullName }: ProfileSet
 
               <div className="space-y-2">
                 <p className="text-sm font-medium">Tips</p>
-                <p className="text-xs text-muted-foreground">Keep your full name updated for a cleaner admin experience.</p>
+                <p className="text-muted-foreground text-xs">
+                  Keep your full name updated for a cleaner admin experience.
+                </p>
               </div>
             </CardContent>
           </Card>
 
-          <div className="lg:col-span-2 space-y-3 sm:space-y-4 md:space-y-6">
+          <div className="space-y-3 sm:space-y-4 md:space-y-6 lg:col-span-2">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -147,7 +149,7 @@ export function ProfileSettingsClient({ userEmail, initialFullName }: ProfileSet
                 <CardDescription>Update your profile details</CardDescription>
               </CardHeader>
               <CardContent className="space-y-5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="full_name">Full Name</Label>
                     <Input
@@ -162,10 +164,12 @@ export function ProfileSettingsClient({ userEmail, initialFullName }: ProfileSet
                 <div className="space-y-2">
                   <Label htmlFor="email">Email Address</Label>
                   <Input id="email" type="email" value={userEmail} disabled className="bg-muted" />
-                  <p className="text-xs text-muted-foreground">Contact support to change your email address</p>
+                  <p className="text-muted-foreground text-xs">
+                    Contact support to change your email address
+                  </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Button onClick={handleSaveProfile} disabled={savingProfile} className="sm:w-auto">
                     <Save className="mr-2 h-4 w-4" />
                     {savingProfile ? "Saving..." : "Save Changes"}
@@ -183,7 +187,7 @@ export function ProfileSettingsClient({ userEmail, initialFullName }: ProfileSet
                 <CardDescription>Update your account password</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="new_password">New Password</Label>
                     <Input

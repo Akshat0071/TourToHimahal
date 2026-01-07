@@ -32,10 +32,10 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
   const dateString = post.published_at || post.date
   const formattedDate = dateString
     ? new Date(dateString).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    })
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      })
     : ""
 
   const imageUrl =
@@ -49,7 +49,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
       <motion.article variants={fadeInUp} initial="hidden" animate="visible">
         <Link href={`/blog/${post.slug}`}>
           <motion.div
-            className="group relative rounded-2xl md:rounded-3xl overflow-hidden"
+            className="group relative overflow-hidden rounded-2xl md:rounded-3xl"
             variants={cardHover}
             initial="rest"
             whileHover="hover"
@@ -63,21 +63,21 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
             </div>
-            <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 lg:p-8">
+            <div className="absolute right-0 bottom-0 left-0 p-4 md:p-6 lg:p-8">
               {post.category && (
-                <Badge className="bg-gradient-to-r from-saffron to-sunset-orange text-white mb-2 md:mb-3 text-xs">
+                <Badge className="from-saffron to-sunset-orange mb-2 bg-gradient-to-r text-xs text-white md:mb-3">
                   {post.category}
                 </Badge>
               )}
-              <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif font-bold text-white mb-2 group-hover:text-saffron transition-colors line-clamp-2">
+              <h3 className="group-hover:text-saffron mb-2 line-clamp-2 font-serif text-lg font-bold text-white transition-colors sm:text-xl md:text-2xl lg:text-3xl">
                 {post.title}
               </h3>
               {post.excerpt && (
-                <p className="text-white/80 mb-3 md:mb-4 line-clamp-2 text-sm md:text-base hidden sm:block">
+                <p className="mb-3 line-clamp-2 hidden text-sm text-white/80 sm:block md:mb-4 md:text-base">
                   {post.excerpt}
                 </p>
               )}
-              <div className="flex items-center gap-3 md:gap-4 text-white/70 text-xs md:text-sm">
+              <div className="flex items-center gap-3 text-xs text-white/70 md:gap-4 md:text-sm">
                 {post.readTime && (
                   <span className="flex items-center gap-1">
                     <Clock className="h-3 w-3 md:h-4 md:w-4" />
@@ -102,53 +102,59 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
     <motion.article variants={fadeInUp} initial="hidden" animate="visible" className="min-w-0">
       <Link href={post.slug ? `/blog/${post.slug}` : "#"} className="block min-w-0">
         <motion.div
-          className="group bg-card rounded-xl md:rounded-2xl overflow-hidden shadow-md h-full flex flex-col md:flex-row border border-border hover:border-mountain-blue/40 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 min-w-0"
+          className="group bg-card border-border hover:border-mountain-blue/40 flex h-full min-w-0 flex-col overflow-hidden rounded-xl border shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl md:flex-row md:rounded-2xl"
           variants={cardHover}
           initial="rest"
           whileHover="hover"
         >
           {/* Left: Image */}
-          <div className="relative w-full md:w-2/5 flex-shrink-0 overflow-hidden rounded-xl md:rounded-2xl" style={{ aspectRatio: '16/9', display: 'block' }}>
+          <div
+            className="relative w-full flex-shrink-0 overflow-hidden rounded-xl md:w-2/5 md:rounded-2xl"
+            style={{ aspectRatio: "16/9", display: "block" }}
+          >
             <Image
               src={imageUrl || "/placeholder.svg"}
               alt={post.title}
               width={800}
               height={450}
               layout="responsive"
-              className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105 rounded-xl md:rounded-2xl block"
-              style={{ objectFit: 'cover', borderRadius: 'inherit' }}
+              className="block h-full w-full rounded-xl object-cover transition-transform duration-500 group-hover:scale-105 md:rounded-2xl"
+              style={{ objectFit: "cover", borderRadius: "inherit" }}
             />
-            <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/20 to-transparent rounded-xl md:rounded-2xl pointer-events-none" />
+            <div className="pointer-events-none absolute inset-0 rounded-xl bg-linear-to-t from-black/50 via-black/20 to-transparent md:rounded-2xl" />
             {post.category && (
               <div className="absolute top-2 left-2 md:top-3 md:left-3">
-                <Badge variant="secondary" className="bg-white/90 text-mountain-blue font-semibold text-[10px] md:text-xs px-2 py-0.5 md:px-2.5 md:py-0.5 shadow-sm">
+                <Badge
+                  variant="secondary"
+                  className="text-mountain-blue bg-white/90 px-2 py-0.5 text-[10px] font-semibold shadow-sm md:px-2.5 md:py-0.5 md:text-xs"
+                >
                   {post.category}
                 </Badge>
               </div>
             )}
           </div>
           {/* Right: Content */}
-          <div className="flex-1 flex flex-col justify-center p-4 md:p-6 lg:p-8 bg-gradient-to-b from-transparent to-white/60">
-            <h3 className="text-lg md:text-2xl font-serif font-bold text-foreground mb-2 group-hover:text-mountain-blue transition-colors line-clamp-2 leading-tight">
+          <div className="flex flex-1 flex-col justify-center bg-gradient-to-b from-transparent to-white/60 p-4 md:p-6 lg:p-8">
+            <h3 className="text-foreground group-hover:text-mountain-blue mb-2 line-clamp-2 font-serif text-lg leading-tight font-bold transition-colors md:text-2xl">
               {post.title}
             </h3>
             {post.excerpt && (
-              <p className="text-base text-muted-foreground mb-3 md:mb-4 line-clamp-2 flex-1 leading-relaxed">
+              <p className="text-muted-foreground mb-3 line-clamp-2 flex-1 text-base leading-relaxed md:mb-4">
                 {post.excerpt}
               </p>
             )}
-            <div className="flex items-center justify-between mt-auto pt-2">
-              <div className="flex items-center gap-3 text-xs md:text-sm text-muted-foreground">
+            <div className="mt-auto flex items-center justify-between pt-2">
+              <div className="text-muted-foreground flex items-center gap-3 text-xs md:text-sm">
                 {post.readTime && (
-                  <span className="flex items-center gap-1 bg-mountain-blue/10 px-2 py-1 rounded-full">
+                  <span className="bg-mountain-blue/10 flex items-center gap-1 rounded-full px-2 py-1">
                     <Clock className="h-3 w-3" />
                     {post.readTime} min
                   </span>
                 )}
                 {formattedDate && <span>{formattedDate}</span>}
               </div>
-              <span className="text-mountain-blue text-xs md:text-sm font-medium flex items-center group-hover:gap-1 transition-all">
-                Read <ArrowRight className="h-3 w-3 md:h-4 md:w-4 ml-1" />
+              <span className="text-mountain-blue flex items-center text-xs font-medium transition-all group-hover:gap-1 md:text-sm">
+                Read <ArrowRight className="ml-1 h-3 w-3 md:h-4 md:w-4" />
               </span>
             </div>
           </div>

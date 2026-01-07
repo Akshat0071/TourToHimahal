@@ -12,7 +12,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "sonner"
-import { CloudinaryUploadWidget, UploadedImagePreview, type CloudinaryUploadResult } from "./cloudinary-upload-widget"
+import {
+  CloudinaryUploadWidget,
+  UploadedImagePreview,
+  type CloudinaryUploadResult,
+} from "./cloudinary-upload-widget"
 import { registerMedia } from "@/lib/admin/media-client"
 
 interface BlogFormProps {
@@ -46,12 +50,18 @@ export function BlogForm({ initialData }: BlogFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isClient, setIsClient] = useState(false)
 
+  const initialGallery =
+    initialData?.gallery && initialData.gallery.length > 0
+      ? initialData.gallery
+      : initialData?.cover_image
+        ? [initialData.cover_image]
+        : []
+
   const [formData, setFormData] = useState({
     title: initialData?.title || "",
     slug: initialData?.slug || "",
     content: initialData?.content || "",
     excerpt: initialData?.excerpt || "",
-    cover_image: initialData?.cover_image || "",
     category: initialData?.category || "",
     is_published: initialData?.is_published ?? false,
     seo_title: initialData?.seo_title || "",
@@ -60,7 +70,7 @@ export function BlogForm({ initialData }: BlogFormProps) {
 
   const [tags, setTags] = useState<string[]>(initialData?.tags || [])
   const [newTag, setNewTag] = useState("")
-  const [gallery, setGallery] = useState<string[]>(initialData?.gallery || [])
+  const [gallery, setGallery] = useState<string[]>(initialGallery)
 
   useEffect(() => {
     setIsClient(true)
@@ -110,9 +120,11 @@ export function BlogForm({ initialData }: BlogFormProps) {
 
       const blogData = {
         ...formData,
+        cover_image: gallery[0] || null,
         tags,
         gallery,
-        published_at: formData.is_published && !initialData?.is_published ? new Date().toISOString() : undefined,
+        published_at:
+          formData.is_published && !initialData?.is_published ? new Date().toISOString() : undefined,
       }
 
       let error
@@ -141,13 +153,13 @@ export function BlogForm({ initialData }: BlogFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-4xl" suppressHydrationWarning>
+    <form onSubmit={handleSubmit} className="max-w-4xl space-y-6" suppressHydrationWarning>
       <Card>
         <CardHeader>
           <CardTitle>Blog Content</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="title">Title *</Label>
               <Input
@@ -195,60 +207,9 @@ export function BlogForm({ initialData }: BlogFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="cover_image">Cover Image</Label>
-            <div className="space-y-4">
-              {formData.cover_image ? (
-                <div className="space-y-2">
-                  <UploadedImagePreview
-                    imageUrl={formData.cover_image}
-                    onRemove={() => setFormData((prev) => ({ ...prev, cover_image: "" }))}
-                    alt={formData.title}
-                  />
-                  <p className="text-xs text-muted-foreground break-all">
-                    URL: {formData.cover_image}
-                  </p>
-                </div>
-              ) : (
-                <CloudinaryUploadWidget
-                  onUploadSuccess={async (result: CloudinaryUploadResult) => {
-                    setFormData((prev) => ({ ...prev, cover_image: result.secure_url }))
-
-                    const registered = await registerMedia({
-                      url: result.secure_url,
-                      public_id: result.public_id,
-                      folder: "blogs",
-                      name: result.original_filename,
-                      alt_text: result.original_filename,
-                      size: result.bytes,
-                      format: result.format,
-                      resource_type: result.resource_type,
-                    })
-
-                    if (!registered.ok) {
-                      toast.error(registered.error)
-                      return
-                    }
-
-                    toast.success("Image uploaded successfully!")
-                  }}
-                  onUploadError={(error) => {
-                    console.error("Upload failed:", error)
-                    toast.error("Failed to upload image")
-                  }}
-                  folder="himachal-yatra/blogs/covers"
-                  maxFiles={1}
-                  acceptedFormats={["jpg", "jpeg", "png", "webp"]}
-                  buttonText="Upload Cover Image"
-                  buttonVariant="outline"
-                />
-              )}
-            </div>
-          </div>
-
-          <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label>Gallery Images (up to 5)</Label>
-              <span className="text-xs text-muted-foreground">First image is used in cards</span>
+              <span className="text-muted-foreground text-xs">First image is used in cards</span>
             </div>
             <div className="space-y-3">
               <div className="flex flex-wrap gap-3">
@@ -285,10 +246,6 @@ export function BlogForm({ initialData }: BlogFormProps) {
 
                     setGallery((prev) => {
                       const next = [...prev, result.secure_url].slice(0, 5)
-                      // If no cover is set, default it to the first uploaded gallery image
-                      if (!formData.cover_image && next.length > 0) {
-                        setFormData((prevData) => ({ ...prevData, cover_image: next[0] }))
-                      }
                       return next
                     })
                     toast.success("Image added to gallery")
@@ -349,18 +306,18 @@ export function BlogForm({ initialData }: BlogFormProps) {
                 }}
               />
               <Button type="button" variant="outline" onClick={addTag}>
-                <Plus className="w-4 h-4" />
+                <Plus className="h-4 w-4" />
               </Button>
             </div>
-            <div className="flex flex-wrap gap-2 mt-2">
+            <div className="mt-2 flex flex-wrap gap-2">
               {tags.map((tag, index) => (
                 <span
                   key={index}
-                  className="inline-flex items-center gap-1 bg-primary/10 text-primary px-3 py-1 rounded-full text-sm"
+                  className="bg-primary/10 text-primary inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm"
                 >
                   {tag}
                   <button type="button" onClick={() => removeTag(index)} className="hover:text-red-500">
-                    <X className="w-3 h-3" />
+                    <X className="h-3 w-3" />
                   </button>
                 </span>
               ))}
@@ -374,7 +331,7 @@ export function BlogForm({ initialData }: BlogFormProps) {
           <CardTitle>SEO & Publishing</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="seo_title">SEO Title</Label>
               <Input
@@ -413,12 +370,12 @@ export function BlogForm({ initialData }: BlogFormProps) {
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? (
             <>
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Saving...
             </>
           ) : (
             <>
-              <Save className="w-4 h-4 mr-2" />
+              <Save className="mr-2 h-4 w-4" />
               {initialData ? "Update Blog" : "Create Blog"}
             </>
           )}

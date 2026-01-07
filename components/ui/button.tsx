@@ -23,7 +23,8 @@ const buttonVariants = cva(
         green:
           "bg-forest-green text-white hover:bg-forest-green/90 shadow-lg shadow-forest-green/30 hover:shadow-xl hover:shadow-forest-green/40",
         blue: "bg-mountain-blue text-white hover:bg-mountain-blue/90 shadow-lg shadow-mountain-blue/30 hover:shadow-xl hover:shadow-mountain-blue/40",
-        golden: "bg-golden-yellow text-foreground hover:bg-golden-yellow/90 shadow-lg shadow-golden-yellow/30",
+        golden:
+          "bg-golden-yellow text-foreground hover:bg-golden-yellow/90 shadow-lg shadow-golden-yellow/30",
         gradient:
           "bg-gradient-to-r from-saffron via-sunset-orange to-temple-red text-white shadow-lg hover:shadow-xl hover:scale-[1.02]",
       },

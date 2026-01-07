@@ -89,7 +89,7 @@ export function PackageBookingForm({ packageName, packagePrice, onSuccess }: Pac
             phone: formData.phone,
             message: formData.message,
           },
-          settings?.whatsapp_number
+          settings?.whatsapp_number,
         )
 
         setTimeout(() => {
@@ -107,13 +107,17 @@ export function PackageBookingForm({ packageName, packagePrice, onSuccess }: Pac
 
   if (isSuccess) {
     return (
-      <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-8">
-        <div className="w-16 h-16 bg-forest-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
-          <CheckCircle2 className="h-8 w-8 text-forest-green" />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="py-8 text-center"
+      >
+        <div className="bg-forest-green/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+          <CheckCircle2 className="text-forest-green h-8 w-8" />
         </div>
-        <h3 className="text-xl font-semibold text-foreground mb-2">Booking Request Sent!</h3>
+        <h3 className="text-foreground mb-2 text-xl font-semibold">Booking Request Sent!</h3>
         {referenceNumber && (
-          <p className="text-sm font-medium text-foreground bg-muted px-4 py-2 rounded-lg inline-block mb-4">
+          <p className="text-foreground bg-muted mb-4 inline-block rounded-lg px-4 py-2 text-sm font-medium">
             Reference: <span className="text-primary">{referenceNumber}</span>
           </p>
         )}
@@ -140,12 +144,18 @@ export function PackageBookingForm({ packageName, packagePrice, onSuccess }: Pac
   }
 
   return (
-    <motion.form variants={fadeInUp} initial="hidden" animate="visible" onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <motion.form
+      variants={fadeInUp}
+      initial="hidden"
+      animate="visible"
+      onSubmit={handleSubmit}
+      className="space-y-4"
+    >
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="name">Full Name *</Label>
           <div className="relative">
-            <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <User className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               id="name"
               placeholder="Your name"
@@ -155,13 +165,13 @@ export function PackageBookingForm({ packageName, packagePrice, onSuccess }: Pac
               aria-invalid={!!errors.name}
             />
           </div>
-          {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
+          {errors.name && <p className="text-destructive text-sm">{errors.name}</p>}
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="phone">Phone *</Label>
           <div className="relative">
-            <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Phone className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               id="phone"
               type="tel"
@@ -172,14 +182,14 @@ export function PackageBookingForm({ packageName, packagePrice, onSuccess }: Pac
               aria-invalid={!!errors.phone}
             />
           </div>
-          {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
+          {errors.phone && <p className="text-destructive text-sm">{errors.phone}</p>}
         </div>
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="email">Email *</Label>
         <div className="relative">
-          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Mail className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input
             id="email"
             type="email"
@@ -190,14 +200,14 @@ export function PackageBookingForm({ packageName, packagePrice, onSuccess }: Pac
             aria-invalid={!!errors.email}
           />
         </div>
-        {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
+        {errors.email && <p className="text-destructive text-sm">{errors.email}</p>}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="date">Preferred Date *</Label>
           <div className="relative">
-            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Calendar className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               id="date"
               type="date"
@@ -207,13 +217,13 @@ export function PackageBookingForm({ packageName, packagePrice, onSuccess }: Pac
               aria-invalid={!!errors.date}
             />
           </div>
-          {errors.date && <p className="text-sm text-destructive">{errors.date}</p>}
+          {errors.date && <p className="text-destructive text-sm">{errors.date}</p>}
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="travelers">Number of Travelers</Label>
           <div className="relative">
-            <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Users className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               id="travelers"
               type="number"
@@ -231,23 +241,23 @@ export function PackageBookingForm({ packageName, packagePrice, onSuccess }: Pac
       <div className="space-y-2">
         <Label htmlFor="message">Special Requirements</Label>
         <div className="relative">
-          <MessageSquare className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+          <MessageSquare className="text-muted-foreground absolute top-3 left-3 h-4 w-4" />
           <Textarea
             id="message"
             placeholder="Any special requirements or questions..."
             value={formData.message}
             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-            className="pl-10 min-h-[80px]"
+            className="min-h-[80px] pl-10"
           />
         </div>
       </div>
 
-      {errors.submit && <p className="text-sm text-destructive text-center">{errors.submit}</p>}
+      {errors.submit && <p className="text-destructive text-center text-sm">{errors.submit}</p>}
 
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-forest-green hover:bg-forest-green/90 text-white gap-2"
+        className="bg-forest-green hover:bg-forest-green/90 w-full gap-2 text-white"
         size="lg"
       >
         {isSubmitting ? (

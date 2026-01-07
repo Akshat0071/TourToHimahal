@@ -77,28 +77,28 @@ export function DiaryFilter({
   }
 
   return (
-    <div className="bg-gradient-to-r from-[oklch(0.99_0.02_85)] to-[oklch(0.98_0.025_70)] border-2 border-saffron/20 rounded-xl sm:rounded-2xl lg:rounded-3xl p-3 sm:p-4 lg:p-6 shadow-lg">
-      <div className="hidden lg:block mb-4">
-        <h3 className="text-xl font-serif font-bold text-foreground">Filter & Search</h3>
-        <p className="text-sm text-muted-foreground">Find your perfect story</p>
+    <div className="border-saffron/20 rounded-xl border-2 bg-gradient-to-r from-[oklch(0.99_0.02_85)] to-[oklch(0.98_0.025_70)] p-3 shadow-lg sm:rounded-2xl sm:p-4 lg:rounded-3xl lg:p-6">
+      <div className="mb-4 hidden lg:block">
+        <h3 className="text-foreground font-serif text-xl font-bold">Filter & Search</h3>
+        <p className="text-muted-foreground text-sm">Find your perfect story</p>
       </div>
 
       {/* Unified Search + Filter Toggle */}
-      <div className="flex flex-col lg:flex-row gap-3">
+      <div className="flex flex-col gap-3 lg:flex-row">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 md:h-5 md:w-5 text-saffron" />
+          <Search className="text-saffron absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 md:h-5 md:w-5" />
           <Input
             type="text"
             placeholder="Search diaries..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="pl-9 sm:pl-10 bg-white border-2 border-saffron/20 focus:border-saffron rounded-full lg:rounded-xl h-10 sm:h-11 md:h-12 text-xs sm:text-sm md:text-base pr-12 w-full"
+            className="border-saffron/20 focus:border-saffron h-10 w-full rounded-full border-2 bg-white pr-12 pl-9 text-xs sm:h-11 sm:pl-10 sm:text-sm md:h-12 md:text-base lg:rounded-xl"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => onSearchChange("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground absolute top-1/2 right-3 -translate-y-1/2"
               aria-label="Clear search"
             >
               <X className="h-4 w-4" />
@@ -109,12 +109,12 @@ export function DiaryFilter({
         <Button
           onClick={() => setIsExpanded(!isExpanded)}
           variant="outline"
-          className="lg:w-auto w-full relative rounded-full lg:rounded-xl border-2 border-saffron/30 bg-white hover:bg-saffron/10 h-10 sm:h-11 md:h-12 px-3 sm:px-4 gap-1.5 sm:gap-2 flex justify-center items-center"
+          className="border-saffron/30 hover:bg-saffron/10 relative flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 bg-white px-3 sm:h-11 sm:gap-2 sm:px-4 md:h-12 lg:w-auto lg:rounded-xl"
         >
-          <Filter className="h-4 w-4 sm:h-5 sm:w-5 text-saffron" />
-          <span className="text-xs sm:text-sm font-medium text-foreground">Filters</span>
+          <Filter className="text-saffron h-4 w-4 sm:h-5 sm:w-5" />
+          <span className="text-foreground text-xs font-medium sm:text-sm">Filters</span>
           {hasActiveFilters && (
-            <span className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-gradient-to-r from-saffron to-sunset-orange text-white text-[10px] sm:text-xs font-bold rounded-full flex items-center justify-center">
+            <span className="from-saffron to-sunset-orange absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r text-[10px] font-bold text-white sm:h-5 sm:w-5 sm:text-xs">
               !
             </span>
           )}
@@ -131,15 +131,16 @@ export function DiaryFilter({
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <div className="pt-3 sm:pt-4 mt-3 sm:mt-4 border-t border-saffron/20 space-y-4">
+            <div className="border-saffron/20 mt-3 space-y-4 border-t pt-3 sm:mt-4 sm:pt-4">
               {/* Region */}
-              <div className="bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-golden-yellow/20">
-                <h4 className="text-xs sm:text-sm font-semibold text-foreground mb-3">Region</h4>
+              <div className="border-golden-yellow/20 rounded-xl border bg-white p-3 sm:rounded-2xl sm:p-4">
+                <h4 className="text-foreground mb-3 text-xs font-semibold sm:text-sm">Region</h4>
                 <div className="flex flex-wrap gap-2">
                   <Badge
                     variant={localRegion === "All" ? "default" : "outline"}
-                    className={`cursor-pointer text-xs hover:bg-mountain-blue/10 ${localRegion === "All" ? "bg-mountain-blue text-white hover:bg-mountain-blue" : ""
-                      }`}
+                    className={`hover:bg-mountain-blue/10 cursor-pointer text-xs ${
+                      localRegion === "All" ? "bg-mountain-blue hover:bg-mountain-blue text-white" : ""
+                    }`}
                     onClick={() => setLocalRegion("All")}
                   >
                     All
@@ -148,8 +149,9 @@ export function DiaryFilter({
                     <Badge
                       key={region}
                       variant={localRegion === region ? "default" : "outline"}
-                      className={`cursor-pointer text-xs hover:bg-mountain-blue/10 ${localRegion === region ? "bg-mountain-blue text-white hover:bg-mountain-blue" : ""
-                        }`}
+                      className={`hover:bg-mountain-blue/10 cursor-pointer text-xs ${
+                        localRegion === region ? "bg-mountain-blue hover:bg-mountain-blue text-white" : ""
+                      }`}
                       onClick={() => setLocalRegion(localRegion === region ? "All" : region)}
                     >
                       {region}
@@ -159,13 +161,14 @@ export function DiaryFilter({
               </div>
 
               {/* Tags */}
-              <div className="bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-golden-yellow/20">
-                <h4 className="text-xs sm:text-sm font-semibold text-foreground mb-3">Tags</h4>
+              <div className="border-golden-yellow/20 rounded-xl border bg-white p-3 sm:rounded-2xl sm:p-4">
+                <h4 className="text-foreground mb-3 text-xs font-semibold sm:text-sm">Tags</h4>
                 <div className="flex flex-wrap gap-2">
                   <Badge
                     variant={localTags.length === 0 ? "default" : "outline"}
-                    className={`cursor-pointer text-xs hover:bg-mountain-blue/10 ${localTags.length === 0 ? "bg-mountain-blue text-white hover:bg-mountain-blue" : ""
-                      }`}
+                    className={`hover:bg-mountain-blue/10 cursor-pointer text-xs ${
+                      localTags.length === 0 ? "bg-mountain-blue hover:bg-mountain-blue text-white" : ""
+                    }`}
                     onClick={() => handleTagToggle("All")}
                   >
                     All
@@ -174,8 +177,9 @@ export function DiaryFilter({
                     <Badge
                       key={tag}
                       variant={localTags.includes(tag) ? "default" : "outline"}
-                      className={`cursor-pointer capitalize text-xs hover:bg-mountain-blue/10 ${localTags.includes(tag) ? "bg-mountain-blue text-white hover:bg-mountain-blue" : ""
-                        }`}
+                      className={`hover:bg-mountain-blue/10 cursor-pointer text-xs capitalize ${
+                        localTags.includes(tag) ? "bg-mountain-blue hover:bg-mountain-blue text-white" : ""
+                      }`}
                       onClick={() => handleTagToggle(tag)}
                     >
                       {tag}
@@ -185,13 +189,16 @@ export function DiaryFilter({
               </div>
 
               {/* Season */}
-              <div className="bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-golden-yellow/20">
-                <h4 className="text-xs sm:text-sm font-semibold text-foreground mb-3">Season</h4>
+              <div className="border-golden-yellow/20 rounded-xl border bg-white p-3 sm:rounded-2xl sm:p-4">
+                <h4 className="text-foreground mb-3 text-xs font-semibold sm:text-sm">Season</h4>
                 <div className="flex flex-wrap gap-2">
                   <Badge
                     variant={!localMonth || localMonth === "All" ? "default" : "outline"}
-                    className={`cursor-pointer text-xs hover:bg-mountain-blue/10 ${!localMonth || localMonth === "All" ? "bg-mountain-blue text-white hover:bg-mountain-blue" : ""
-                      }`}
+                    className={`hover:bg-mountain-blue/10 cursor-pointer text-xs ${
+                      !localMonth || localMonth === "All"
+                        ? "bg-mountain-blue hover:bg-mountain-blue text-white"
+                        : ""
+                    }`}
                     onClick={() => setLocalMonth(null)}
                   >
                     All
@@ -200,8 +207,9 @@ export function DiaryFilter({
                     <Badge
                       key={month}
                       variant={localMonth === month ? "default" : "outline"}
-                      className={`cursor-pointer text-xs hover:bg-mountain-blue/10 ${localMonth === month ? "bg-mountain-blue text-white hover:bg-mountain-blue" : ""
-                        }`}
+                      className={`hover:bg-mountain-blue/10 cursor-pointer text-xs ${
+                        localMonth === month ? "bg-mountain-blue hover:bg-mountain-blue text-white" : ""
+                      }`}
                       onClick={() => setLocalMonth(localMonth === month ? null : month)}
                     >
                       {month}
@@ -215,7 +223,7 @@ export function DiaryFilter({
                 <Button
                   onClick={applyFilters}
                   variant="gradient"
-                  className="flex-1 rounded-xl h-10 sm:h-11 text-sm shadow-md hover:shadow-lg"
+                  className="h-10 flex-1 rounded-xl text-sm shadow-md hover:shadow-lg sm:h-11"
                 >
                   Apply Filters
                 </Button>
@@ -223,7 +231,7 @@ export function DiaryFilter({
                   <Button
                     variant="outline"
                     onClick={handleClear}
-                    className="rounded-xl border-2 border-temple-red/30 text-temple-red hover:bg-temple-red/10 h-10 sm:h-11 px-4"
+                    className="border-temple-red/30 text-temple-red hover:bg-temple-red/10 h-10 rounded-xl border-2 px-4 sm:h-11"
                   >
                     Clear
                   </Button>

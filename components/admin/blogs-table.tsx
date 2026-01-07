@@ -73,9 +73,9 @@ export function BlogsTable({ blogs }: BlogsTableProps) {
 
   if (blogs.length === 0) {
     return (
-      <div className="bg-background border border-border rounded-xl p-12 text-center">
-        <FileText className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-        <h3 className="text-lg font-medium text-foreground mb-2">No blogs yet</h3>
+      <div className="bg-background border-border rounded-xl border p-12 text-center">
+        <FileText className="text-muted-foreground mx-auto mb-4 h-16 w-16" />
+        <h3 className="text-foreground mb-2 text-lg font-medium">No blogs yet</h3>
         <p className="text-muted-foreground mb-4">Write your first blog post to get started.</p>
         <Button asChild>
           <Link href="/admin/blogs/new">Write Blog</Link>
@@ -99,32 +99,32 @@ export function BlogsTable({ blogs }: BlogsTableProps) {
               <CardContent className="p-3">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="font-medium text-foreground truncate">{blog.title}</p>
-                    <p className="text-xs text-muted-foreground truncate">/{blog.slug}</p>
+                    <p className="text-foreground truncate font-medium">{blog.title}</p>
+                    <p className="text-muted-foreground truncate text-xs">/{blog.slug}</p>
                   </div>
 
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
-                        <MoreHorizontal className="w-4 h-4" />
+                        <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem asChild>
                         <Link href={`/blog/${blog.slug}`} target="_blank">
-                          <Eye className="w-4 h-4 mr-2" />
+                          <Eye className="mr-2 h-4 w-4" />
                           Preview
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
                         <Link href={`/admin/blogs/${blog.id}`}>
-                          <Edit className="w-4 h-4 mr-2" />
+                          <Edit className="mr-2 h-4 w-4" />
                           Edit
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem className="text-destructive" onClick={() => deleteBlog(blog.id)}>
-                        <Trash2 className="w-4 h-4 mr-2" />
+                        <Trash2 className="mr-2 h-4 w-4" />
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -135,7 +135,9 @@ export function BlogsTable({ blogs }: BlogsTableProps) {
                   <Badge variant="outline" className="text-xs">
                     {blog.category || "Uncategorized"}
                   </Badge>
-                  <p className="text-xs text-muted-foreground">{format(new Date(blog.created_at), "MMM d, yyyy")}</p>
+                  <p className="text-muted-foreground text-xs">
+                    {format(new Date(blog.created_at), "MMM d, yyyy")}
+                  </p>
                 </div>
 
                 <div className="mt-3 flex items-center justify-between gap-3">
@@ -144,7 +146,9 @@ export function BlogsTable({ blogs }: BlogsTableProps) {
                       checked={blog.is_published}
                       onCheckedChange={() => togglePublished(blog.id, blog.is_published)}
                     />
-                    <span className="text-sm text-muted-foreground">{blog.is_published ? "Published" : "Draft"}</span>
+                    <span className="text-muted-foreground text-sm">
+                      {blog.is_published ? "Published" : "Draft"}
+                    </span>
                   </div>
                 </div>
               </CardContent>
@@ -154,7 +158,7 @@ export function BlogsTable({ blogs }: BlogsTableProps) {
       </div>
 
       {/* Desktop table */}
-      <div className="hidden md:block bg-background border border-border rounded-xl overflow-hidden">
+      <div className="bg-background border-border hidden overflow-hidden rounded-xl border md:block">
         <Table>
           <TableHeader>
             <TableRow>
@@ -172,12 +176,12 @@ export function BlogsTable({ blogs }: BlogsTableProps) {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.03 }}
-                className="border-b border-border hover:bg-muted/50 transition-colors"
+                className="border-border hover:bg-muted/50 border-b transition-colors"
               >
                 <TableCell>
                   <div>
-                    <p className="font-medium text-foreground">{blog.title}</p>
-                    <p className="text-sm text-muted-foreground">/{blog.slug}</p>
+                    <p className="text-foreground font-medium">{blog.title}</p>
+                    <p className="text-muted-foreground text-sm">/{blog.slug}</p>
                   </div>
                 </TableCell>
                 <TableCell>
@@ -189,35 +193,37 @@ export function BlogsTable({ blogs }: BlogsTableProps) {
                       checked={blog.is_published}
                       onCheckedChange={() => togglePublished(blog.id, blog.is_published)}
                     />
-                    <span className="text-sm text-muted-foreground">{blog.is_published ? "Published" : "Draft"}</span>
+                    <span className="text-muted-foreground text-sm">
+                      {blog.is_published ? "Published" : "Draft"}
+                    </span>
                   </div>
                 </TableCell>
-                <TableCell className="text-sm text-muted-foreground">
+                <TableCell className="text-muted-foreground text-sm">
                   {format(new Date(blog.created_at), "MMM d, yyyy")}
                 </TableCell>
                 <TableCell className="text-right">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <MoreHorizontal className="w-4 h-4" />
+                        <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem asChild>
                         <Link href={`/blog/${blog.slug}`} target="_blank">
-                          <Eye className="w-4 h-4 mr-2" />
+                          <Eye className="mr-2 h-4 w-4" />
                           Preview
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
                         <Link href={`/admin/blogs/${blog.id}`}>
-                          <Edit className="w-4 h-4 mr-2" />
+                          <Edit className="mr-2 h-4 w-4" />
                           Edit
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem className="text-destructive" onClick={() => deleteBlog(blog.id)}>
-                        <Trash2 className="w-4 h-4 mr-2" />
+                        <Trash2 className="mr-2 h-4 w-4" />
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>

@@ -17,21 +17,21 @@ export function ContactHero() {
       title="Let's Create Your Dream Journey"
       subtitle="Have questions? Need a custom itinerary? Want to explore off-the-beaten-path destinations? Our local travel experts are just a message away. We don't just plan trips — we craft unforgettable Himalayan experiences tailored just for you."
     >
-      <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      <div className="flex flex-col justify-center gap-4 sm:flex-row">
         <a
           href={`tel:${contactPhone.replace(/\s/g, "")}`}
-          className="inline-flex items-center justify-center gap-2 bg-white text-black px-6 py-3 rounded-xl font-medium hover:bg-white/90 transition-colors"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 font-medium text-black transition-colors hover:bg-white/90"
         >
-          <Phone className="w-5 h-5" />
+          <Phone className="h-5 w-5" />
           {contactPhone}
         </a>
         <a
           href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, "")}?text=Hi!%20I%20want%20to%20plan%20a%20trip%20to%20Himachal.`}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-xl font-medium hover:bg-[#25D366]/90 transition-colors"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3 font-medium text-white transition-colors hover:bg-[#25D366]/90"
         >
-          <MessageCircle className="w-5 h-5" />
+          <MessageCircle className="h-5 w-5" />
           WhatsApp Us
         </a>
       </div>

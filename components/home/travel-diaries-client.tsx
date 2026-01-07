@@ -65,37 +65,34 @@ export function TravelDiariesClient({ blogs }: TravelDiariesClientProps) {
       : fallbackBlogs
 
   return (
-    <section className="py-8 md:py-8 lg:py-12 bg-linear-to-br from-background via-[oklch(0.97_0.02_85)] to-background relative overflow-hidden">
+    <section className="from-background to-background relative overflow-hidden bg-linear-to-br via-[oklch(0.97_0.02_85)] py-8 md:py-8 lg:py-12">
       {/* Background decorations */}
-      <div className="absolute top-20 right-10 md:right-20 w-48 md:w-64 h-48 md:h-64 bg-linear-to-br from-golden-yellow/20 to-saffron/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-10 md:left-20 w-36 md:w-48 h-36 md:h-48 bg-linear-to-tr from-mountain-blue/15 to-forest-green/15 rounded-full blur-3xl" />
+      <div className="from-golden-yellow/20 to-saffron/20 absolute top-20 right-10 h-48 w-48 rounded-full bg-linear-to-br blur-3xl md:right-20 md:h-64 md:w-64" />
+      <div className="from-mountain-blue/15 to-forest-green/15 absolute bottom-20 left-10 h-36 w-36 rounded-full bg-linear-to-tr blur-3xl md:left-20 md:h-48 md:w-48" />
 
-      <div className="container mx-auto px-4 relative">
+      <div className="relative container mx-auto px-4">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 md:mb-12"
+          className="mb-8 flex flex-col md:mb-12 md:flex-row md:items-end md:justify-between"
         >
           <div>
             <motion.div
               variants={fadeInUp}
-              className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-forest-green/15 rounded-full mb-3 md:mb-4"
+              className="bg-forest-green/15 mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1.5 md:mb-4 md:px-4 md:py-2"
             >
-              <BookOpen className="h-3 w-3 md:h-4 md:w-4 text-forest-green" />
-              <span className="text-xs md:text-sm font-semibold text-forest-green uppercase tracking-wider">
+              <BookOpen className="text-forest-green h-3 w-3 md:h-4 md:w-4" />
+              <span className="text-forest-green text-xs font-semibold tracking-wider uppercase md:text-sm">
                 Stories & Inspiration
               </span>
             </motion.div>
             <motion.h2
               variants={fadeInUp}
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-foreground mt-2 md:mt-3"
+              className="text-foreground mt-2 font-serif text-2xl font-bold sm:text-3xl md:mt-3 md:text-4xl lg:text-5xl"
             >
-              Travel{" "}
-              <span className="text-forest-green">
-                Diaries
-              </span>
+              Travel <span className="text-forest-green">Diaries</span>
             </motion.h2>
           </div>
           <motion.div variants={fadeInUp}>
@@ -103,7 +100,7 @@ export function TravelDiariesClient({ blogs }: TravelDiariesClientProps) {
               asChild
               variant="outline"
               size="lg"
-              className="mt-4 md:mt-0 border-2 border-forest-green text-forest-green hover:bg-forest-green hover:text-white rounded-full bg-transparent text-sm md:text-base"
+              className="border-forest-green text-forest-green hover:bg-forest-green mt-4 rounded-full border-2 bg-transparent text-sm hover:text-white md:mt-0 md:text-base"
             >
               <Link href="/blog" className="gap-2">
                 View All Posts
@@ -118,14 +115,14 @@ export function TravelDiariesClient({ blogs }: TravelDiariesClientProps) {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8"
+          className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:gap-8 lg:grid-cols-3"
         >
           {displayBlogs.map((blog, index) => (
             <motion.article key={blog.title} variants={fadeInUp} className="group">
               <Link href={`/blog/${blog.slug}`} className="block">
-                <div className="bg-linear-to-br from-[oklch(0.99_0.015_145)] to-[oklch(0.97_0.02_130)] rounded-2xl md:rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 border border-forest-green/10 hover:border-forest-green/30">
+                <div className="border-forest-green/10 hover:border-forest-green/30 overflow-hidden rounded-2xl border bg-linear-to-br from-[oklch(0.99_0.015_145)] to-[oklch(0.97_0.02_130)] shadow-lg transition-all duration-500 hover:shadow-xl md:rounded-3xl">
                   {/* Image container with hover effect */}
-                  <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
+                  <div className="relative h-48 overflow-hidden sm:h-56 md:h-64">
                     <Image
                       src={blog.image || "/placeholder.svg"}
                       alt={blog.title}
@@ -133,35 +130,35 @@ export function TravelDiariesClient({ blogs }: TravelDiariesClientProps) {
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     {/* Gradient overlay */}
-                    <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                     {/* Category badge */}
                     {index === 0 && (
-                      <div className="absolute top-3 md:top-4 left-3 md:left-4 px-2.5 md:px-3 py-1 bg-linear-to-r from-forest-green to-mountain-blue text-white text-xs font-bold rounded-full">
+                      <div className="from-forest-green to-mountain-blue absolute top-3 left-3 rounded-full bg-linear-to-r px-2.5 py-1 text-xs font-bold text-white md:top-4 md:left-4 md:px-3">
                         FEATURED
                       </div>
                     )}
 
                     {/* Read more indicator */}
-                    <div className="absolute bottom-3 md:bottom-4 right-3 md:right-4 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg transform translate-y-4 group-hover:translate-y-0">
-                      <ArrowRight className="h-4 w-4 md:h-5 md:w-5 text-forest-green" />
+                    <div className="absolute right-3 bottom-3 flex h-10 w-10 translate-y-4 transform items-center justify-center rounded-full bg-white opacity-0 shadow-lg transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 md:right-4 md:bottom-4 md:h-12 md:w-12">
+                      <ArrowRight className="text-forest-green h-4 w-4 md:h-5 md:w-5" />
                     </div>
                   </div>
 
                   {/* Content */}
                   <div className="p-4 md:p-5">
                     {blog.date && (
-                      <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground mb-2 md:mb-3">
-                        <div className="p-1 md:p-1.5 bg-golden-yellow/15 rounded-lg">
-                          <Calendar className="h-3 w-3 md:h-4 md:w-4 text-golden-yellow" />
+                      <div className="text-muted-foreground mb-2 flex items-center gap-2 text-xs md:mb-3 md:text-sm">
+                        <div className="bg-golden-yellow/15 rounded-lg p-1 md:p-1.5">
+                          <Calendar className="text-golden-yellow h-3 w-3 md:h-4 md:w-4" />
                         </div>
                         <span>{blog.date}</span>
                       </div>
                     )}
-                    <h3 className="text-base md:text-xl font-bold text-foreground mb-2 md:mb-3 group-hover:text-forest-green transition-colors line-clamp-2">
+                    <h3 className="text-foreground group-hover:text-forest-green mb-2 line-clamp-2 text-base font-bold transition-colors md:mb-3 md:text-xl">
                       {blog.title}
                     </h3>
-                    <p className="text-muted-foreground line-clamp-2 leading-relaxed text-sm md:text-base">
+                    <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed md:text-base">
                       {blog.excerpt}
                     </p>
                   </div>

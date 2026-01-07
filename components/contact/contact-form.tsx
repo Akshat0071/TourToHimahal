@@ -133,7 +133,8 @@ export function ContactForm() {
     // Validate all fields
     const newErrors: FormErrors = {}
     if (formData.name.length < 2) newErrors.name = ["Name must be at least 2 characters"]
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = ["Please enter a valid email address"]
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
+      newErrors.email = ["Please enter a valid email address"]
     if (formData.phone.length < 10) newErrors.phone = ["Please enter a valid phone number"]
     if (formData.message.length < 10) newErrors.message = ["Message must be at least 10 characters"]
     if (!formData.serviceType) newErrors.serviceType = ["Please select a service type"]
@@ -171,34 +172,34 @@ export function ContactForm() {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-forest-green/10 border border-forest-green/30 rounded-2xl p-8 text-center"
+        className="bg-forest-green/10 border-forest-green/30 rounded-2xl border p-8 text-center"
       >
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-          className="w-20 h-20 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-6"
+          className="bg-forest-green/20 mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full"
         >
-          <CheckCircle2 className="w-10 h-10 text-forest-green" />
+          <CheckCircle2 className="text-forest-green h-10 w-10" />
         </motion.div>
-        <h3 className="text-2xl font-serif font-bold text-foreground mb-2">Thank You!</h3>
+        <h3 className="text-foreground mb-2 font-serif text-2xl font-bold">Thank You!</h3>
         <p className="text-muted-foreground mb-4">Your inquiry has been submitted successfully.</p>
         {referenceNumber && (
-          <p className="text-sm font-medium text-foreground bg-muted px-4 py-2 rounded-lg inline-block mb-6">
+          <p className="text-foreground bg-muted mb-6 inline-block rounded-lg px-4 py-2 text-sm font-medium">
             Reference: <span className="text-primary">{referenceNumber}</span>
           </p>
         )}
-        <p className="text-sm text-muted-foreground mb-6">
+        <p className="text-muted-foreground mb-6 text-sm">
           We typically respond within 12 hours. For urgent inquiries, chat with us directly.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button asChild className="bg-[#25D366] hover:bg-[#25D366]/90 text-white">
+        <div className="flex flex-col justify-center gap-4 sm:flex-row">
+          <Button asChild className="bg-[#25D366] text-white hover:bg-[#25D366]/90">
             <a
               href={`https://wa.me/${(settings?.whatsapp_number || "").replace(/[^0-9]/g, "")}?text=Hi!%20I%20just%20submitted%20an%20inquiry%20and%20would%20like%20to%20chat.`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <MessageCircle className="w-4 h-4 mr-2" />
+              <MessageCircle className="mr-2 h-4 w-4" />
               Chat on WhatsApp
             </a>
           </Button>
@@ -227,7 +228,13 @@ export function ContactForm() {
   }
 
   return (
-    <motion.form variants={fadeInUp} initial="hidden" animate="visible" onSubmit={handleSubmit} className="space-y-6">
+    <motion.form
+      variants={fadeInUp}
+      initial="hidden"
+      animate="visible"
+      onSubmit={handleSubmit}
+      className="space-y-6"
+    >
       {/* Honeypot field - hidden from users */}
       <input
         type="text"
@@ -240,7 +247,7 @@ export function ContactForm() {
         aria-hidden="true"
       />
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid gap-6 md:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="name">Full Name *</Label>
           <Input
@@ -253,7 +260,7 @@ export function ContactForm() {
             required
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? "name-error" : undefined}
-            className={`transition-all duration-200 focus:ring-2 focus:ring-primary/20 focus:shadow-lg ${
+            className={`focus:ring-primary/20 transition-all duration-200 focus:shadow-lg focus:ring-2 ${
               errors.name ? "border-destructive" : ""
             }`}
           />
@@ -264,9 +271,9 @@ export function ContactForm() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 id="name-error"
-                className="text-sm text-destructive flex items-center gap-1"
+                className="text-destructive flex items-center gap-1 text-sm"
               >
-                <AlertCircle className="w-3 h-3" />
+                <AlertCircle className="h-3 w-3" />
                 {errors.name[0]}
               </motion.p>
             )}
@@ -285,7 +292,7 @@ export function ContactForm() {
             required
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? "email-error" : undefined}
-            className={`transition-all duration-200 focus:ring-2 focus:ring-primary/20 focus:shadow-lg ${
+            className={`focus:ring-primary/20 transition-all duration-200 focus:shadow-lg focus:ring-2 ${
               errors.email ? "border-destructive" : ""
             }`}
           />
@@ -296,9 +303,9 @@ export function ContactForm() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 id="email-error"
-                className="text-sm text-destructive flex items-center gap-1"
+                className="text-destructive flex items-center gap-1 text-sm"
               >
-                <AlertCircle className="w-3 h-3" />
+                <AlertCircle className="h-3 w-3" />
                 {errors.email[0]}
               </motion.p>
             )}
@@ -306,7 +313,7 @@ export function ContactForm() {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid gap-6 md:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="phone">Phone / WhatsApp *</Label>
           <Input
@@ -320,7 +327,7 @@ export function ContactForm() {
             required
             aria-invalid={!!errors.phone}
             aria-describedby={errors.phone ? "phone-error" : undefined}
-            className={`transition-all duration-200 focus:ring-2 focus:ring-primary/20 focus:shadow-lg ${
+            className={`focus:ring-primary/20 transition-all duration-200 focus:shadow-lg focus:ring-2 ${
               errors.phone ? "border-destructive" : ""
             }`}
           />
@@ -331,9 +338,9 @@ export function ContactForm() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 id="phone-error"
-                className="text-sm text-destructive flex items-center gap-1"
+                className="text-destructive flex items-center gap-1 text-sm"
               >
-                <AlertCircle className="w-3 h-3" />
+                <AlertCircle className="h-3 w-3" />
                 {errors.phone[0]}
               </motion.p>
             )}
@@ -348,7 +355,7 @@ export function ContactForm() {
           >
             <SelectTrigger
               id="serviceType"
-              className={`transition-all duration-200 focus:ring-2 focus:ring-primary/20 focus:shadow-lg ${
+              className={`focus:ring-primary/20 transition-all duration-200 focus:shadow-lg focus:ring-2 ${
                 errors.serviceType ? "border-destructive" : ""
               }`}
               aria-invalid={!!errors.serviceType}
@@ -369,9 +376,9 @@ export function ContactForm() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="text-sm text-destructive flex items-center gap-1"
+                className="text-destructive flex items-center gap-1 text-sm"
               >
-                <AlertCircle className="w-3 h-3" />
+                <AlertCircle className="h-3 w-3" />
                 {errors.serviceType[0]}
               </motion.p>
             )}
@@ -387,7 +394,7 @@ export function ContactForm() {
           value={formData.subject}
           onChange={handleInputChange}
           placeholder="Brief subject of your inquiry"
-          className="transition-all duration-200 focus:ring-2 focus:ring-primary/20 focus:shadow-lg"
+          className="focus:ring-primary/20 transition-all duration-200 focus:shadow-lg focus:ring-2"
         />
       </div>
 
@@ -404,7 +411,7 @@ export function ContactForm() {
           required
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "message-error" : undefined}
-          className={`transition-all duration-200 focus:ring-2 focus:ring-primary/20 focus:shadow-lg resize-none ${
+          className={`focus:ring-primary/20 resize-none transition-all duration-200 focus:shadow-lg focus:ring-2 ${
             errors.message ? "border-destructive" : ""
           }`}
         />
@@ -415,9 +422,9 @@ export function ContactForm() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               id="message-error"
-              className="text-sm text-destructive flex items-center gap-1"
+              className="text-destructive flex items-center gap-1 text-sm"
             >
-              <AlertCircle className="w-3 h-3" />
+              <AlertCircle className="h-3 w-3" />
               {errors.message[0]}
             </motion.p>
           )}
@@ -427,7 +434,7 @@ export function ContactForm() {
       {/* File Upload */}
       <div className="space-y-2">
         <Label htmlFor="file">Attach Document (Optional)</Label>
-        <p className="text-xs text-muted-foreground mb-2">
+        <p className="text-muted-foreground mb-2 text-xs">
           Upload itinerary request or travel document (PDF, JPG, PNG - max 5MB)
         </p>
         <div className="flex items-center gap-4">
@@ -439,19 +446,28 @@ export function ContactForm() {
             onChange={handleFileChange}
             className="hidden"
           />
-          <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()} className="gap-2">
-            <Upload className="w-4 h-4" />
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => fileInputRef.current?.click()}
+            className="gap-2"
+          >
+            <Upload className="h-4 w-4" />
             Choose File
           </Button>
           {selectedFile && (
             <motion.div
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
-              className="flex items-center gap-2 bg-muted px-3 py-1.5 rounded-lg text-sm"
+              className="bg-muted flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm"
             >
-              <span className="truncate max-w-37.5">{selectedFile.name}</span>
-              <button type="button" onClick={removeFile} className="text-muted-foreground hover:text-foreground">
-                <X className="w-4 h-4" />
+              <span className="max-w-37.5 truncate">{selectedFile.name}</span>
+              <button
+                type="button"
+                onClick={removeFile}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <X className="h-4 w-4" />
               </button>
             </motion.div>
           )}
@@ -465,11 +481,11 @@ export function ContactForm() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="bg-destructive/10 border border-destructive/30 text-destructive rounded-lg p-4 flex items-center gap-3"
+            className="bg-destructive/10 border-destructive/30 text-destructive flex items-center gap-3 rounded-lg border p-4"
             role="alert"
             aria-live="polite"
           >
-            <AlertCircle className="w-5 h-5 shrink-0" />
+            <AlertCircle className="h-5 w-5 shrink-0" />
             <p>{submitError}</p>
           </motion.div>
         )}
@@ -478,17 +494,17 @@ export function ContactForm() {
       <Button
         type="submit"
         size="lg"
-        className="w-full bg-saffron hover:bg-saffron/90 text-white transition-all duration-200"
+        className="bg-saffron hover:bg-saffron/90 w-full text-white transition-all duration-200"
         disabled={isSubmitting}
       >
         {isSubmitting ? (
           <>
-            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             Submitting...
           </>
         ) : (
           <>
-            <Send className="w-4 h-4 mr-2" />
+            <Send className="mr-2 h-4 w-4" />
             Send Inquiry
           </>
         )}

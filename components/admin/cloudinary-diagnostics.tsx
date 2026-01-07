@@ -33,7 +33,13 @@ export function CloudinaryDiagnostics() {
 
   const testPreset = async () => {
     try {
-      const response = await fetch("https://api.cloudinary.com/v1_1/dabqqymqe/upload/presets")
+      const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+      if (!cloudName) {
+        alert("Missing NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME")
+        return
+      }
+
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload/presets`)
       const data = await response.json()
       console.log("Available presets:", data)
       alert("Check console for available presets")
@@ -44,7 +50,7 @@ export function CloudinaryDiagnostics() {
   }
 
   return (
-    <div className="container mx-auto py-8 max-w-2xl">
+    <div className="container mx-auto max-w-2xl py-8">
       <Card className="mb-6">
         <CardHeader>
           <CardTitle>🔍 Cloudinary Diagnostics</CardTitle>
@@ -53,7 +59,7 @@ export function CloudinaryDiagnostics() {
           {/* Environment Variables */}
           <div className="space-y-2">
             <h3 className="font-semibold">Environment Variables</h3>
-            <div className="bg-slate-100 dark:bg-slate-900 p-4 rounded-lg space-y-2 font-mono text-sm">
+            <div className="space-y-2 rounded-lg bg-slate-100 p-4 font-mono text-sm dark:bg-slate-900">
               <div>
                 <span className="text-green-600">CLOUD_NAME:</span>{" "}
                 <span className={envVars.cloudName ? "text-green-600" : "text-red-600"}>
@@ -77,7 +83,7 @@ export function CloudinaryDiagnostics() {
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-100 p-4 rounded-lg">
+            <div className="rounded-lg bg-red-100 p-4 text-red-800 dark:bg-red-900 dark:text-red-100">
               <p className="font-semibold">⚠️ Error Detected:</p>
               <p>{error}</p>
             </div>
@@ -86,15 +92,19 @@ export function CloudinaryDiagnostics() {
           {/* Instructions */}
           <div className="space-y-3">
             <h3 className="font-semibold">✅ Fix Steps</h3>
-            <ol className="list-decimal list-inside space-y-2 text-sm">
+            <ol className="list-inside list-decimal space-y-2 text-sm">
               <li>
-                Check <code className="bg-slate-200 px-2 py-1 rounded">.env.local</code> file:
+                Check <code className="rounded bg-slate-200 px-2 py-1">.env.local</code> file:
               </li>
               <li>
-                Make sure <code className="bg-slate-200 px-2 py-1 rounded">NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=himachal_yatra_uploads</code>
+                Make sure{" "}
+                <code className="rounded bg-slate-200 px-2 py-1">
+                  NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=&lt;your_unsigned_preset&gt;
+                </code>
               </li>
               <li>
-                There should be ONLY ONE line with <code className="bg-slate-200 px-2 py-1 rounded">NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET</code>
+                There should be ONLY ONE line with{" "}
+                <code className="rounded bg-slate-200 px-2 py-1">NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET</code>
               </li>
               <li>Stop dev server: Press Ctrl+C</li>
               <li>Restart: Run `npm run dev`</li>
@@ -110,7 +120,11 @@ export function CloudinaryDiagnostics() {
               <p className="text-sm">
                 1. Go to{" "}
                 <a
-                  href="https://console.cloudinary.com/settings/c-dabqqymqe/upload_presets"
+                  href={
+                    envVars.cloudName
+                      ? `https://console.cloudinary.com/settings/c-${envVars.cloudName}/upload_presets`
+                      : "https://console.cloudinary.com/settings"
+                  }
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 underline"
@@ -118,7 +132,9 @@ export function CloudinaryDiagnostics() {
                   Upload Presets
                 </a>
               </p>
-              <p className="text-sm">2. Do you see <code className="bg-slate-200 px-2 py-1 rounded">himachal_yatra_uploads</code>?</p>
+              <p className="text-sm">
+                2. Do you see your preset (e.g. <code className="rounded bg-slate-200 px-2 py-1">tourtohimachal_uploads</code>)?
+              </p>
               <p className="text-sm">3. Is it set to "Unsigned"?</p>
               <p className="text-sm">4. If not, create it now!</p>
             </div>
@@ -130,7 +146,7 @@ export function CloudinaryDiagnostics() {
           </Button>
 
           {/* Console Instructions */}
-          <div className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 p-4 rounded-lg text-sm">
+          <div className="rounded-lg bg-blue-100 p-4 text-sm text-blue-800 dark:bg-blue-900 dark:text-blue-100">
             <p className="font-semibold">💡 Open Browser Console (F12):</p>
             <p className="mt-1">You should see the diagnostics logged there</p>
           </div>

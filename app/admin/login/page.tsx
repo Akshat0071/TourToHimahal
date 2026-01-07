@@ -121,14 +121,14 @@ export default function AdminLoginPage() {
 
   if (isCheckingSession) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 to-slate-100">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-slate-50 to-slate-100">
+        <Loader2 className="text-primary h-8 w-8 animate-spin" />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 to-slate-100 p-4">
+    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-slate-50 to-slate-100 p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -136,9 +136,9 @@ export default function AdminLoginPage() {
         className="w-full max-w-md"
       >
         <Card className="border-0 shadow-xl">
-          <CardHeader className="text-center pb-2 flex flex-col items-center gap-3">
-            <Logo size="lg" href={null} forceColors />
-            <CardTitle className="text-2xl font-serif">Admin Login</CardTitle>
+          <CardHeader className="flex flex-col items-center gap-3 pb-2 text-center">
+            <Logo size="lg" href={null} />
+            <CardTitle className="font-serif text-2xl">Admin Login</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
@@ -172,10 +172,10 @@ export default function AdminLoginPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    className="text-muted-foreground hover:text-foreground absolute top-1/2 right-3 -translate-y-1/2"
                     tabIndex={-1}
                   >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
               </div>
@@ -184,9 +184,9 @@ export default function AdminLoginPage() {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-2 text-sm text-destructive bg-destructive/10 p-3 rounded-lg"
+                  className="text-destructive bg-destructive/10 flex items-center gap-2 rounded-lg p-3 text-sm"
                 >
-                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <AlertCircle className="h-4 w-4 shrink-0" />
                   <p>{error}</p>
                 </motion.div>
               )}
@@ -194,7 +194,7 @@ export default function AdminLoginPage() {
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? (
                   <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Signing in...
                   </>
                 ) : (
@@ -203,7 +203,7 @@ export default function AdminLoginPage() {
               </Button>
             </form>
 
-            <p className="text-xs text-center text-muted-foreground mt-6">
+            <p className="text-muted-foreground mt-6 text-center text-xs">
               Protected area. Unauthorized access is prohibited.
             </p>
           </CardContent>

@@ -43,7 +43,10 @@ export function DiaryCard({ diary, featured = false }: DiaryCardProps) {
     : ""
 
   const imageUrl =
-    diary.gallery?.[0] || diary.cover_image || diary.coverImage || `/placeholder.svg?height=400&width=600&query=${diary.title}`
+    diary.gallery?.[0] ||
+    diary.cover_image ||
+    diary.coverImage ||
+    `/placeholder.svg?height=400&width=600&query=${diary.title}`
   const authorName = diary.author_name || diary.author?.name || "Traveler"
   const authorAvatar = diary.author_avatar || diary.author?.avatar || "/diverse-avatars.png"
 
@@ -52,12 +55,12 @@ export function DiaryCard({ diary, featured = false }: DiaryCardProps) {
       <motion.article variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
         <Link href={`/diaries/${diary.slug}`}>
           <motion.div
-            className="group relative bg-card rounded-2xl overflow-hidden shadow-lg"
+            className="group bg-card relative overflow-hidden rounded-2xl shadow-lg"
             variants={cardHover}
             initial="rest"
             whileHover="hover"
           >
-            <div className="grid md:grid-cols-2 gap-0">
+            <div className="grid gap-0 md:grid-cols-2">
               <div className="relative aspect-4/3 md:aspect-auto">
                 <Image
                   src={imageUrl || "/placeholder.svg"}
@@ -69,18 +72,20 @@ export function DiaryCard({ diary, featured = false }: DiaryCardProps) {
                   <Badge className="bg-saffron text-white">Featured Story</Badge>
                 </div>
               </div>
-              <div className="p-6 md:p-8 flex flex-col justify-center">
+              <div className="flex flex-col justify-center p-6 md:p-8">
                 {diary.destination && (
-                  <div className="flex items-center gap-2 mb-4 text-muted-foreground">
+                  <div className="text-muted-foreground mb-4 flex items-center gap-2">
                     <MapPin className="h-4 w-4" />
                     <span>{diary.destination}</span>
                   </div>
                 )}
-                <h2 className="text-2xl md:text-3xl font-serif font-bold text-foreground mb-3 group-hover:text-mountain-blue transition-colors">
+                <h2 className="text-foreground group-hover:text-mountain-blue mb-3 font-serif text-2xl font-bold transition-colors md:text-3xl">
                   {diary.title}
                 </h2>
-                {diary.excerpt && <p className="text-muted-foreground mb-4 leading-relaxed">{diary.excerpt}</p>}
-                <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
+                {diary.excerpt && (
+                  <p className="text-muted-foreground mb-4 leading-relaxed">{diary.excerpt}</p>
+                )}
+                <div className="text-muted-foreground mb-6 flex items-center gap-4 text-sm">
                   {diary.readTime && (
                     <span className="flex items-center gap-1">
                       <Clock className="h-4 w-4" />
@@ -102,7 +107,7 @@ export function DiaryCard({ diary, featured = false }: DiaryCardProps) {
                     height={40}
                     className="rounded-full"
                   />
-                  <span className="font-medium text-foreground">{authorName}</span>
+                  <span className="text-foreground font-medium">{authorName}</span>
                 </div>
               </div>
             </div>
@@ -116,54 +121,60 @@ export function DiaryCard({ diary, featured = false }: DiaryCardProps) {
     <motion.article variants={fadeInUp} initial="hidden" animate="visible" className="min-w-0">
       <Link href={diary.slug ? `/diaries/${diary.slug}` : "#"} className="block min-w-0">
         <motion.div
-          className="group bg-card rounded-xl md:rounded-2xl overflow-hidden shadow-md h-full flex flex-col md:flex-row border border-border hover:border-mountain-blue/40 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 min-w-0"
+          className="group bg-card border-border hover:border-mountain-blue/40 flex h-full min-w-0 flex-col overflow-hidden rounded-xl border shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl md:flex-row md:rounded-2xl"
           variants={cardHover}
           initial="rest"
           whileHover="hover"
         >
           {/* Left: Image */}
-          <div className="relative w-full md:w-2/5 flex-shrink-0 overflow-hidden rounded-xl md:rounded-2xl" style={{ aspectRatio: '16/9', display: 'block' }}>
+          <div
+            className="relative w-full flex-shrink-0 overflow-hidden rounded-xl md:w-2/5 md:rounded-2xl"
+            style={{ aspectRatio: "16/9", display: "block" }}
+          >
             <Image
               src={imageUrl || "/placeholder.svg"}
               alt={diary.title}
               width={800}
               height={450}
               layout="responsive"
-              className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105 rounded-xl md:rounded-2xl block"
-              style={{ objectFit: 'cover', borderRadius: 'inherit' }}
+              className="block h-full w-full rounded-xl object-cover transition-transform duration-500 group-hover:scale-105 md:rounded-2xl"
+              style={{ objectFit: "cover", borderRadius: "inherit" }}
             />
-            <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/20 to-transparent rounded-xl md:rounded-2xl pointer-events-none" />
+            <div className="pointer-events-none absolute inset-0 rounded-xl bg-linear-to-t from-black/50 via-black/20 to-transparent md:rounded-2xl" />
             {diary.destination && (
               <div className="absolute top-2 left-2 md:top-3 md:left-3">
-                <Badge variant="secondary" className="bg-white/90 text-mountain-blue font-semibold text-[10px] md:text-xs px-2 py-0.5 md:px-2.5 md:py-0.5 shadow-sm">
-                  <MapPin className="h-3 w-3 mr-1" />
+                <Badge
+                  variant="secondary"
+                  className="text-mountain-blue bg-white/90 px-2 py-0.5 text-[10px] font-semibold shadow-sm md:px-2.5 md:py-0.5 md:text-xs"
+                >
+                  <MapPin className="mr-1 h-3 w-3" />
                   {diary.destination}
                 </Badge>
               </div>
             )}
           </div>
           {/* Right: Content */}
-          <div className="flex-1 flex flex-col justify-center p-4 md:p-6 lg:p-8 bg-gradient-to-b from-transparent to-white/60">
-            <h3 className="text-lg md:text-2xl font-serif font-bold text-foreground mb-2 group-hover:text-mountain-blue transition-colors line-clamp-2 leading-tight">
+          <div className="flex flex-1 flex-col justify-center bg-gradient-to-b from-transparent to-white/60 p-4 md:p-6 lg:p-8">
+            <h3 className="text-foreground group-hover:text-mountain-blue mb-2 line-clamp-2 font-serif text-lg leading-tight font-bold transition-colors md:text-2xl">
               {diary.title}
             </h3>
             {diary.excerpt && (
-              <p className="text-base text-muted-foreground mb-3 md:mb-4 line-clamp-2 flex-1 leading-relaxed">
+              <p className="text-muted-foreground mb-3 line-clamp-2 flex-1 text-base leading-relaxed md:mb-4">
                 {diary.excerpt}
               </p>
             )}
-            <div className="flex items-center justify-between mt-auto pt-2">
-              <div className="flex items-center gap-3 text-xs md:text-sm text-muted-foreground">
+            <div className="mt-auto flex items-center justify-between pt-2">
+              <div className="text-muted-foreground flex items-center gap-3 text-xs md:text-sm">
                 {diary.readTime && (
-                  <span className="flex items-center gap-1 bg-mountain-blue/10 px-2 py-1 rounded-full">
+                  <span className="bg-mountain-blue/10 flex items-center gap-1 rounded-full px-2 py-1">
                     <Clock className="h-3 w-3" />
                     {diary.readTime} min
                   </span>
                 )}
                 {formattedDate && <span>{formattedDate}</span>}
               </div>
-              <span className="text-mountain-blue text-xs md:text-sm font-medium flex items-center group-hover:gap-1 transition-all">
-                Read <ArrowRight className="h-3 w-3 md:h-4 md:w-4 ml-1" />
+              <span className="text-mountain-blue flex items-center text-xs font-medium transition-all group-hover:gap-1 md:text-sm">
+                Read <ArrowRight className="ml-1 h-3 w-3 md:h-4 md:w-4" />
               </span>
             </div>
           </div>

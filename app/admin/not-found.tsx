@@ -4,9 +4,9 @@ import { FileQuestion } from "lucide-react"
 
 export default function AdminNotFound() {
   return (
-    <div className="flex flex-col items-center justify-center h-[60vh] text-center">
-      <FileQuestion className="h-16 w-16 text-muted-foreground mb-4" />
-      <h1 className="text-2xl font-bold mb-2">Page Not Found</h1>
+    <div className="flex h-[60vh] flex-col items-center justify-center text-center">
+      <FileQuestion className="text-muted-foreground mb-4 h-16 w-16" />
+      <h1 className="mb-2 text-2xl font-bold">Page Not Found</h1>
       <p className="text-muted-foreground mb-6">
         The page you&apos;re looking for doesn&apos;t exist or has been moved.
       </p>

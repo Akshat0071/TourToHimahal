@@ -1,9 +1,13 @@
 /**
  * Cloudinary Helper Utilities
- * 
+ *
  * This file provides helper functions for working with Cloudinary images and files
  * in the Next.js application.
  */
+
+function getCloudName(): string | undefined {
+  return process.env.CLOUDINARY_CLOUD_NAME || process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+}
 
 /**
  * Build a Cloudinary image URL with transformations
@@ -23,12 +27,12 @@ export function buildCloudinaryUrl(
     aspectRatio?: string
     blur?: number
     sharpen?: boolean
-  }
+  },
 ): string {
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+  const cloudName = getCloudName()
 
   if (!cloudName) {
-    console.error("NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME is not defined")
+    console.error("Cloudinary cloud name is not defined")
     return ""
   }
 
@@ -73,7 +77,7 @@ export function getOptimizedImageUrl(publicId: string, width: number): string {
  */
 export function getResponsiveSrcSet(
   publicId: string,
-  widths: number[] = [640, 768, 1024, 1280, 1536]
+  widths: number[] = [640, 768, 1024, 1280, 1536],
 ): string {
   return widths
     .map((width) => {
@@ -106,10 +110,10 @@ export function getThumbnailUrl(publicId: string, size: number = 200): string {
  * @returns PDF URL
  */
 export function getPdfUrl(publicId: string): string {
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+  const cloudName = getCloudName()
 
   if (!cloudName) {
-    console.error("NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME is not defined")
+    console.error("Cloudinary cloud name is not defined")
     return ""
   }
 
@@ -154,7 +158,7 @@ export function getBlurredPlaceholder(publicId: string): string {
  * Use this in your admin components
  */
 export const uploadWidgetConfig = {
-  cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  cloudName: getCloudName(),
   uploadPreset: process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
   sources: ["local", "url", "camera"],
   multiple: false,

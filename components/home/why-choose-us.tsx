@@ -51,40 +51,43 @@ const features = [
 
 export function WhyChooseUs() {
   return (
-    <section className="py-8 md:py-8 lg:py-12 bg-gradient-to-br from-[oklch(0.97_0.035_85)] via-[oklch(0.98_0.02_75)] to-[oklch(0.96_0.03_65)] relative overflow-hidden">
+    <section className="relative overflow-hidden bg-gradient-to-br from-[oklch(0.97_0.035_85)] via-[oklch(0.98_0.02_75)] to-[oklch(0.96_0.03_65)] py-8 md:py-8 lg:py-12">
       {/* Decorative patterns */}
-      <div className="absolute inset-0 pattern-dots opacity-20" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-saffron to-transparent" />
+      <div className="pattern-dots absolute inset-0 opacity-20" />
+      <div className="via-saffron absolute top-0 left-1/2 h-1 w-full -translate-x-1/2 bg-gradient-to-r from-transparent to-transparent" />
 
-      <div className="container mx-auto px-4 relative">
+      <div className="relative container mx-auto px-4">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="text-center mb-6 md:mb-8 lg:mb-10"
+          className="mb-6 text-center md:mb-8 lg:mb-10"
         >
           <motion.div
             variants={fadeInUp}
-            className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-saffron/20 to-sunset-orange/20 rounded-full mb-3 md:mb-4"
+            className="from-saffron/20 to-sunset-orange/20 mb-3 inline-flex items-center gap-2 rounded-full bg-gradient-to-r px-3 py-1.5 md:mb-4 md:px-4 md:py-2"
           >
-            <Award className="h-3 w-3 md:h-4 md:w-4 text-saffron" />
-            <span className="text-xs md:text-sm font-semibold text-saffron uppercase tracking-wider">
+            <Award className="text-saffron h-3 w-3 md:h-4 md:w-4" />
+            <span className="text-saffron text-xs font-semibold tracking-wider uppercase md:text-sm">
               Why Travelers Trust Us
             </span>
           </motion.div>
           <motion.h2
             variants={fadeInUp}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-foreground mt-2 md:mt-3 mb-3 md:mb-4"
+            className="text-foreground mt-2 mb-3 font-serif text-2xl font-bold sm:text-3xl md:mt-3 md:mb-4 md:text-4xl lg:text-5xl"
           >
             Why Choose{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-saffron via-sunset-orange to-temple-red">
+            <span className="from-saffron via-sunset-orange to-temple-red bg-gradient-to-r bg-clip-text text-transparent">
               Us
             </span>
           </motion.h2>
-          <motion.p variants={fadeInUp} className="text-muted-foreground max-w-2xl mx-auto text-sm md:text-lg px-4">
-            We combine local expertise, quality service, and customer-first approach to make your Himachal journey
-            memorable.
+          <motion.p
+            variants={fadeInUp}
+            className="text-muted-foreground mx-auto max-w-2xl px-4 text-sm md:text-lg"
+          >
+            We combine local expertise, quality service, and customer-first approach to make your Himachal
+            journey memorable.
           </motion.p>
         </motion.div>
 
@@ -93,26 +96,26 @@ export function WhyChooseUs() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8"
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8"
         >
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
               variants={fadeInUp}
               whileHover={{ y: -8, scale: 1.02 }}
-              className="group relative bg-white p-5 md:p-8 rounded-2xl md:rounded-3xl border-2 border-white/50 shadow-md hover:shadow-2xl transition-all duration-500"
+              className="group relative rounded-2xl border-2 border-white/50 bg-white p-5 shadow-md transition-all duration-500 hover:shadow-2xl md:rounded-3xl md:p-8"
             >
               {/* Icon with gradient background */}
               <div
-                className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br ${feature.gradient} rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
+                className={`h-12 w-12 bg-gradient-to-br md:h-16 md:w-16 ${feature.gradient} mb-4 flex items-center justify-center rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-110 md:mb-6 md:rounded-2xl`}
               >
-                <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                <feature.icon className="h-6 w-6 text-white md:h-8 md:w-8" />
               </div>
 
-              <h3 className="text-base md:text-xl font-bold text-foreground mb-2 md:mb-3">
-                {feature.title}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed text-sm md:text-base">{feature.description}</p>
+              <h3 className="text-foreground mb-2 text-base font-bold md:mb-3 md:text-xl">{feature.title}</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed md:text-base">
+                {feature.description}
+              </p>
             </motion.div>
           ))}
         </motion.div>

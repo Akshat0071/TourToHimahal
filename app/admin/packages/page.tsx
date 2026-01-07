@@ -21,11 +21,11 @@ export default async function PackagesPage() {
     <div>
       <AdminHeader title="Packages Management" description="Create and manage tour packages" />
 
-      <div className="p-6 space-y-6">
+      <div className="space-y-6 p-6">
         <div className="flex justify-end">
           <Button asChild>
             <Link href="/admin/packages/new">
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="mr-2 h-4 w-4" />
               Add Package
             </Link>
           </Button>

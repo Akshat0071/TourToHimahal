@@ -27,23 +27,26 @@ export function ItineraryAccordion({ itinerary }: ItineraryAccordionProps) {
   return (
     <div className="space-y-3 sm:space-y-4">
       {itinerary.map((item) => (
-        <div key={item.day} className="border-2 border-saffron/20 rounded-2xl overflow-hidden bg-linear-to-br from-white to-saffron/5 shadow-sm hover:shadow-lg hover:border-saffron/40 transition-all duration-300">
+        <div
+          key={item.day}
+          className="border-saffron/20 to-saffron/5 hover:border-saffron/40 overflow-hidden rounded-2xl border-2 bg-linear-to-br from-white shadow-sm transition-all duration-300 hover:shadow-lg"
+        >
           <button
             onClick={() => toggleDay(item.day)}
-            className="w-full flex items-center justify-between p-4 sm:p-5 md:p-6 text-left hover:bg-saffron/5 transition-colors"
+            className="hover:bg-saffron/5 flex w-full items-center justify-between p-4 text-left transition-colors sm:p-5 md:p-6"
             aria-expanded={openDay === item.day}
           >
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-linear-to-br from-saffron to-sunset-orange flex items-center justify-center shrink-0 shadow-md">
-                <span className="text-white font-bold text-base">D{item.day}</span>
+              <div className="from-saffron to-sunset-orange flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-linear-to-br shadow-md sm:h-14 sm:w-14">
+                <span className="text-base font-bold text-white">D{item.day}</span>
               </div>
               <div>
-                <h4 className="font-bold text-foreground text-sm md:text-base">{item.title}</h4>
-                <p className="text-xs text-muted-foreground font-medium">Day {item.day} of your journey</p>
+                <h4 className="text-foreground text-sm font-bold md:text-base">{item.title}</h4>
+                <p className="text-muted-foreground text-xs font-medium">Day {item.day} of your journey</p>
               </div>
             </div>
             <ChevronDown
-              className={`h-5 w-5 sm:h-6 sm:w-6 text-saffron transition-transform duration-300 ${
+              className={`text-saffron h-5 w-5 transition-transform duration-300 sm:h-6 sm:w-6 ${
                 openDay === item.day ? "rotate-180" : ""
               }`}
             />
@@ -58,25 +61,28 @@ export function ItineraryAccordion({ itinerary }: ItineraryAccordionProps) {
                 exit="hidden"
                 className="overflow-hidden"
               >
-                <div className="px-3 sm:px-5 md:px-6 pb-5 pt-1">
+                <div className="px-3 pt-1 pb-5 sm:px-5 md:px-6">
                   {/* Subtitles Section */}
                   {item.subtitles && item.subtitles.length > 0 ? (
                     <div className="space-y-3 pl-0 md:pl-16">
                       {item.subtitles.map((subtitle, subtitleIndex) => (
-                        <div key={subtitleIndex} className="bg-linear-to-br from-white to-mountain-blue/5 rounded-xl p-3 sm:p-4 md:p-5 border border-mountain-blue/20 hover:shadow-md transition-all duration-300">
-                          <h5 className="font-bold text-foreground text-xs sm:text-sm mb-2.5 flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-linear-to-br from-mountain-blue to-forest-green" />
+                        <div
+                          key={subtitleIndex}
+                          className="to-mountain-blue/5 border-mountain-blue/20 rounded-xl border bg-linear-to-br from-white p-3 transition-all duration-300 hover:shadow-md sm:p-4 md:p-5"
+                        >
+                          <h5 className="text-foreground mb-2.5 flex items-center gap-2 text-xs font-bold sm:text-sm">
+                            <div className="from-mountain-blue to-forest-green h-2 w-2 rounded-full bg-linear-to-br" />
                             {subtitle.title}
                           </h5>
                           {subtitle.highlight && (
-                            <div className="mb-3 p-3 rounded-xl bg-linear-to-r from-yellow-50 to-yellow-100 border-2 border-yellow-400/50 shadow-lg shadow-yellow-200/60">
-                              <p className="text-xs font-semibold text-yellow-900 flex items-center gap-2">
+                            <div className="mb-3 rounded-xl border-2 border-yellow-400/50 bg-linear-to-r from-yellow-50 to-yellow-100 p-3 shadow-lg shadow-yellow-200/60">
+                              <p className="flex items-center gap-2 text-xs font-semibold text-yellow-900">
                                 <span className="text-base">⚠️</span>
                                 {subtitle.highlight}
                               </p>
                             </div>
                           )}
-                          <div className="text-xs sm:text-xs text-muted-foreground mb-3 leading-relaxed whitespace-pre-line">
+                          <div className="text-muted-foreground mb-3 text-xs leading-relaxed whitespace-pre-line sm:text-xs">
                             {subtitle.description}
                           </div>
                           {subtitle.activities && subtitle.activities.length > 0 && (
@@ -84,7 +90,7 @@ export function ItineraryAccordion({ itinerary }: ItineraryAccordionProps) {
                               {subtitle.activities.map((activity, actIndex) => (
                                 <span
                                   key={actIndex}
-                                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-white border border-forest-green/30 rounded-full text-[10px] sm:text-[11px] font-medium text-forest-green hover:bg-forest-green/5 hover:border-forest-green/50 transition-all"
+                                  className="border-forest-green/30 text-forest-green hover:bg-forest-green/5 hover:border-forest-green/50 inline-flex items-center gap-1 rounded-full border bg-white px-2.5 py-1 text-[10px] font-medium transition-all sm:text-[11px]"
                                 >
                                   <MapPin className="h-3 w-3" />
                                   {activity}
@@ -96,7 +102,9 @@ export function ItineraryAccordion({ itinerary }: ItineraryAccordionProps) {
                       ))}
                     </div>
                   ) : (
-                    <div className="pl-0 md:pl-16 text-muted-foreground text-xs italic py-3">No sub-sections added.</div>
+                    <div className="text-muted-foreground py-3 pl-0 text-xs italic md:pl-16">
+                      No sub-sections added.
+                    </div>
                   )}
                 </div>
               </motion.div>

@@ -8,7 +8,10 @@ import { DiariesTable } from "@/components/admin/diaries-table"
 export default async function DiariesPage() {
   const supabase = await createClient()
 
-  const { data: diaries, error } = await supabase.from("diaries").select("*").order("created_at", { ascending: false })
+  const { data: diaries, error } = await supabase
+    .from("diaries")
+    .select("*")
+    .order("created_at", { ascending: false })
 
   if (error) {
     console.error("Error fetching diaries:", error)
@@ -18,11 +21,11 @@ export default async function DiariesPage() {
     <div>
       <AdminHeader title="Travel Diaries" description="Manage traveler stories and experiences" />
 
-      <div className="p-6 space-y-6">
+      <div className="space-y-6 p-6">
         <div className="flex justify-end">
           <Button asChild>
             <Link href="/admin/diaries/new">
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="mr-2 h-4 w-4" />
               Add Diary
             </Link>
           </Button>

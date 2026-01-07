@@ -40,7 +40,17 @@ export async function GET(request: NextRequest) {
   }
 
   // Create CSV
-  const headers = ["Reference", "Name", "Email", "Phone", "Service Type", "Status", "Subject", "Message", "Date"]
+  const headers = [
+    "Reference",
+    "Name",
+    "Email",
+    "Phone",
+    "Service Type",
+    "Status",
+    "Subject",
+    "Message",
+    "Date",
+  ]
   const rows = (leads || []).map((lead) => [
     lead.reference_number,
     lead.name,

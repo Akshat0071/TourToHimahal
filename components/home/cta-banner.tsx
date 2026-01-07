@@ -16,34 +16,36 @@ export function CTABanner() {
 
   const ctaImage = ""
   return (
-    <section className="relative py-12 md:py-16 overflow-hidden">
+    <section className="relative overflow-hidden py-12 md:py-16">
       {/* Background image layer */}
       <img
-        src={getImageUrl("https://res.cloudinary.com/dabqqymqe/image/upload/v1765967181/vor6a288gor8vhrmnej1.png")}
+        src={getImageUrl(
+          "https://res.cloudinary.com/daqp8c5fa/image/upload/v1767795901/y1plr2wekvbv7g7yjyk0.webp",
+        )}
         alt="panoramic landcape view"
         aria-hidden="true"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover"
       />
       {/* Background overlay gradient (semi-transparent so image shows) */}
-      <div className="absolute inset-0 bg-linear-to-br from-mountain-blue/70 via-forest-green/50 to-mountain-blue/70" />
+      <div className="from-mountain-blue/70 via-forest-green/50 to-mountain-blue/70 absolute inset-0 bg-linear-to-br" />
 
       {/* Decorative patterns */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 left-10 w-40 h-40 border-4 border-white rounded-full" />
-        <div className="absolute top-20 right-20 w-60 h-60 border-4 border-white rounded-full" />
-        <div className="absolute bottom-10 left-1/3 w-32 h-32 border-4 border-white rounded-full" />
+        <div className="absolute top-10 left-10 h-40 w-40 rounded-full border-4 border-white" />
+        <div className="absolute top-20 right-20 h-60 w-60 rounded-full border-4 border-white" />
+        <div className="absolute bottom-10 left-1/3 h-32 w-32 rounded-full border-4 border-white" />
       </div>
 
       {/* Floating shapes */}
       <motion.div
         animate={{ y: [-10, 10, -10] }}
         transition={{ repeat: Number.POSITIVE_INFINITY, duration: 4 }}
-        className="absolute top-20 right-1/4 w-16 h-16 bg-golden-yellow/30 rounded-2xl rotate-12"
+        className="bg-golden-yellow/30 absolute top-20 right-1/4 h-16 w-16 rotate-12 rounded-2xl"
       />
       <motion.div
         animate={{ y: [10, -10, 10] }}
         transition={{ repeat: Number.POSITIVE_INFINITY, duration: 5 }}
-        className="absolute bottom-20 left-1/4 w-20 h-20 bg-saffron/30 rounded-full"
+        className="bg-saffron/30 absolute bottom-20 left-1/4 h-20 w-20 rounded-full"
       />
 
       <div className="relative z-10 container mx-auto px-4 text-center">
@@ -58,10 +60,10 @@ export function CTABanner() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-5 py-2 bg-white/20 backdrop-blur-sm rounded-full mb-8"
+            className="mb-8 inline-flex items-center gap-2 rounded-full bg-white/20 px-5 py-2 backdrop-blur-sm"
           >
-            <Sparkles className="h-4 w-4 text-golden-yellow" />
-            <span className="text-white font-medium">Start Your Journey Today</span>
+            <Sparkles className="text-golden-yellow h-4 w-4" />
+            <span className="font-medium text-white">Start Your Journey Today</span>
           </motion.div>
 
           <motion.h2
@@ -69,7 +71,7 @@ export function CTABanner() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-3xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 text-balance"
+            className="mb-6 font-serif text-3xl font-bold text-balance text-white md:text-5xl lg:text-6xl"
           >
             Plan Your Dream <span className="text-golden-yellow">Himachal Trip</span>
           </motion.h2>
@@ -79,9 +81,10 @@ export function CTABanner() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="text-xl text-white/90 mb-12 max-w-2xl mx-auto leading-relaxed"
+            className="mx-auto mb-12 max-w-2xl text-xl leading-relaxed text-white/90"
           >
-            Get personalized travel packages and instant taxi booking. Connect with us on WhatsApp for quick assistance.
+            Get personalized travel packages and instant taxi booking. Connect with us on WhatsApp for quick
+            assistance.
           </motion.p>
 
           <motion.div
@@ -89,14 +92,9 @@ export function CTABanner() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex flex-col justify-center gap-4 sm:flex-row"
           >
-            <Button
-              size="xl"
-              variant="gradient"
-              className="text-lg px-10 shadow-2xl group"
-              asChild
-            >
+            <Button size="xl" variant="gradient" className="group px-10 text-lg shadow-2xl" asChild>
               <a
                 href={`https://wa.me/${(settings?.whatsapp_number || "").replace(/[^0-9]/g, "")}?text=Hi, I want to plan my Himachal trip`}
                 target="_blank"
@@ -104,14 +102,14 @@ export function CTABanner() {
               >
                 <MessageCircle className="mr-2 h-6 w-6" />
                 Chat on WhatsApp
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </a>
             </Button>
 
             <Button
               size="xl"
               variant="outline"
-              className="border-2 border-white text-white hover:bg-white hover:text-mountain-blue text-lg px-10 bg-transparent"
+              className="hover:text-mountain-blue border-2 border-white bg-transparent px-10 text-lg text-white hover:bg-white"
               asChild
             >
               <a href={`tel:${settings?.contact_phone || ""}`}>

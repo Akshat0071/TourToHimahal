@@ -48,7 +48,10 @@ export function BlogDetailClient({ post, relatedPosts, url }: BlogDetailClientPr
       <main>
         {/* Back Button */}
         <div className="container mx-auto px-4 pt-6">
-          <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <Link
+            href="/blog"
+            className="text-muted-foreground hover:text-foreground inline-flex items-center gap-2 text-sm transition-colors"
+          >
             <ArrowLeft className="h-4 w-4" />
             Back to Blog
           </Link>
@@ -58,21 +61,23 @@ export function BlogDetailClient({ post, relatedPosts, url }: BlogDetailClientPr
           <div className="container mx-auto px-4 py-10 md:py-14">
             <motion.div variants={fadeInUp} initial="hidden" animate="visible">
               {/* Category + Tags Row */}
-              <div className="flex flex-wrap items-center gap-2 mb-4">
+              <div className="mb-4 flex flex-wrap items-center gap-2">
                 {post.category && (
-                  <span className="px-2.5 py-1 text-xs rounded-full bg-mountain-blue/10 text-mountain-blue ring-1 ring-mountain-blue/20">
+                  <span className="bg-mountain-blue/10 text-mountain-blue ring-mountain-blue/20 rounded-full px-2.5 py-1 text-xs ring-1">
                     {post.category}
                   </span>
                 )}
                 {post.tags?.slice(0, 3).map((tag) => (
-                  <span key={tag} className="px-2.5 py-1 text-xs rounded-full bg-muted text-muted-foreground">
+                  <span key={tag} className="bg-muted text-muted-foreground rounded-full px-2.5 py-1 text-xs">
                     #{tag}
                   </span>
                 ))}
               </div>
-              <div className="flex items-center gap-3 text-sm text-muted-foreground mb-3">
+              <div className="text-muted-foreground mb-3 flex items-center gap-3 text-sm">
                 {displayAuthor && <span>{displayAuthor}</span>}
-                {post.published_at && <span className="inline-block h-1 w-1 rounded-full bg-muted-foreground/60" />}
+                {post.published_at && (
+                  <span className="bg-muted-foreground/60 inline-block h-1 w-1 rounded-full" />
+                )}
                 {post.published_at && (
                   <span>
                     {new Date(post.published_at).toLocaleDateString("en-US", {
@@ -83,18 +88,25 @@ export function BlogDetailClient({ post, relatedPosts, url }: BlogDetailClientPr
                   </span>
                 )}
               </div>
-              <h1 className="text-3xl md:text-5xl font-serif font-bold leading-tight text-foreground">{post.title}</h1>
+              <h1 className="text-foreground font-serif text-3xl leading-tight font-bold md:text-5xl">
+                {post.title}
+              </h1>
             </motion.div>
           </div>
         </section>
 
         {/* Main article grid: content left, sidebar right */}
         <article className="container mx-auto px-4 py-10">
-          <div className="grid gap-10 items-start max-w-[1400px] mx-auto xl:grid-cols-[1fr_minmax(0,768px)_320px_1fr]">
+          <div className="mx-auto grid max-w-[1400px] items-start gap-10 xl:grid-cols-[1fr_minmax(0,768px)_320px_1fr]">
             {/* Left: Image gallery + content (centered column) */}
-            <div className="w-full xl:col-start-2 xl:col-span-1">
+            <div className="w-full xl:col-span-1 xl:col-start-2">
               {/* Social Share */}
-              <motion.div variants={fadeInUp} initial="hidden" animate="visible" className="mb-8 pb-8 border-b">
+              <motion.div
+                variants={fadeInUp}
+                initial="hidden"
+                animate="visible"
+                className="mb-8 border-b pb-8"
+              >
                 <SocialShare title={post.title} url={shareUrl} />
               </motion.div>
 
@@ -110,12 +122,15 @@ export function BlogDetailClient({ post, relatedPosts, url }: BlogDetailClientPr
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
-                  className="mt-12 pt-8 border-t"
+                  className="mt-12 border-t pt-8"
                 >
-                  <h4 className="text-sm font-semibold text-foreground mb-3">Tags:</h4>
+                  <h4 className="text-foreground mb-3 text-sm font-semibold">Tags:</h4>
                   <div className="flex flex-wrap gap-2">
                     {post.tags.map((tag) => (
-                      <span key={tag} className="px-3 py-1 bg-muted rounded-full text-sm text-muted-foreground">
+                      <span
+                        key={tag}
+                        className="bg-muted text-muted-foreground rounded-full px-3 py-1 text-sm"
+                      >
                         {tag}
                       </span>
                     ))}
@@ -124,18 +139,20 @@ export function BlogDetailClient({ post, relatedPosts, url }: BlogDetailClientPr
               )}
 
               {/* Share Again */}
-              <div className="py-8 border-t border-b mt-8">
+              <div className="mt-8 border-t border-b py-8">
                 <SocialShare title={post.title} url={shareUrl} />
               </div>
             </div>
 
             {/* Right: Sticky sidebar with TOC and related posts */}
-            <aside className="hidden xl:block xl:col-start-3 xl:col-span-1 sticky top-24 self-start">
+            <aside className="sticky top-24 hidden self-start xl:col-span-1 xl:col-start-3 xl:block">
               <div className="space-y-6">
                 <BlogTOC content={markdownContent} />
                 {relatedPosts.length > 0 && (
-                  <div className="rounded-xl border bg-muted/50 backdrop-blur-sm p-4 shadow-sm">
-                    <h3 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wide">Related Articles</h3>
+                  <div className="bg-muted/50 rounded-xl border p-4 shadow-sm backdrop-blur-sm">
+                    <h3 className="text-foreground mb-3 text-sm font-semibold tracking-wide uppercase">
+                      Related Articles
+                    </h3>
                     <div className="space-y-4">
                       {relatedPosts.map((relatedPost) => (
                         <BlogCard key={relatedPost.slug} post={relatedPost} />

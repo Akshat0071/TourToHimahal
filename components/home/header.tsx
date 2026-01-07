@@ -12,6 +12,7 @@ import { useSettings } from "@/lib/settings-context"
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/taxi", label: "Taxi Service" },
+  { href: "/about", label: "About Us" },
   { href: "/packages", label: "Packages" },
   { href: "/diaries", label: "Travel Diaries" },
   { href: "/blog", label: "Blog" },
@@ -78,25 +79,21 @@ export function Header() {
   }, [isMobileMenuOpen])
 
   return (
-    <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-background/95 backdrop-blur-md shadow-sm border-b border-border"
-    >
+    <header className="bg-background/95 border-border fixed top-0 right-0 left-0 z-50 border-b shadow-sm backdrop-blur-md transition-all duration-500">
       <div className="container mx-auto px-4">
-        <div className="flex h-16 md:h-20 items-center justify-between">
-          <Logo isScrolled={true} forceColors={true} />
+        <div className="flex h-16 items-center justify-between md:h-20">
+          <Logo size="lg" className="origin-left scale-x-[1.5] scale-y-[1.3]" />
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden items-center gap-1 lg:flex">
             {navLinks.map((link) => {
               const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href))
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                    isActive
-                      ? "text-white bg-saffron"
-                      : "text-foreground hover:text-white hover:bg-saffron"
+                  className={`rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 ${
+                    isActive ? "bg-saffron text-white" : "text-foreground hover:bg-saffron hover:text-white"
                   }`}
                 >
                   {link.label}
@@ -105,21 +102,21 @@ export function Header() {
             })}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden items-center gap-4 lg:flex">
             {/* Contact Phone */}
             {contactPhone && (
               <div className="text-right">
-                <p className="text-xs text-muted-foreground">Need help?</p>
+                <p className="text-muted-foreground text-xs">Need help?</p>
                 <a
                   href={`tel:${contactPhone.replace(/\s/g, "")}`}
-                  className="text-sm font-semibold text-foreground hover:text-saffron transition-colors flex items-center justify-end gap-1"
+                  className="text-foreground hover:text-saffron flex items-center justify-end gap-1 text-sm font-semibold transition-colors"
                 >
                   <Phone className="h-4 w-4" />
                   {contactPhone}
                 </a>
               </div>
             )}
-            
+
             {whatsappNumber && (
               <Button asChild variant="gradient" size="lg" className="gap-2">
                 <a
@@ -136,11 +133,11 @@ export function Header() {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="lg:hidden p-2.5 md:p-3 rounded-full transition-all bg-muted hover:bg-saffron/10"
+            className="bg-muted hover:bg-saffron/10 rounded-full p-2.5 transition-all md:p-3 lg:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            <Menu className="h-5 w-5 text-foreground" />
+            <Menu className="text-foreground h-5 w-5" />
           </button>
         </div>
       </div>
@@ -154,7 +151,7 @@ export function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm lg:hidden z-[100]"
+              className="fixed inset-0 z-100 bg-black/50 backdrop-blur-sm lg:hidden"
               onClick={() => setIsMobileMenuOpen(false)}
             />
 
@@ -163,33 +160,39 @@ export function Header() {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: "100%", opacity: 1 }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 bottom-0 right-0 w-[80%] max-w-sm bg-white lg:hidden z-[101] shadow-2xl flex flex-col h-[100dvh]"
+              className="fixed top-0 right-0 bottom-0 z-101 flex h-dvh w-[80%] max-w-sm flex-col bg-white shadow-2xl lg:hidden"
             >
               {/* Decorative gradient top */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-saffron via-golden-yellow to-forest-green" />
+              <div className="from-saffron via-golden-yellow to-forest-green absolute top-0 right-0 left-0 h-1 bg-linear-to-r" />
 
               {/* Header with logo and close button */}
-              <div className="flex items-center justify-between p-4 border-b border-border bg-white shrink-0">
-                <Logo size="sm" href="/" onClick={() => setIsMobileMenuOpen(false)} forceColors={true} />
+              <div className="border-border flex shrink-0 items-center justify-between border-b bg-white p-4">
+                <Logo
+                  size="md"
+                  href="/"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="origin-left scale-x-[1.2] scale-y-[1.05]"
+                />
 
                 {/* Close button */}
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 rounded-full bg-muted hover:bg-destructive/10 transition-colors"
+                  className="bg-muted hover:bg-destructive/10 rounded-full p-2 transition-colors"
                   aria-label="Close menu"
                 >
-                  <X className="h-5 w-5 text-foreground" />
+                  <X className="text-foreground h-5 w-5" />
                 </button>
               </div>
 
               {/* Navigation */}
-              <div className="flex flex-col flex-1 p-4 sm:p-6 bg-white overflow-y-auto relative">
+              <div className="relative flex flex-1 flex-col overflow-y-auto bg-white p-4 sm:p-6">
                 {/* Decorative element */}
-                <div className="absolute top-20 right-0 w-32 h-32 bg-linear-to-bl from-saffron/10 to-transparent rounded-bl-full pointer-events-none" />
+                <div className="from-saffron/10 pointer-events-none absolute top-20 right-0 h-32 w-32 rounded-bl-full bg-linear-to-bl to-transparent" />
 
                 <nav className="flex flex-col gap-1">
                   {navLinks.map((link, index) => {
-                    const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href))
+                    const isActive =
+                      pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href))
                     return (
                       <motion.div
                         key={link.href}
@@ -199,14 +202,16 @@ export function Header() {
                       >
                         <Link
                           href={link.href}
-                          className={`flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl text-sm sm:text-base font-medium transition-all ${
+                          className={`flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-semibold transition-all sm:px-4 sm:py-3 sm:text-base ${
                             isActive
                               ? "bg-saffron text-white"
                               : "text-foreground hover:bg-saffron hover:text-white"
                           }`}
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
-                          <span className={`w-2 h-2 rounded-full ${isActive ? "bg-white" : "bg-linear-to-r from-saffron to-golden-yellow"}`} />
+                          <span
+                            className={`h-2 w-2 rounded-full ${isActive ? "bg-white" : "from-saffron to-golden-yellow bg-linear-to-r"}`}
+                          />
                           {link.label}
                         </Link>
                       </motion.div>
@@ -222,17 +227,17 @@ export function Header() {
                       rel="noopener noreferrer"
                     >
                       <Sparkles className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-                      <span className="hidden xs:inline">Book Now on WhatsApp</span>
+                      <span className="xs:inline hidden">Book Now on WhatsApp</span>
                       <span className="xs:hidden">Book on WhatsApp</span>
                     </a>
                   </Button>
 
                   {/* Contact info */}
-                  <div className="text-center text-xs sm:text-sm text-muted-foreground p-3 sm:p-4 rounded-2xl bg-muted/50">
+                  <div className="text-muted-foreground bg-muted/50 rounded-2xl p-3 text-center text-xs sm:p-4 sm:text-sm">
                     <p>Need help? Call us at</p>
                     <a
                       href={`tel:${contactPhone.replace(/\s/g, "")}`}
-                      className="text-saffron font-semibold text-sm sm:text-base flex items-center justify-center gap-2 mt-1"
+                      className="text-saffron mt-1 flex items-center justify-center gap-2 text-sm font-semibold sm:text-base"
                     >
                       <Phone className="h-4 w-4" />
                       {contactPhone}

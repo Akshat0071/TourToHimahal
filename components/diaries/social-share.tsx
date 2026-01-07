@@ -53,11 +53,16 @@ export function SocialShare({ title, url }: SocialShareProps) {
       viewport={{ once: true }}
       className="flex items-center gap-4"
     >
-      <span className="text-sm font-medium text-muted-foreground">Share:</span>
+      <span className="text-muted-foreground text-sm font-medium">Share:</span>
       <div className="flex gap-2">
         {shareLinks.map((link) => (
           <Button key={link.name} variant="outline" size="icon" asChild className="h-9 w-9 bg-transparent">
-            <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={`Share on ${link.name}`}>
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Share on ${link.name}`}
+            >
               <link.icon className="h-4 w-4" />
             </a>
           </Button>

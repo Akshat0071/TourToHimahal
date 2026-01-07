@@ -10,7 +10,9 @@ export type RegisterMediaPayload = {
   mime_type?: string
 }
 
-export async function registerMedia(payload: RegisterMediaPayload): Promise<{ ok: true } | { ok: false; error: string }> {
+export async function registerMedia(
+  payload: RegisterMediaPayload,
+): Promise<{ ok: true } | { ok: false; error: string }> {
   try {
     const res = await fetch("/api/admin/media", {
       method: "POST",

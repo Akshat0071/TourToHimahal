@@ -82,7 +82,7 @@ export function DiariesPageClient({ diaries }: DiariesPageClientProps) {
       if (selectedTags.length > 0) {
         const dTags = diary.tags || []
         // Match if diary contains ANY of the selected tags (OR logic)
-        const hasMatch = selectedTags.some(tag => dTags.includes(tag))
+        const hasMatch = selectedTags.some((tag) => dTags.includes(tag))
         if (!hasMatch) return false
       }
 
@@ -103,8 +103,6 @@ export function DiariesPageClient({ diaries }: DiariesPageClientProps) {
         }
       }
 
-
-
       return true
     })
   }, [diaries, searchQuery, selectedRegion, selectedTags, selectedMonth])
@@ -117,7 +115,6 @@ export function DiariesPageClient({ diaries }: DiariesPageClientProps) {
     setSelectedRegion("All")
     setSelectedTags([])
     setSelectedMonth(null)
-
   }
 
   const loadMore = () => {
@@ -127,7 +124,7 @@ export function DiariesPageClient({ diaries }: DiariesPageClientProps) {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-background">
+      <main className="bg-background min-h-screen">
         <StaticHero
           image="/Images/diary.png"
           badge="Real Stories, Real Adventures"
@@ -136,7 +133,7 @@ export function DiariesPageClient({ diaries }: DiariesPageClientProps) {
         />
 
         {/* Mobile Filter Bar - Visible only on mobile/tablet */}
-        <section className="lg:hidden bg-background/95 border-b border-border py-3 sm:py-4">
+        <section className="bg-background/95 border-border border-b py-3 sm:py-4 lg:hidden">
           <div className="container mx-auto px-4">
             <DiaryFilter
               selectedRegion={selectedRegion}
@@ -155,13 +152,12 @@ export function DiariesPageClient({ diaries }: DiariesPageClientProps) {
         {/* Main Content with Desktop Sidebar */}
         <section className="py-12 md:py-16">
           <div className="container mx-auto px-4">
-            <div className="lg:grid lg:grid-cols-[1fr_320px] xl:grid-cols-[1fr_380px] lg:gap-8">
+            <div className="lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 xl:grid-cols-[1fr_380px]">
               {/* Main Column */}
               <div>
-
                 {/* Diaries Grid */}
                 {filteredDiaries.length === 0 ? (
-                  <div className="text-center py-16 bg-muted/30 rounded-3xl">
+                  <div className="bg-muted/30 rounded-3xl py-16 text-center">
                     <p className="text-muted-foreground mb-4">No diaries found matching your filters.</p>
                     <Button variant="outline" onClick={clearFilters}>
                       Clear Filters
@@ -187,7 +183,7 @@ export function DiariesPageClient({ diaries }: DiariesPageClientProps) {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true }}
-                    className="text-center mt-12"
+                    className="mt-12 text-center"
                   >
                     <Button variant="outline" size="lg" onClick={loadMore}>
                       Load More Stories
@@ -214,19 +210,21 @@ export function DiariesPageClient({ diaries }: DiariesPageClientProps) {
 
                   {/* Popular Diaries */}
                   {diaries.length > 0 && (
-                    <div className="bg-card rounded-xl p-6 shadow-md border-2 border-muted/50">
-                      <h3 className="text-lg font-serif font-bold text-foreground mb-4">Popular Stories</h3>
+                    <div className="bg-card border-muted/50 rounded-xl border-2 p-6 shadow-md">
+                      <h3 className="text-foreground mb-4 font-serif text-lg font-bold">Popular Stories</h3>
                       <div className="space-y-4">
                         {diaries.slice(0, 4).map((diary, index) => (
-                          <Link key={diary.slug} href={`/diaries/${diary.slug}`} className="flex gap-3 group">
-                            <span className="text-2xl font-bold text-muted-foreground/30 group-hover:text-saffron transition-colors">
+                          <Link key={diary.slug} href={`/diaries/${diary.slug}`} className="group flex gap-3">
+                            <span className="text-muted-foreground/30 group-hover:text-saffron text-2xl font-bold transition-colors">
                               {String(index + 1).padStart(2, "0")}
                             </span>
                             <div>
-                              <h4 className="font-medium text-foreground group-hover:text-mountain-blue transition-colors line-clamp-2 text-sm">
+                              <h4 className="text-foreground group-hover:text-mountain-blue line-clamp-2 text-sm font-medium transition-colors">
                                 {diary.title}
                               </h4>
-                              <span className="text-xs text-muted-foreground">{diary.region || diary.destination}</span>
+                              <span className="text-muted-foreground text-xs">
+                                {diary.region || diary.destination}
+                              </span>
                             </div>
                           </Link>
                         ))}

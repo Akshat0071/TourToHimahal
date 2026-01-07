@@ -2,18 +2,70 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Plus, Package, FileText, ImageIcon, Settings, Car, Route, BookOpen, MessageSquare } from "lucide-react"
+import {
+  Plus,
+  Package,
+  FileText,
+  ImageIcon,
+  Settings,
+  Car,
+  Route,
+  BookOpen,
+  MessageSquare,
+} from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const actions = [
-  { id: "package", href: "/admin/packages/new", label: "Add Package", icon: Package, color: "bg-blue-100 text-blue-600" },
-  { id: "blog", href: "/admin/blogs/new", label: "Write Blog", icon: FileText, color: "bg-green-100 text-green-600" },
-  { id: "diary", href: "/admin/diaries/new", label: "Add Diary", icon: BookOpen, color: "bg-pink-100 text-pink-600" },
-  { id: "vehicle", href: "/admin/taxi", label: "Add Vehicle", icon: Car, color: "bg-orange-100 text-orange-600" },
+  {
+    id: "package",
+    href: "/admin/packages/new",
+    label: "Add Package",
+    icon: Package,
+    color: "bg-blue-100 text-blue-600",
+  },
+  {
+    id: "blog",
+    href: "/admin/blogs/new",
+    label: "Write Blog",
+    icon: FileText,
+    color: "bg-green-100 text-green-600",
+  },
+  {
+    id: "diary",
+    href: "/admin/diaries/new",
+    label: "Add Diary",
+    icon: BookOpen,
+    color: "bg-pink-100 text-pink-600",
+  },
+  {
+    id: "vehicle",
+    href: "/admin/taxi",
+    label: "Add Vehicle",
+    icon: Car,
+    color: "bg-orange-100 text-orange-600",
+  },
   { id: "route", href: "/admin/taxi", label: "Add Route", icon: Route, color: "bg-cyan-100 text-cyan-600" },
-  { id: "review", href: "/admin/reviews/new", label: "Add Review", icon: MessageSquare, color: "bg-indigo-100 text-indigo-600" },
-  { id: "media", href: "/admin/media", label: "Upload Media", icon: ImageIcon, color: "bg-amber-100 text-amber-600" },
-  { id: "settings", href: "/admin/settings", label: "Settings", icon: Settings, color: "bg-purple-100 text-purple-600" },
+  {
+    id: "review",
+    href: "/admin/reviews/new",
+    label: "Add Review",
+    icon: MessageSquare,
+    color: "bg-indigo-100 text-indigo-600",
+  },
+  {
+    id: "media",
+    href: "/admin/media",
+    label: "Upload Media",
+    icon: ImageIcon,
+    color: "bg-amber-100 text-amber-600",
+  },
+  {
+    id: "settings",
+    href: "/admin/settings",
+    label: "Settings",
+    icon: Settings,
+    color: "bg-purple-100 text-purple-600",
+  },
 ]
 
 export function QuickActions() {
@@ -32,15 +84,17 @@ export function QuickActions() {
           >
             <Link
               href={action.href}
-              className="flex items-center gap-2 sm:gap-3 p-1.5 rounded-lg hover:bg-muted transition-colors group w-full xs:w-auto"
+              className="hover:bg-muted group xs:w-auto flex w-full items-center gap-2 rounded-lg p-1.5 transition-colors sm:gap-3"
             >
-              <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg ${action.color} flex items-center justify-center shrink-0`}>
-                <action.icon className="w-4 h-4 sm:w-5 sm:h-5" />
+              <div
+                className={`h-9 w-9 rounded-lg sm:h-10 sm:w-10 ${action.color} flex shrink-0 items-center justify-center`}
+              >
+                <action.icon className="h-4 w-4 sm:h-5 sm:w-5" />
               </div>
-              <span className="font-medium text-xs sm:text-sm text-foreground group-hover:text-primary transition-colors truncate">
+              <span className="text-foreground group-hover:text-primary truncate text-xs font-medium transition-colors sm:text-sm">
                 {action.label}
               </span>
-              <Plus className="w-3 h-3 sm:w-4 sm:h-4 ml-auto text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+              <Plus className="text-muted-foreground group-hover:text-primary ml-auto h-3 w-3 shrink-0 transition-colors sm:h-4 sm:w-4" />
             </Link>
           </motion.div>
         ))}

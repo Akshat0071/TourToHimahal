@@ -48,8 +48,8 @@ export function RelatedPackagesCarousel({ packages, currentSlug }: RelatedPackag
 
   return (
     <div className="relative">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-2xl font-serif font-bold text-foreground">Similar Packages</h3>
+      <div className="mb-6 flex items-center justify-between">
+        <h3 className="text-foreground font-serif text-2xl font-bold">Similar Packages</h3>
         <div className="flex gap-2">
           <Button variant="outline" size="icon" onClick={() => scroll("left")} className="rounded-full">
             <ChevronLeft className="h-5 w-5" />
@@ -60,11 +60,11 @@ export function RelatedPackagesCarousel({ packages, currentSlug }: RelatedPackag
         </div>
       </div>
 
-      <div ref={scrollRef} className="flex gap-6 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4">
+      <div ref={scrollRef} className="scrollbar-hide -mx-4 flex gap-6 overflow-x-auto px-4 pb-4">
         {relatedPackages.map((pkg) => (
           <motion.div
             key={pkg.id}
-            className="flex-shrink-0 w-[320px]"
+            className="w-[320px] flex-shrink-0"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

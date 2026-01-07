@@ -4,7 +4,11 @@ import { z } from "zod"
 export const contactFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100),
   phone: z.string().min(10, "Please enter a valid phone number").max(15),
-  email: z.string().email("Please enter a valid email address").optional().default("noemail@himachalyatra.com"),
+  email: z
+    .string()
+    .email("Please enter a valid email address")
+    .optional()
+    .default("noemail@himachalyatra.com"),
   subject: z.string().min(5, "Subject must be at least 5 characters").max(200).optional(),
   message: z.string().min(10, "Message must be at least 10 characters").max(2000),
   serviceType: z.enum(["package", "taxi", "enquiry"], {

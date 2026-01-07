@@ -81,7 +81,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
           if (row.key in settingsObj) {
             // Parse JSON values if they're strings
             let parsedValue = row.value
-            if (typeof row.value === 'string') {
+            if (typeof row.value === "string") {
               try {
                 parsedValue = JSON.parse(row.value)
               } catch {

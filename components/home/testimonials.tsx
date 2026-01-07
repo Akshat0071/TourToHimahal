@@ -23,7 +23,6 @@ interface Review {
   created_at: string
 }
 
-
 export function Testimonials() {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
@@ -60,7 +59,6 @@ export function Testimonials() {
     fetchReviews()
   }, [])
 
-
   const checkScroll = () => {
     if (scrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current
@@ -81,47 +79,44 @@ export function Testimonials() {
   }
 
   return (
-    <section className="py-8 md:py-8 lg:py-12 bg-white relative overflow-hidden">
+    <section className="relative overflow-hidden bg-white py-8 md:py-8 lg:py-12">
       {/* Decorative elements */}
-      <div className="absolute top-10 right-10 w-32 md:w-40 h-32 md:h-40 bg-gradient-to-br from-golden-yellow/30 to-saffron/30 rounded-full blur-3xl" />
-      <div className="absolute bottom-10 left-10 w-48 md:w-60 h-48 md:h-60 bg-gradient-to-tr from-mountain-blue/20 to-forest-green/20 rounded-full blur-3xl" />
+      <div className="from-golden-yellow/30 to-saffron/30 absolute top-10 right-10 h-32 w-32 rounded-full bg-gradient-to-br blur-3xl md:h-40 md:w-40" />
+      <div className="from-mountain-blue/20 to-forest-green/20 absolute bottom-10 left-10 h-48 w-48 rounded-full bg-gradient-to-tr blur-3xl md:h-60 md:w-60" />
 
-      <div className="container mx-auto px-4 relative">
+      <div className="relative container mx-auto px-4">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 md:mb-12"
+          className="mb-8 flex flex-col md:mb-12 md:flex-row md:items-end md:justify-between"
         >
           <div>
             <motion.div
               variants={fadeInUp}
-              className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-mountain-blue/10 rounded-full mb-3 md:mb-4"
+              className="bg-mountain-blue/10 mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1.5 md:mb-4 md:px-4 md:py-2"
             >
-              <MessageSquare className="h-3 w-3 md:h-4 md:w-4 text-mountain-blue" />
-              <span className="text-xs md:text-sm font-semibold text-mountain-blue uppercase tracking-wider">
+              <MessageSquare className="text-mountain-blue h-3 w-3 md:h-4 md:w-4" />
+              <span className="text-mountain-blue text-xs font-semibold tracking-wider uppercase md:text-sm">
                 What Our Travelers Say
               </span>
             </motion.div>
             <motion.h2
               variants={fadeInUp}
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-foreground mt-2 md:mt-3"
+              className="text-foreground mt-2 font-serif text-2xl font-bold sm:text-3xl md:mt-3 md:text-4xl lg:text-5xl"
             >
-              Happy{" "}
-              <span className="text-mountain-blue">
-                Travelers
-              </span>
+              Happy <span className="text-mountain-blue">Travelers</span>
             </motion.h2>
           </div>
 
-          <motion.div variants={fadeInUp} className="flex gap-2 md:gap-3 mt-4 md:mt-0">
+          <motion.div variants={fadeInUp} className="mt-4 flex gap-2 md:mt-0 md:gap-3">
             <Button
               variant="outline"
               size="icon"
               onClick={() => scroll("left")}
               disabled={!canScrollLeft}
-              className="rounded-full border-2 hover:bg-mountain-blue hover:text-white hover:border-mountain-blue disabled:opacity-30 h-10 w-10 md:h-12 md:w-12"
+              className="hover:bg-mountain-blue hover:border-mountain-blue h-10 w-10 rounded-full border-2 hover:text-white disabled:opacity-30 md:h-12 md:w-12"
             >
               <ChevronLeft className="h-4 w-4 md:h-5 md:w-5" />
             </Button>
@@ -130,18 +125,18 @@ export function Testimonials() {
               size="icon"
               onClick={() => scroll("right")}
               disabled={!canScrollRight}
-              className="rounded-full border-2 hover:bg-mountain-blue hover:text-white hover:border-mountain-blue disabled:opacity-30 h-10 w-10 md:h-12 md:w-12"
+              className="hover:bg-mountain-blue hover:border-mountain-blue h-10 w-10 rounded-full border-2 hover:text-white disabled:opacity-30 md:h-12 md:w-12"
             >
               <ChevronRight className="h-4 w-4 md:h-5 md:w-5" />
             </Button>
             <div className="ml-4">
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-mountain-blue text-white hover:bg-mountain-blue/90">
+                  <Button className="bg-mountain-blue hover:bg-mountain-blue/90 text-white">
                     Write a Review
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-[95vw] md:max-w-md max-h-[90vh] overflow-y-auto rounded-2xl p-4 sm:p-6">
+                <DialogContent className="max-h-[90vh] max-w-[95vw] overflow-y-auto rounded-2xl p-4 sm:p-6 md:max-w-md">
                   <ReviewForm onSuccess={() => setIsDialogOpen(false)} />
                 </DialogContent>
               </Dialog>
@@ -152,11 +147,11 @@ export function Testimonials() {
         <div
           ref={scrollRef}
           onScroll={checkScroll}
-          className="flex gap-4 md:gap-6 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory -mx-4 px-4"
+          className="scrollbar-hide -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:gap-6"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {reviews.length === 0 && !isLoading ? (
-            <div className="w-full text-center py-10 text-muted-foreground bg-white/50 rounded-xl">
+            <div className="text-muted-foreground w-full rounded-xl bg-white/50 py-10 text-center">
               <p>No reviews yet. Be the first to share your experience!</p>
             </div>
           ) : (
@@ -167,12 +162,12 @@ export function Testimonials() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="shrink-0 w-[280px] sm:w-[320px] md:w-[350px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 snap-start transition-shadow hover:shadow-md"
+                className="w-[280px] shrink-0 snap-start rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md sm:w-[320px] md:w-[350px]"
               >
-                <div className="flex items-start justify-between mb-3">
+                <div className="mb-3 flex items-start justify-between">
                   <div className="flex items-center gap-3">
                     {/* Avatar */}
-                    <div className="relative w-10 h-10 rounded-full overflow-hidden bg-gray-100 shrink-0">
+                    <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-gray-100">
                       {testimonial.image_url ? (
                         <Image
                           src={testimonial.image_url}
@@ -181,14 +176,14 @@ export function Testimonials() {
                           className="object-cover"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-mountain-blue text-white font-bold text-lg">
+                        <div className="bg-mountain-blue flex h-full w-full items-center justify-center text-lg font-bold text-white">
                           {testimonial.name.charAt(0)}
                         </div>
                       )}
                     </div>
 
                     <div>
-                      <h4 className="font-bold text-gray-900 text-sm">{testimonial.name}</h4>
+                      <h4 className="text-sm font-bold text-gray-900">{testimonial.name}</h4>
                       <div className="flex gap-2 text-xs text-gray-500">
                         {testimonial.city && (
                           <>
@@ -196,36 +191,53 @@ export function Testimonials() {
                             <span>•</span>
                           </>
                         )}
-                        <span>{testimonial.created_at ? new Date(testimonial.created_at).toLocaleDateString() : "Recent"}</span>
+                        <span>
+                          {testimonial.created_at
+                            ? new Date(testimonial.created_at).toLocaleDateString()
+                            : "Recent"}
+                        </span>
                       </div>
                     </div>
                   </div>
 
                   {/* Google Logo */}
-                  <svg className="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+                  <svg className="h-6 w-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                      fill="#4285F4"
+                    />
+                    <path
+                      d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                      fill="#34A853"
+                    />
+                    <path
+                      d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                      fill="#FBBC05"
+                    />
+                    <path
+                      d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                      fill="#EA4335"
+                    />
                   </svg>
                 </div>
 
                 {/* Star rating */}
-                <div className="flex gap-1 mb-3">
+                <div className="mb-3 flex gap-1">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star
                       key={i}
-                      className={`w-5 h-5 ${i < testimonial.rating ? "fill-[#F4B400] text-[#F4B400]" : "fill-gray-200 text-gray-200"}`}
+                      className={`h-5 w-5 ${i < testimonial.rating ? "fill-[#F4B400] text-[#F4B400]" : "fill-gray-200 text-gray-200"}`}
                     />
                   ))}
                 </div>
 
                 {/* Review Text */}
-                <p className="text-gray-600 text-sm leading-relaxed line-clamp-4">
+                <p className="line-clamp-4 text-sm leading-relaxed text-gray-600">
                   {testimonial.review_text}
                 </p>
               </motion.div>
-            )))}
+            ))
+          )}
         </div>
       </div>
     </section>

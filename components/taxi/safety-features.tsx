@@ -23,19 +23,19 @@ export function SafetyFeatures() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
-      className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"
+      className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6"
     >
       {safetyFeatures.map((feature, index) => (
         <motion.div
           key={index}
           variants={fadeInUp}
-          className="bg-card border border-border rounded-xl p-4 text-center hover:shadow-md transition-shadow"
+          className="bg-card border-border rounded-xl border p-4 text-center transition-shadow hover:shadow-md"
         >
-          <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 text-primary">
+          <div className="bg-primary/10 text-primary mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full">
             {iconMap[feature.icon]}
           </div>
-          <h4 className="font-medium text-foreground text-sm mb-1">{feature.title}</h4>
-          <p className="text-xs text-muted-foreground">{feature.description}</p>
+          <h4 className="text-foreground mb-1 text-sm font-medium">{feature.title}</h4>
+          <p className="text-muted-foreground text-xs">{feature.description}</p>
         </motion.div>
       ))}
     </motion.div>

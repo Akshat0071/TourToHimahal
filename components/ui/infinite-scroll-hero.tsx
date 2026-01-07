@@ -37,7 +37,7 @@ export function InfiniteScrollHero({ images, title, subtitle, badge, children }:
 
   useAnimationFrame((time, delta) => {
     if (!containerRef.current) return
-      const speed = 0.06
+    const speed = 0.06
     xRef.current -= delta * speed
     const totalWidth = images.length * 400
     if (Math.abs(xRef.current) >= totalWidth) {
@@ -47,12 +47,12 @@ export function InfiniteScrollHero({ images, title, subtitle, badge, children }:
   })
 
   return (
-    <section className="relative min-h-screen overflow-hidden flex items-center">
+    <section className="relative flex min-h-screen items-center overflow-hidden">
       {/* Infinite Scrolling Background */}
       <div className="absolute inset-0">
         <div ref={containerRef} className="flex h-full" style={{ width: `${allImages.length * 400}px` }}>
           {allImages.map((image, index) => (
-            <div key={index} className="relative h-full w-[300px] md:w-[400px] shrink-0">
+            <div key={index} className="relative h-full w-[300px] shrink-0 md:w-[400px]">
               <img
                 src={getImageUrl(image.url) || "/placeholder.svg"}
                 alt={image.alt}
@@ -66,7 +66,7 @@ export function InfiniteScrollHero({ images, title, subtitle, badge, children }:
 
       {/* Dark Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
-      <div className="absolute inset-0 bg-gradient-to-r from-mountain-blue/20 via-transparent to-saffron/20" />
+      <div className="from-mountain-blue/20 to-saffron/20 absolute inset-0 bg-gradient-to-r via-transparent" />
 
       {/* Content */}
       <div className="relative z-10 w-full">
@@ -75,16 +75,16 @@ export function InfiniteScrollHero({ images, title, subtitle, badge, children }:
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="max-w-4xl mx-auto text-center"
+            className="mx-auto max-w-4xl text-center"
           >
             {badge && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.3 }}
-                className="inline-flex items-center gap-2 px-4 py-2 mb-6 text-sm font-medium text-white bg-gradient-to-r from-saffron/40 to-sunset-orange/40 backdrop-blur-md rounded-full border border-white/30"
+                className="from-saffron/40 to-sunset-orange/40 mb-6 inline-flex items-center gap-2 rounded-full border border-white/30 bg-gradient-to-r px-4 py-2 text-sm font-medium text-white backdrop-blur-md"
               >
-                <span className="text-white font-semibold">{badge}</span>
+                <span className="font-semibold text-white">{badge}</span>
               </motion.div>
             )}
 
@@ -92,7 +92,7 @@ export function InfiniteScrollHero({ images, title, subtitle, badge, children }:
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-3xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 text-balance"
+              className="mb-6 font-serif text-3xl font-bold text-balance text-white md:text-5xl lg:text-6xl"
             >
               <span className="block text-[#fc9700]">{title}</span>
             </motion.h1>
@@ -101,13 +101,17 @@ export function InfiniteScrollHero({ images, title, subtitle, badge, children }:
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
-              className="text-base md:text-xl text-white/90 mb-8 max-w-3xl mx-auto text-pretty leading-relaxed"
+              className="mx-auto mb-8 max-w-3xl text-base leading-relaxed text-pretty text-white/90 md:text-xl"
             >
               {subtitle}
             </motion.p>
 
             {children && (
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+              >
                 {children}
               </motion.div>
             )}

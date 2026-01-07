@@ -86,7 +86,7 @@ const statCards = [
 
 export function DashboardStats({ stats }: DashboardStatsProps) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 sm:gap-3">
+    <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
       {statCards.map((stat, index) => (
         <motion.div
           key={stat.key}
@@ -98,16 +98,23 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
             <CardContent className="p-2 sm:p-2.5 md:p-3">
               <div className="flex items-center justify-between gap-1">
                 <div className="min-w-0">
-                  <p className="text-xs sm:text-sm text-muted-foreground">{stat.label}</p>
-                  <p className="text-xl sm:text-2xl font-bold text-foreground mt-0.5">{stats[stat.key as keyof typeof stats]}</p>
+                  <p className="text-muted-foreground text-xs sm:text-sm">{stat.label}</p>
+                  <p className="text-foreground mt-0.5 text-xl font-bold sm:text-2xl">
+                    {stats[stat.key as keyof typeof stats]}
+                  </p>
                 </div>
-                <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg ${stat.bgColor} flex items-center justify-center shrink-0`}>
-                  <stat.icon className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: stat.color.replace('text-', '') }} />
+                <div
+                  className={`h-8 w-8 rounded-lg sm:h-10 sm:w-10 ${stat.bgColor} flex shrink-0 items-center justify-center`}
+                >
+                  <stat.icon
+                    className="h-4 w-4 sm:h-5 sm:w-5"
+                    style={{ color: stat.color.replace("text-", "") }}
+                  />
                 </div>
               </div>
               {stat.key === "newToday" && stats.newToday > 0 && (
-                <div className="flex items-center gap-1 mt-1 sm:mt-2 text-xs text-green-600">
-                  <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4" />
+                <div className="mt-1 flex items-center gap-1 text-xs text-green-600 sm:mt-2">
+                  <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span>Active inquiries</span>
                 </div>
               )}
