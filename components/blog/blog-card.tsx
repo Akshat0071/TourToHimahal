@@ -55,12 +55,12 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
             whileHover="hover"
           >
             <div className="relative aspect-video">
-              <Image
-                src={imageUrl || "/placeholder.svg"}
-                alt={post.title}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
+                <Image
+                  src={imageUrl || "/placeholder.svg"}
+                  alt={post.title}
+                  fill
+                  className="object-cover"
+                />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
             </div>
             <div className="absolute right-0 bottom-0 left-0 p-4 md:p-6 lg:p-8">
@@ -112,15 +112,15 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
             className="relative w-full flex-shrink-0 overflow-hidden rounded-xl md:w-2/5 md:rounded-2xl"
             style={{ aspectRatio: "16/9", display: "block" }}
           >
-            <Image
-              src={imageUrl || "/placeholder.svg"}
-              alt={post.title}
-              width={800}
-              height={450}
-              layout="responsive"
-              className="block h-full w-full rounded-xl object-cover transition-transform duration-500 group-hover:scale-105 md:rounded-2xl"
-              style={{ objectFit: "cover", borderRadius: "inherit" }}
-            />
+              <Image
+                src={imageUrl || "/placeholder.svg"}
+                alt={post.title}
+                width={800}
+                height={450}
+                layout="responsive"
+                className="block h-full w-full rounded-xl object-cover md:rounded-2xl"
+                style={{ objectFit: "cover", borderRadius: "inherit" }}
+              />
             <div className="pointer-events-none absolute inset-0 rounded-xl bg-linear-to-t from-black/50 via-black/20 to-transparent md:rounded-2xl" />
             {post.category && (
               <div className="absolute top-2 left-2 md:top-3 md:left-3">

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowLeft } from "lucide-react"
 import { Header } from "@/components/home/header"
 import { Footer } from "@/components/home/footer"
@@ -94,6 +95,7 @@ export function BlogDetailClient({ post, relatedPosts, url }: BlogDetailClientPr
             </motion.div>
           </div>
         </section>
+
 
         {/* Main article grid: content left, sidebar right */}
         <article className="container mx-auto px-4 py-10">

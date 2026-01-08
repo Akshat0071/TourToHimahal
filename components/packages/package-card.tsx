@@ -61,12 +61,10 @@ export function PackageCard({ pkg }: PackageCardProps) {
               src={pkg.images?.[0] || `/placeholder.svg?height=400&width=600&query=${pkg.title}`}
               alt={pkg.title}
               fill
-              className="object-contain transition-transform duration-500 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
 
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            
 
             {/* Featured Badge */}
             {pkg.is_featured && (

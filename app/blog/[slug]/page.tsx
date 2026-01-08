@@ -37,8 +37,7 @@ export async function generateMetadata({ params }: BlogDetailPageProps) {
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      images:
-        post.gallery && post.gallery.length > 0 ? post.gallery : post.cover_image ? [post.cover_image] : [],
+      images: post.gallery && post.gallery.length > 0 ? post.gallery : post.cover_image ? [post.cover_image] : [],
       type: "article",
       publishedTime: post.published_at,
       authors: [displayAuthor],
@@ -93,7 +92,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
     },
   }
 
-  const blogUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/blog/${slug}`
+  const blogUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/blog/${slug}`
 
   return (
     <>

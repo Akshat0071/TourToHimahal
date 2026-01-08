@@ -40,7 +40,7 @@ export function PackageHeroSlider({ images, title, pdfUrl }: PackageHeroSliderPr
   return (
     <div className="relative">
       {/* Main Image */}
-      <div className="bg-muted/30 relative aspect-[16/9] overflow-hidden rounded-xl md:aspect-[21/9]">
+       <div className="relative aspect-[19/9]">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -54,13 +54,12 @@ export function PackageHeroSlider({ images, title, pdfUrl }: PackageHeroSliderPr
               src={displayImages[currentIndex] || "/placeholder.svg"}
               alt={`${title} - Image ${currentIndex + 1}`}
               fill
-              className="object-contain"
               priority
             />
           </motion.div>
         </AnimatePresence>
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+
 
         {/* Navigation Arrows */}
         {displayImages.length > 1 && (

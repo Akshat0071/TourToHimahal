@@ -82,7 +82,7 @@ export default async function DiaryDetailPage({ params }: DiaryDetailPageProps) 
     },
     publisher: {
       "@type": "Organization",
-      name: "Himachal Yatra",
+      name: "TourToHimachal",
     },
   }
 

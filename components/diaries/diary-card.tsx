@@ -66,7 +66,7 @@ export function DiaryCard({ diary, featured = false }: DiaryCardProps) {
                   src={imageUrl || "/placeholder.svg"}
                   alt={diary.title}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover"
                 />
                 <div className="absolute top-4 left-4">
                   <Badge className="bg-saffron text-white">Featured Story</Badge>
@@ -137,7 +137,7 @@ export function DiaryCard({ diary, featured = false }: DiaryCardProps) {
               width={800}
               height={450}
               layout="responsive"
-              className="block h-full w-full rounded-xl object-cover transition-transform duration-500 group-hover:scale-105 md:rounded-2xl"
+              className="block h-full w-full rounded-xl object-cover md:rounded-2xl"
               style={{ objectFit: "cover", borderRadius: "inherit" }}
             />
             <div className="pointer-events-none absolute inset-0 rounded-xl bg-linear-to-t from-black/50 via-black/20 to-transparent md:rounded-2xl" />
