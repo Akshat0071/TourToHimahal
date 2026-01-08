@@ -75,11 +75,11 @@ export function ItineraryAccordion({ itinerary }: ItineraryAccordionProps) {
                             {subtitle.title}
                           </h5>
                           {subtitle.highlight && (
-                            <div className="mb-3 rounded-xl border-2 border-yellow-400/50 bg-linear-to-r from-yellow-50 to-yellow-100 p-3 shadow-lg shadow-yellow-200/60">
-                              <p className="flex items-center gap-2 text-xs font-semibold text-yellow-900">
-                                <span className="text-base">⚠️</span>
-                                {subtitle.highlight}
-                              </p>
+                            <div className="mb-3 inline-flex max-w-full items-start rounded-xl border-2 border-yellow-400/50 bg-linear-to-r from-yellow-50 to-yellow-100 px-3 py-2 shadow-lg shadow-yellow-200/60">
+                              <span className="inline-flex items-start gap-2 text-xs font-semibold text-yellow-900 whitespace-normal">
+                                <span className="text-base leading-none">⚠️</span>
+                                <span>{subtitle.highlight}</span>
+                              </span>
                             </div>
                           )}
                           <div className="text-muted-foreground mb-3 text-xs leading-relaxed whitespace-pre-line sm:text-xs">

@@ -188,9 +188,8 @@ export function Footer() {
           <div className="container mx-auto px-4 py-4 sm:py-6">
             <div className="flex flex-col items-center justify-between gap-3 sm:gap-4 md:flex-row">
               <p className="flex items-center gap-1 text-xs text-slate-300 sm:text-sm">
-                © 2025 TourToHimachal. Made with{" "}
-                <Heart className="text-temple-red fill-temple-red h-3 w-3 sm:h-4 sm:w-4" /> in Himachal
-              </p>
+                © 2026 TourToHimachal. All rights reserved.
+                </p>
               <div className="flex gap-4 sm:gap-6">
                 <Link
                   href="/privacy"

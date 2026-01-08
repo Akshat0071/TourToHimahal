@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useLayoutEffect } from "react"
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { Clock, MapPin, Users, Check, X, Phone, MessageCircle } from "lucide-react"
 import { Header } from "@/components/home/header"
@@ -57,9 +57,16 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
   const { settings } = useSettings()
   const whatsappLink = generateWhatsAppLink({ packageName: pkg.title }, settings?.whatsapp_number)
 
-  useLayoutEffect(() => {
-    document.documentElement.scrollTop = 0
-    document.body.scrollTop = 0
+  useEffect(() => {
+    // Next.js can restore scroll position after navigation; run this after paint to reliably land at top.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const scrollingElement = document.scrollingElement || document.documentElement
+        scrollingElement.scrollTop = 0
+        document.body.scrollTop = 0
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" })
+      })
+    })
   }, [pkg.slug])
 
   return (
@@ -78,7 +85,7 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
                 variants={fadeInUp}
                 initial="hidden"
                 animate="visible"
-                className="to-saffron/5 border-saffron/10 rounded-2xl border bg-linear-to-br from-white p-4 shadow-sm sm:rounded-3xl sm:p-6 md:p-8"
+                className="py-2"
               >
                 <div className="mb-3 flex flex-wrap items-center gap-1.5 sm:mb-4 sm:gap-2">
                   {pkg.is_featured && (
@@ -107,18 +114,6 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
                 <h1 className="mb-4 font-serif text-xl font-bold text-[#fc9700] sm:mb-6 sm:text-2xl md:text-4xl">
                   {pkg.title}
                 </h1>
-                <div className="mb-4 flex flex-wrap items-center gap-2 sm:mb-6 sm:gap-4">
-                  <div className="bg-mountain-blue/10 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs sm:gap-2 sm:px-4 sm:py-2 sm:text-sm">
-                    <Clock className="text-mountain-blue h-4 w-4 sm:h-5 sm:w-5" />
-                    <span className="text-mountain-blue font-semibold">{pkg.duration}</span>
-                  </div>
-                  <div className="bg-forest-green/10 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs sm:gap-2 sm:px-4 sm:py-2 sm:text-sm">
-                    <Users className="text-forest-green h-4 w-4 sm:h-5 sm:w-5" />
-                    <span className="text-forest-green font-semibold">
-                      Min {pkg.min_persons ?? 2} persons
-                    </span>
-                  </div>
-                </div>
 
                 {/* Hero Slider placed between Title and Description */}
                 <div className="border-saffron/20 mb-8 overflow-hidden rounded-2xl border shadow-lg">
@@ -146,7 +141,7 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
-                  className="from-forest-green/5 to-mountain-blue/5 border-forest-green/10 rounded-2xl border bg-linear-to-br p-4 sm:rounded-3xl sm:p-6 md:p-8"
+                  className="py-2"
                 >
                   <div className="mb-4 flex items-center gap-2 sm:mb-6 sm:gap-3">
                     <div className="from-forest-green to-mountain-blue flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-br sm:h-10 sm:w-10">
@@ -179,7 +174,7 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
-                  className="from-saffron/5 to-sunset-orange/5 border-saffron/10 rounded-2xl border bg-linear-to-br p-4 sm:p-5 md:p-8"
+                  className="py-2"
                 >
                   <div className="mb-6 flex items-center gap-3">
                     <div className="from-saffron to-sunset-orange flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br">
