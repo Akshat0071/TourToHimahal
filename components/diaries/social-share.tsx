@@ -16,9 +16,9 @@ export function SocialShare({ title, url }: SocialShareProps) {
 
   const shareLinks = [
     {
-      name: "Twitter",
-      icon: Twitter,
-      href: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
+      name: "WhatsApp",
+      icon: MessageCircle,
+      href: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
     },
     {
       name: "Facebook",
@@ -26,20 +26,22 @@ export function SocialShare({ title, url }: SocialShareProps) {
       href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
     },
     {
+      name: "Twitter",
+      icon: Twitter,
+      href: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
+    },
+    {
       name: "LinkedIn",
       icon: Linkedin,
       href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
-    },
-    {
-      name: "WhatsApp",
-      icon: MessageCircle,
-      href: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
     },
   ]
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(url)
+      // If url is relative, prepend window.location.origin
+      const absoluteUrl = url.startsWith("http") ? url : `${window.location.origin}${url}`
+      await navigator.clipboard.writeText(absoluteUrl)
     } catch (err) {
       console.error("Failed to copy:", err)
     }

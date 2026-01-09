@@ -61,12 +61,13 @@ export function DiaryCard({ diary, featured = false }: DiaryCardProps) {
             whileHover="hover"
           >
             <div className="grid gap-0 md:grid-cols-2">
-              <div className="relative aspect-4/3 md:aspect-auto">
+              <div className="relative aspect-4/3">
                 <Image
                   src={imageUrl || "/placeholder.svg"}
                   alt={diary.title}
                   fill
-                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  style={{ objectFit: "contain" }}
                 />
                 <div className="absolute top-4 left-4">
                   <Badge className="bg-saffron text-white">Featured Story</Badge>
@@ -137,8 +138,8 @@ export function DiaryCard({ diary, featured = false }: DiaryCardProps) {
               width={800}
               height={450}
               layout="responsive"
-              className="block h-full w-full rounded-xl object-cover md:rounded-2xl"
-              style={{ objectFit: "cover", borderRadius: "inherit" }}
+              className="block h-full w-full rounded-xl object-contain md:rounded-2xl"
+              style={{ objectFit: "contain", borderRadius: "inherit" }}
             />
             <div className="pointer-events-none absolute inset-0 rounded-xl bg-linear-to-t from-black/50 via-black/20 to-transparent md:rounded-2xl" />
             {diary.destination && (

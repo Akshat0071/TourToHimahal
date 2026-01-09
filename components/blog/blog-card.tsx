@@ -49,19 +49,19 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
       <motion.article variants={fadeInUp} initial="hidden" animate="visible">
         <Link href={`/blog/${post.slug}`}>
           <motion.div
-            className="group relative overflow-hidden rounded-2xl md:rounded-3xl"
+            className="group relative overflow-hidden rounded-lg"
             variants={cardHover}
             initial="rest"
             whileHover="hover"
           >
-            <div className="relative aspect-video">
+            <div className="relative aspect-auto">
                 <Image
                   src={imageUrl || "/placeholder.svg"}
                   alt={post.title}
                   fill
-                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  //style={{ objectFit: "contain" }}
                 />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
             </div>
             <div className="absolute right-0 bottom-0 left-0 p-4 md:p-6 lg:p-8">
               {post.category && (
@@ -118,8 +118,8 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
                 width={800}
                 height={450}
                 layout="responsive"
-                className="block h-full w-full rounded-xl object-cover md:rounded-2xl"
-                style={{ objectFit: "cover", borderRadius: "inherit" }}
+                className="block h-full w-full rounded-xl object-contain md:rounded-2xl"
+                style={{ objectFit: "contain", borderRadius: "inherit" }}
               />
             <div className="pointer-events-none absolute inset-0 rounded-xl bg-linear-to-t from-black/50 via-black/20 to-transparent md:rounded-2xl" />
             {post.category && (

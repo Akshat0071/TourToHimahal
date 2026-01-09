@@ -210,6 +210,24 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
                     WhatsApp
                   </Button>
                 </a>
+                <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(post.slug)}`} target="_blank" rel="noopener noreferrer">
+                  <Button size="sm" variant="outline" className="gap-2 hover:bg-[#4267B2]/10">
+                    Facebook
+                  </Button>
+                </a>
+                <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(post.slug)}`} target="_blank" rel="noopener noreferrer">
+                  <Button size="sm" variant="outline" className="gap-2 hover:bg-[#1DA1F2]/10">
+                    Twitter
+                  </Button>
+                </a>
+                <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(post.slug)}`} target="_blank" rel="noopener noreferrer">
+                  <Button size="sm" variant="outline" className="gap-2 hover:bg-[#0077B5]/10">
+                    LinkedIn
+                  </Button>
+                </a>
+                <Button size="sm" variant="outline" className="gap-2" onClick={() => navigator.clipboard.writeText(window.location.href)}>
+                  Copy Link
+                </Button>
               </div>
 
               {/* All Tags */}
