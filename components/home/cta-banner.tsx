@@ -3,7 +3,8 @@
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { useSettings } from "@/lib/settings-context"
-import { MessageCircle, Phone, ArrowRight, Sparkles } from "lucide-react"
+import { Phone, ArrowRight, Sparkles } from "lucide-react"
+import { WhatsAppIcon } from "@/components/icons/whatsapp"
 import Image from "next/image"
 import { optimizeCloudinaryDeliveryUrl } from "@/lib/cloudinary"
 
@@ -111,7 +112,7 @@ export function CTABanner() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <MessageCircle className="mr-2 h-6 w-6" />
+                <WhatsAppIcon className="mr-2 h-6 w-6" />
                 Chat on WhatsApp
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </a>

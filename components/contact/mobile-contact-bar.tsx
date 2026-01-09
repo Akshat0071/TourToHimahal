@@ -1,7 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Phone, MessageCircle } from "lucide-react"
+import { Phone } from "lucide-react"
+import { WhatsAppIcon } from "@/components/icons/whatsapp"
 import { useSettings } from "@/lib/settings-context"
 
 export function MobileContactBar() {
@@ -27,7 +28,7 @@ export function MobileContactBar() {
           rel="noopener noreferrer"
           className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#25D366] py-3 font-medium text-white"
         >
-          <MessageCircle className="h-5 w-5" />
+          <WhatsAppIcon className="h-5 w-5" />
           WhatsApp
         </a>
       </div>

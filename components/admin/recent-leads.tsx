@@ -2,7 +2,8 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { MessageCircle, ArrowRight, Inbox } from "lucide-react"
+import { ArrowRight, Inbox } from "lucide-react"
+import { WhatsAppIcon } from "@/components/icons/whatsapp"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -90,7 +91,7 @@ export function RecentLeads({ leads }: RecentLeadsProps) {
                   rel="noopener noreferrer"
                   className="shrink-0 rounded-lg bg-[#25D366] p-1.5 text-white transition-colors hover:bg-[#25D366]/90 sm:p-2"
                 >
-                  <MessageCircle className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <WhatsAppIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                 </a>
               </motion.div>
             ))}

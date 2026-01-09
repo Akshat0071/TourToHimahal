@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import { Clock, MapPin, Users, Check, X, Phone, MessageCircle } from "lucide-react"
+import { Clock, MapPin, Users, Check, X, Phone } from "lucide-react"
+import { WhatsAppIcon } from "@/components/icons/whatsapp"
 import { Header } from "@/components/home/header"
 import { Footer } from "@/components/home/footer"
 import { Button } from "@/components/ui/button"
@@ -334,7 +335,7 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
                       className="from-forest-green to-mountain-blue hover:from-forest-green/90 hover:to-mountain-blue/90 h-10 w-full gap-2 bg-linear-to-r text-sm text-white shadow-md transition-all hover:shadow-lg"
                     >
                       <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                        <MessageCircle className="h-4 w-4" />
+                        <WhatsAppIcon className="h-4 w-4" />
                         WhatsApp Booking
                       </a>
                     </Button>

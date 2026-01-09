@@ -1,6 +1,7 @@
 "use client"
 
-import { Phone, MessageCircle } from "lucide-react"
+import { Phone } from "lucide-react"
+import { WhatsAppIcon } from "@/components/icons/whatsapp"
 import { StaticHero } from "@/components/ui/static-hero"
 import { useSettings } from "@/lib/settings-context"
 
@@ -31,7 +32,7 @@ export function ContactHero() {
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3 font-medium text-white transition-colors hover:bg-[#25D366]/90"
         >
-          <MessageCircle className="h-5 w-5" />
+          <WhatsAppIcon className="h-5 w-5" />
           WhatsApp Us
         </a>
       </div>

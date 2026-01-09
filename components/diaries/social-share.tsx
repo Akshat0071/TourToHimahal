@@ -1,7 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Twitter, Facebook, Linkedin, Link2, MessageCircle } from "lucide-react"
+import { Twitter, Facebook, Linkedin, Link2 } from "lucide-react"
+import { WhatsAppIcon } from "@/components/icons/whatsapp"
 import { Button } from "@/components/ui/button"
 import { fadeInUp } from "@/lib/animation-variants"
 
@@ -17,7 +18,7 @@ export function SocialShare({ title, url }: SocialShareProps) {
   const shareLinks = [
     {
       name: "WhatsApp",
-      icon: MessageCircle,
+      icon: WhatsAppIcon,
       href: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
     },
     {

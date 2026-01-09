@@ -1,7 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { MapPin, Wallet, Shield, MessageCircle, ClipboardList, BadgeCheck, Award } from "lucide-react"
+import { MapPin, Wallet, Shield, ClipboardList, BadgeCheck, Award } from "lucide-react"
+import { WhatsAppIcon } from "@/components/icons/whatsapp"
 import { fadeInUp, staggerContainer } from "@/lib/animation-variants"
 
 const features = [
@@ -27,7 +28,7 @@ const features = [
     bgColor: "from-saffron/20 to-sunset-orange/10",
   },
   {
-    icon: MessageCircle,
+    icon: WhatsAppIcon,
     title: "WhatsApp Instant Booking",
     description: "Quick and easy bookings directly via WhatsApp chat.",
     gradient: "from-forest-green to-mountain-blue",

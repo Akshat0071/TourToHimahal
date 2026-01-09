@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { MessageCircle, Mail, Phone, MoreHorizontal, Eye, Trash2, Inbox } from "lucide-react"
+import { Mail, Phone, MoreHorizontal, Eye, Trash2, Inbox } from "lucide-react"
+import { WhatsAppIcon } from "@/components/icons/whatsapp"
 import { createClient } from "@/lib/supabase/client"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
@@ -165,7 +166,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                       className="rounded-md bg-[#25D366]/10 p-1.5 transition-colors hover:bg-[#25D366]/20"
                       title="WhatsApp"
                     >
-                      <MessageCircle className="h-4 w-4 text-[#25D366]" />
+                      <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
                     </a>
                   </div>
 
@@ -260,7 +261,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                       className="shrink-0 rounded-md bg-[#25D366]/10 p-1 transition-colors hover:bg-[#25D366]/20 sm:p-1.5"
                       title="WhatsApp"
                     >
-                      <MessageCircle className="h-3 w-3 text-[#25D366] sm:h-4 sm:w-4" />
+                      <WhatsAppIcon className="h-3 w-3 text-[#25D366] sm:h-4 sm:w-4" />
                     </a>
                   </div>
                 </TableCell>
@@ -361,7 +362,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <MessageCircle className="mr-2 h-4 w-4" />
+                    <WhatsAppIcon className="mr-2 h-4 w-4" />
                     WhatsApp
                   </a>
                 </Button>

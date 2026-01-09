@@ -3,7 +3,8 @@
 import type React from "react"
 import { useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Send, Loader2, CheckCircle2, MessageCircle, Upload, X, AlertCircle } from "lucide-react"
+import { Send, Loader2, CheckCircle2, Upload, X, AlertCircle } from "lucide-react"
+import { WhatsAppIcon } from "@/components/icons/whatsapp"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -199,7 +200,7 @@ export function ContactForm() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <MessageCircle className="mr-2 h-4 w-4" />
+              <WhatsAppIcon className="mr-2 h-4 w-4" />
               Chat on WhatsApp
             </a>
           </Button>

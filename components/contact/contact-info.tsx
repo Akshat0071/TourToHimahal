@@ -1,7 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Phone, Mail, MapPin, Clock, MessageCircle, Shield } from "lucide-react"
+import { Phone, Mail, MapPin, Clock, Shield } from "lucide-react"
+import { WhatsAppIcon } from "@/components/icons/whatsapp"
 import { Button } from "@/components/ui/button"
 import { fadeInUp, staggerContainer } from "@/lib/animation-variants"
 import { useSettings } from "@/lib/settings-context"
@@ -26,7 +27,7 @@ export function ContactInfo() {
       bgColor: "bg-saffron/10",
     },
     {
-      icon: MessageCircle,
+      icon: WhatsAppIcon,
       label: "WhatsApp",
       value: whatsappNumber.replace(/(\d{2})(\d{5})(\d{5})/, "$1 $2 $3"),
       href: `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, "")}`,
@@ -157,7 +158,7 @@ export function ContactInfo() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <MessageCircle className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+            <WhatsAppIcon className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
             Chat on WhatsApp
           </a>
         </Button>

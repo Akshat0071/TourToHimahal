@@ -3,7 +3,8 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
-import { Phone, MessageCircle, Car, Calendar, Shield, Zap, Users, Gauge } from "lucide-react"
+import { Phone, Car, Calendar, Shield, Zap, Users, Gauge } from "lucide-react"
+import { WhatsAppIcon } from "@/components/icons/whatsapp"
 import { Header } from "@/components/home/header"
 import { Footer } from "@/components/home/footer"
 import { InfiniteScrollHero } from "@/components/ui/infinite-scroll-hero"
@@ -109,7 +110,7 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <MessageCircle className="h-5 w-5" />
+              <WhatsAppIcon className="h-5 w-5" />
               WhatsApp Us
             </a>
           </Button>
@@ -386,7 +387,7 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
               rel="noopener noreferrer"
               aria-label="Chat on WhatsApp"
             >
-              <MessageCircle className="h-5 w-5" />
+              <WhatsAppIcon className="h-5 w-5" />
               <span className="sr-only">Chat on WhatsApp</span>
             </a>
           </Button>

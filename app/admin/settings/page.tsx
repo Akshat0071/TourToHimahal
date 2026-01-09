@@ -21,7 +21,8 @@ import {
   Instagram,
   Twitter,
   Youtube,
-  MessageCircle,
+  // MessageCircle,
+  WhatsAppIcon,
   Clock,
   Shield,
   Bell,
@@ -299,7 +300,7 @@ export default function SettingsPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="whatsapp_number" className="flex items-center gap-2">
-                  <MessageCircle className="h-4 w-4" />
+                  <WhatsAppIcon className="h-4 w-4" />
                   WhatsApp Number
                 </Label>
                 <Input
