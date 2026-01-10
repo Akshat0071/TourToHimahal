@@ -68,7 +68,9 @@ const fallbackDestinations: Package[] = [
 ]
 
 export function PopularDestinationsClient({ packages }: PopularDestinationsClientProps) {
-  const displayedPackages = packages.length > 0 ? packages : fallbackDestinations
+  // Only show packages where is_featured is true
+  const filteredPackages = (packages.length > 0 ? packages : fallbackDestinations).filter(pkg => pkg.is_featured)
+  const displayedPackages = filteredPackages
 
   return (
     <section className="relative overflow-hidden py-8 md:py-8 lg:py-12">
