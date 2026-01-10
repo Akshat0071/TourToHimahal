@@ -68,9 +68,13 @@ const fallbackDestinations: Package[] = [
 ]
 
 export function PopularDestinationsClient({ packages }: PopularDestinationsClientProps) {
-  // Only show packages where is_featured is true
-  const filteredPackages = (packages.length > 0 ? packages : fallbackDestinations).filter(pkg => pkg.is_featured)
-  const displayedPackages = filteredPackages
+  // Only show packages where is_featured and is_active are true
+  let dataSource = packages
+  if (packages.length === 0) {
+    console.warn("Using fallback destinations for PopularDestinationsClient. Check Supabase data if this is unexpected.")
+    dataSource = fallbackDestinations
+  }
+  const displayedPackages = dataSource.filter(pkg => pkg.is_featured === true && pkg.is_active === true)
 
   return (
     <section className="relative overflow-hidden py-8 md:py-8 lg:py-12">
