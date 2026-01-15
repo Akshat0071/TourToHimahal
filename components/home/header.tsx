@@ -80,7 +80,7 @@ export function Header() {
 
   return (
     <header className="bg-background/95 border-border fixed top-0 right-0 left-0 z-50 border-b shadow-sm backdrop-blur-md transition-all duration-500">
-      <div className="container mx-auto px-4">
+      <div className="mx-auto px-4">
         <div className="flex h-16 items-center justify-between md:h-20">
           <Logo size="lg" className="origin-left translate-y-1.5 scale-x-[1.5] scale-y-[1.3]" />
 
@@ -92,7 +92,7 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 ${
+                  className={`rounded-full px-3 py-2 text-sm font-semibold transition-all duration-300 md:px-4 ${
                     isActive ? "bg-saffron text-white" : "text-foreground hover:bg-saffron hover:text-white"
                   }`}
                 >
@@ -102,30 +102,32 @@ export function Header() {
             })}
           </nav>
 
-          <div className="hidden items-center gap-4 lg:flex">
+          <div className="hidden items-center gap-3 lg:flex">
             {/* Contact Phone */}
             {contactPhone && (
               <div className="text-right">
-                <p className="text-muted-foreground text-xs">Need help?</p>
+                <p className="text-muted-foreground text-[10px] md:text-xs">Need help?</p>
                 <a
                   href={`tel:${contactPhone.replace(/\s/g, "")}`}
-                  className="text-foreground hover:text-saffron flex items-center justify-end gap-1 text-sm font-semibold transition-colors"
+                  className="text-foreground hover:text-saffron flex items-center justify-end gap-1 text-xs font-semibold transition-colors md:text-sm"
                 >
-                  <Phone className="h-4 w-4" />
-                  {contactPhone}
+                  <Phone className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                  <span className="hidden sm:inline">{contactPhone}</span>
+                  <span className="sm:hidden">Call</span>
                 </a>
               </div>
             )}
 
             {whatsappNumber && (
-              <Button asChild variant="gradient" size="lg" className="gap-2">
+              <Button asChild variant="gradient" size="lg" className="gap-1 px-3 py-2 text-xs md:gap-2 md:px-4 md:py-2 md:text-sm">
                 <a
                   href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, "")}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Sparkles className="h-4 w-4" />
-                  Book Now
+                  <Sparkles className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                  <span className="hidden sm:inline">Book Now</span>
+                  <span className="sm:hidden">Book</span>
                 </a>
               </Button>
             )}
@@ -133,11 +135,11 @@ export function Header() {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="bg-muted hover:bg-saffron/10 rounded-full p-2.5 transition-all md:p-3 lg:hidden"
+            className="bg-muted hover:bg-saffron/10 rounded-full p-2 transition-all md:p-2.5 lg:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            <Menu className="text-foreground h-5 w-5" />
+            <Menu className="text-foreground h-4.5 w-4.5 md:h-5 md:w-5" />
           </button>
         </div>
       </div>

@@ -62,7 +62,7 @@ export function Footer() {
 
       {/* Main footer content */}
       <div className="bg-slate-900 text-white">
-        <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="mx-auto px-4 py-12 md:py-16">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:gap-12 lg:grid-cols-4">
             {/* Brand */}
             <div className="sm:col-span-2 lg:col-span-1">
