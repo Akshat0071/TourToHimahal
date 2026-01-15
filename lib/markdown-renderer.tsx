@@ -94,8 +94,8 @@ export function MarkdownRenderer({ content, className }: MarkdownRendererProps) 
           ),
           img: ({ src, alt }) => (
             <figure className="my-8">
-              <div className="relative aspect-video overflow-hidden rounded-xl">
-                <Image src={src || ""} alt={alt || ""} fill className="object-cover" />
+              <div className="relative aspect-video overflow-hidden rounded-lg">
+                <Image src={src || ""} alt={alt || ""} fill className="object-contain" />
               </div>
               {alt && (
                 <figcaption className="text-muted-foreground mt-3 text-center text-sm italic">

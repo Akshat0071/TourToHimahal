@@ -49,19 +49,16 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
       <motion.article variants={fadeInUp} initial="hidden" animate="visible">
         <Link href={`/blog/${post.slug}`}>
           <motion.div
-            className="group relative overflow-hidden rounded-lg"
-            variants={cardHover}
-            initial="rest"
-            whileHover="hover"
+            className="group relative overflow-hidden "
           >
-            <div className="relative aspect-auto">
-                <Image
-                  src={imageUrl || "/placeholder.svg"}
-                  alt={post.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  //style={{ objectFit: "contain" }}
-                />
+            <div className="relative aspect-[4/3]">
+              <Image
+                src={imageUrl || "/placeholder.svg"}
+                alt={post.title}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="w-full h-full rounded-xl object-contain"
+              />
             </div>
             <div className="absolute right-0 bottom-0 left-0 p-4 md:p-6 lg:p-8">
               {post.category && (
@@ -102,25 +99,16 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
     <motion.article variants={fadeInUp} initial="hidden" animate="visible" className="min-w-0">
       <Link href={post.slug ? `/blog/${post.slug}` : "#"} className="block min-w-0">
         <motion.div
-          className="group bg-card border-border hover:border-mountain-blue/40 flex h-full min-w-0 flex-col overflow-hidden rounded-xl border shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl md:flex-row md:rounded-2xl"
-          variants={cardHover}
-          initial="rest"
-          whileHover="hover"
+          className="group bg-card border-border hover:border-mountain-blue/40 flex h-full min-w-0 flex-col overflow-hidden rounded:xl md:rounded-xl transition-all duration-300 md:flex-row "
         >
           {/* Left: Image */}
-          <div
-            className="relative w-full flex-shrink-0 overflow-hidden rounded-xl md:w-2/5 md:rounded-2xl"
-            style={{ aspectRatio: "16/9", display: "block" }}
-          >
-              <Image
-                src={imageUrl || "/placeholder.svg"}
-                alt={post.title}
-                width={800}
-                height={450}
-                layout="responsive"
-                className="block h-full w-full rounded-xl object-contain md:rounded-2xl"
-                style={{ objectFit: "contain", borderRadius: "inherit" }}
-              />
+          <div className="relative aspect-[16/9] overflow-hidden md:w-2/5">
+  <Image
+    src={imageUrl || `/placeholder.svg?height=400&width=600&query=${post.title}`}
+    alt={post.title}
+    fill
+    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+  />
             <div className="pointer-events-none absolute inset-0 rounded-xl bg-linear-to-t from-black/50 via-black/20 to-transparent md:rounded-2xl" />
             {post.category && (
               <div className="absolute top-2 left-2 md:top-3 md:left-3">

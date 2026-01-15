@@ -77,19 +77,19 @@ export function DiaryFilter({
   }
 
   return (
-    <div className="border-saffron/20 rounded-xl border-2 bg-gradient-to-r from-[oklch(0.99_0.02_85)] to-[oklch(0.98_0.025_70)] p-3 shadow-lg sm:rounded-2xl sm:p-4 lg:rounded-3xl lg:p-6">
+    <div className=" rounded-lg p-3 border border-saffron/20 sm:rounded-2xl sm:p-4 lg:rounded-3xl lg:p-6">
       <div className="mb-4 hidden lg:block">
         <h3 className="text-foreground font-serif text-xl font-bold">Filter & Search</h3>
         <p className="text-muted-foreground text-sm">Find your perfect story</p>
       </div>
 
       {/* Unified Search + Filter Toggle */}
-      <div className="flex flex-col gap-3 lg:flex-row">
+      <div className="grid grid-cols-2 gap-3 lg:flex-row">
         <div className="relative flex-1">
           <Search className="text-saffron absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 md:h-5 md:w-5" />
           <Input
             type="text"
-            placeholder="Search diaries..."
+            placeholder="Search"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             className="border-saffron/20 focus:border-saffron h-10 w-full rounded-full border-2 bg-white pr-12 pl-9 text-xs sm:h-11 sm:pl-10 sm:text-sm md:h-12 md:text-base lg:rounded-xl"

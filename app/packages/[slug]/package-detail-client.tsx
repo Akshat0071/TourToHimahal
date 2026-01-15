@@ -117,7 +117,7 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
                 </h1>
 
                 {/* Hero Slider placed between Title and Description */}
-                <div className="border-saffron/20 mb-8 overflow-hidden rounded-2xl border shadow-lg">
+                <div className="border-saffron/20 mb-8 overflow-hidden rounded-lg border shadow-lg">
                   <PackageHeroSlider
                     images={pkg.images || []}
                     title={pkg.title}

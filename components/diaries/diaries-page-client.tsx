@@ -133,7 +133,7 @@ export function DiariesPageClient({ diaries }: DiariesPageClientProps) {
         />
 
         {/* Mobile Filter Bar - Visible only on mobile/tablet */}
-        <section className="bg-background/95 border-border border-b py-3 sm:py-4 lg:hidden">
+        <section className=" py-3 sm:py-4 lg:hidden">
           <div className="container mx-auto px-4">
             <DiaryFilter
               selectedRegion={selectedRegion}

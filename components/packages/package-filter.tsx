@@ -92,14 +92,10 @@ export function PackageFilter({
   }
 
   return (
-    <div className="border-saffron/20 rounded-xl border-2 bg-gradient-to-r from-[oklch(0.99_0.02_85)] to-[oklch(0.98_0.025_70)] p-3 shadow-lg sm:rounded-2xl sm:p-4 lg:rounded-3xl lg:p-6">
-      <div className="mb-4 hidden lg:block">
-        <h3 className="text-foreground font-serif text-xl font-bold">Filter & Search</h3>
-        <p className="text-muted-foreground text-sm">Find your perfect package</p>
-      </div>
+    <div className=" rounded-xl p-3 sm:rounded-2xl sm:p-4 lg:rounded-3xl lg:p-6">
 
       {/* Unified Search + Filter Toggle */}
-      <div className="flex flex-col gap-3 lg:flex-row">
+      <div className="flex flex-row gap-3">
         <div className="relative flex-1">
           <Search className="text-saffron absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 md:h-5 md:w-5" />
           <Input
@@ -124,7 +120,7 @@ export function PackageFilter({
         <Button
           onClick={() => setIsFilterOpen(!isFilterOpen)}
           variant="outline"
-          className="border-saffron/30 hover:bg-saffron/10 relative flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 bg-white px-3 sm:h-11 sm:gap-2 sm:px-4 md:h-12 lg:w-auto lg:rounded-xl"
+          className="border-saffron/30 hover:bg-saffron/10 relative flex h-10 w-auto items-center justify-center gap-1.5 rounded-full border-2 bg-white px-3 sm:h-11 sm:gap-2 sm:px-4 md:h-12 lg:w-auto lg:rounded-xl"
         >
           <Filter className="text-saffron h-4 w-4 sm:h-5 sm:w-5" />
           <span className="text-foreground text-xs font-medium sm:text-sm">Filters</span>
@@ -146,9 +142,9 @@ export function PackageFilter({
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <div className="border-saffron/20 mt-3 space-y-3 border-t pt-3 sm:mt-4 sm:space-y-4 sm:pt-4">
+            <div className="border-saffron/20 mt-4 flex flex-col gap-8 border-t pt-4 sm:mt-6 sm:gap-8 sm:pt-6 lg:flex-row lg:items-start">
               {/* Price Range Slider */}
-              <div className="border-golden-yellow/20 rounded-xl border bg-white p-3 sm:rounded-2xl sm:p-4">
+              <div className="border-golden-yellow/20 flex-1 rounded-xl border bg-white p-4 sm:rounded-2xl sm:p-6 lg:w-2/5 lg:flex-none">
                 <div className="mb-2 flex items-center justify-between sm:mb-3">
                   <label className="text-foreground text-xs font-semibold sm:text-sm">Price Range</label>
                   <span className="text-saffron text-xs font-bold sm:text-sm">
@@ -171,7 +167,7 @@ export function PackageFilter({
               </div>
 
               {/* Filter Grid */}
-              <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-1 xl:grid-cols-2">
+              <div className="flex-1 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-2 xl:grid-cols-4">
                 <div className="space-y-1 sm:space-y-2">
                   <label className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase sm:text-xs">
                     Region

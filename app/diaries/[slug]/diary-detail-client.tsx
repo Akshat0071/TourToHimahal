@@ -10,7 +10,6 @@ import { SocialShare } from "@/components/diaries/social-share"
 import { MarkdownRenderer } from "@/lib/markdown-renderer"
 import { fadeInUp } from "@/lib/animation-variants"
 import { BlogTOC } from "@/components/blog/blog-toc"
-import { DiaryCard } from "@/components/diaries/diary-card"
 
 interface Diary {
   id: string
@@ -31,12 +30,11 @@ interface Diary {
 
 interface DiaryDetailClientProps {
   diary: Diary
-  relatedDiaries: Diary[]
   popularDiaries: Diary[]
   url: string
 }
 
-export function DiaryDetailClient({ diary, relatedDiaries, popularDiaries, url }: DiaryDetailClientProps) {
+export function DiaryDetailClient({ diary, popularDiaries, url }: DiaryDetailClientProps) {
   const shareUrl = url
   const gallery = (
     diary.gallery && diary.gallery.length > 0 ? diary.gallery : diary.cover_image ? [diary.cover_image] : []
@@ -55,11 +53,11 @@ export function DiaryDetailClient({ diary, relatedDiaries, popularDiaries, url }
   }
 
   useEffect(() => {
-    if (gallery.length < 2) return
+    if (gallery.length < 2) return undefined
     const el = scrollerRef.current
-    if (!el) return
+    if (!el) return undefined
     const id = setInterval(() => {
-      if (paused) return
+      if (paused) return undefined
       const width = el.clientWidth
       const next = (index + 1) % gallery.length
       el.scrollTo({ left: next * width, behavior: "smooth" })
@@ -233,18 +231,6 @@ export function DiaryDetailClient({ diary, relatedDiaries, popularDiaries, url }
                             <span className="text-muted-foreground text-xs">{d.destination}</span>
                           </div>
                         </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {relatedDiaries.length > 0 && (
-                  <div className="bg-muted/50 rounded-xl border p-4 shadow-sm backdrop-blur-sm">
-                    <h3 className="text-foreground mb-3 text-sm font-semibold tracking-wide uppercase">
-                      Related Diaries
-                    </h3>
-                    <div className="space-y-4">
-                      {relatedDiaries.map((d) => (
-                        <DiaryCard key={d.slug} diary={d} />
                       ))}
                     </div>
                   </div>

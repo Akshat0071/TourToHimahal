@@ -61,14 +61,14 @@ export function DiaryCard({ diary, featured = false }: DiaryCardProps) {
             whileHover="hover"
           >
             <div className="grid gap-0 md:grid-cols-2">
-              <div className="relative aspect-4/3">
-                <Image
-                  src={imageUrl || "/placeholder.svg"}
-                  alt={diary.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  style={{ objectFit: "contain" }}
-                />
+             <div className="relative aspect-[4/3] overflow-hidden">
+              <Image
+                src={imageUrl || `/placeholder.svg?height=400&width=600&query=${diary.title}`}
+                alt={diary.title}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover"
+              />
                 <div className="absolute top-4 left-4">
                   <Badge className="bg-saffron text-white">Featured Story</Badge>
                 </div>
@@ -128,18 +128,13 @@ export function DiaryCard({ diary, featured = false }: DiaryCardProps) {
           whileHover="hover"
         >
           {/* Left: Image */}
-          <div
-            className="relative w-full flex-shrink-0 overflow-hidden rounded-xl md:w-2/5 md:rounded-2xl"
-            style={{ aspectRatio: "16/9", display: "block" }}
-          >
+          <div className="relative w-full flex-shrink-0 overflow-hidden rounded-xl md:w-2/5 md:rounded-2xl" style={{ aspectRatio: "16/9" }}>
             <Image
               src={imageUrl || "/placeholder.svg"}
               alt={diary.title}
-              width={800}
-              height={450}
-              layout="responsive"
-              className="block h-full w-full rounded-xl object-contain md:rounded-2xl"
-              style={{ objectFit: "contain", borderRadius: "inherit" }}
+              fill
+              sizes="(max-width: 768px) 100vw, 40vw"
+              className="h-full w-full object-cover"
             />
             <div className="pointer-events-none absolute inset-0 rounded-xl bg-linear-to-t from-black/50 via-black/20 to-transparent md:rounded-2xl" />
             {diary.destination && (

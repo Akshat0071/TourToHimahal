@@ -66,14 +66,14 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
       ? "TourToHimachal"
       : normalizedAuthor
 
-  // Fetch related posts from the same category or with similar tags
-  const { data: relatedPosts } = await supabase
+  // Fetch popular posts (most recent published posts)
+  const { data: popularPosts } = await supabase
     .from("blogs")
     .select("*")
     .eq("is_published", true)
-    .or(`category.eq.${post.category},tags.cs.{${post.tags?.join(",") || ""}}`)
     .neq("slug", slug)
-    .limit(3)
+    .order("published_at", { ascending: false })
+    .limit(4)
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -97,7 +97,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <BlogDetailClient post={post} relatedPosts={relatedPosts || []} url={blogUrl} />
+      <BlogDetailClient post={post} popularPosts={popularPosts || []} url={blogUrl} />
     </>
   )
 }

@@ -8,7 +8,6 @@ import { ArrowLeft } from "lucide-react"
 import { Header } from "@/components/home/header"
 import { Footer } from "@/components/home/footer"
 import { BlogTOC } from "@/components/blog/blog-toc"
-import { BlogCard } from "@/components/blog/blog-card"
 import { SocialShare } from "@/components/diaries/social-share"
 import { MarkdownRenderer } from "@/lib/markdown-renderer"
 import { fadeInUp } from "@/lib/animation-variants"
@@ -30,11 +29,11 @@ interface BlogPost {
 
 interface BlogDetailClientProps {
   post: BlogPost
-  relatedPosts: BlogPost[]
+  popularPosts: BlogPost[]
   url: string
 }
 
-export function BlogDetailClient({ post, relatedPosts, url }: BlogDetailClientProps) {
+export function BlogDetailClient({ post, popularPosts, url }: BlogDetailClientProps) {
   const shareUrl = url
   const markdownContent = post.content || ""
   const normalizedAuthor = post.author?.trim()
@@ -146,18 +145,25 @@ export function BlogDetailClient({ post, relatedPosts, url }: BlogDetailClientPr
               </div>
             </div>
 
-            {/* Right: Sticky sidebar with TOC and related posts */}
+            {/* Right: Sticky sidebar with TOC and popular posts */}
             <aside className="sticky top-24 hidden self-start xl:col-span-1 xl:col-start-3 xl:block">
               <div className="space-y-6">
                 <BlogTOC content={markdownContent} />
-                {relatedPosts.length > 0 && (
-                  <div className="bg-muted/50 rounded-xl border p-4 shadow-sm backdrop-blur-sm">
-                    <h3 className="text-foreground mb-3 text-sm font-semibold tracking-wide uppercase">
-                      Related Articles
-                    </h3>
+                {popularPosts.length > 0 && (
+                  <div className="bg-card rounded-xl p-6 shadow-md">
+                    <h3 className="text-foreground mb-4 font-serif text-lg font-bold">Popular Posts</h3>
                     <div className="space-y-4">
-                      {relatedPosts.map((relatedPost) => (
-                        <BlogCard key={relatedPost.slug} post={relatedPost} />
+                      {popularPosts.map((post, index) => (
+                        <Link key={post.slug} href={`/blog/${post.slug}`} className="group flex gap-3">
+                          <span className="text-muted-foreground/50 group-hover:text-saffron text-2xl font-bold transition-colors">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                          <div>
+                            <p className="text-foreground group-hover:text-mountain-blue line-clamp-2 text-sm font-medium transition-colors">
+                              {post.title}
+                            </p>
+                          </div>
+                        </Link>
                       ))}
                     </div>
                   </div>

@@ -166,42 +166,34 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
         subtitle="From snow-capped peaks to ancient temples, from thrilling adventures to serene retreats — discover curated journeys that transform travelers into storytellers. Every package is designed with love, local expertise, and a passion for creating memories that last a lifetime."
       />
 
-      {/* Mobile Filter Bar - Visible only on mobile/tablet */}
-      <section className="bg-background/95 border-border border-b py-3 sm:py-4 lg:hidden">
-        <div className="container mx-auto px-4">
-          <PackageFilter
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            selectedRegion={selectedRegion}
-            setSelectedRegion={setSelectedRegion}
-            selectedDuration={selectedDuration}
-            setSelectedDuration={setSelectedDuration}
-            selectedTheme={selectedTheme}
-            setSelectedTheme={setSelectedTheme}
-            selectedPrice={selectedPrice}
-            setSelectedPrice={setSelectedPrice}
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-            onClearFilters={clearFilters}
-            hasActiveFilters={hasActiveFilters}
-          />
-        </div>
-      </section>
-
-      {/* Packages Grid with Desktop Sidebar */}
+      {/* Packages Grid */}
       <section className="from-background to-background bg-linear-to-b via-[oklch(0.97_0.02_85)] py-6 sm:py-8 md:py-12 lg:py-16">
         <div className="container mx-auto px-4">
-          <div className="lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 xl:grid-cols-[1fr_380px]">
-            {/* Main Content */}
-            <div>
-              <div className="mb-4 flex items-center justify-between sm:mb-6 md:mb-8">
-                <p className="text-muted-foreground text-xs sm:text-sm md:text-base">
-                  Showing <span className="text-saffron font-semibold">{displayedPackages.length}</span> of{" "}
-                  <span className="font-semibold">{filteredPackages.length}</span> packages
-                </p>
-              </div>
+          {/* Unified Filter Bar with Summary */}
+          <div className="mb-4 flex flex-col gap-3 sm:mb-6 md:mb-8 lg:flex-row lg:items-center lg:justify-between">
+            <PackageFilter
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              selectedRegion={selectedRegion}
+              setSelectedRegion={setSelectedRegion}
+              selectedDuration={selectedDuration}
+              setSelectedDuration={setSelectedDuration}
+              selectedTheme={selectedTheme}
+              setSelectedTheme={setSelectedTheme}
+              selectedPrice={selectedPrice}
+              setSelectedPrice={setSelectedPrice}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              onClearFilters={clearFilters}
+              hasActiveFilters={hasActiveFilters}
+            />
+            <p className="text-muted-foreground text-xs sm:text-sm md:text-base">
+              Showing <span className="text-saffron font-semibold">{displayedPackages.length}</span> of{" "}
+              <span className="font-semibold">{filteredPackages.length}</span> packages
+            </p>
+          </div>
 
-              {filteredPackages.length === 0 ? (
+          {filteredPackages.length === 0 ? (
                 <div className="from-muted/50 to-muted/30 rounded-2xl bg-linear-to-br py-8 text-center sm:rounded-3xl sm:py-12 md:py-16">
                   <div className="bg-saffron/10 mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full sm:mb-4 sm:h-20 sm:w-20">
                     <MapPin className="text-saffron h-8 w-8 sm:h-10 sm:w-10" />
@@ -221,7 +213,7 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
                   variants={staggerContainer}
                   initial="hidden"
                   animate="visible"
-                  className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6"
+                  className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 md:gap-6"
                 >
                   {displayedPackages.map((pkg) => (
                     <PackageCard key={pkg.id} pkg={pkg} />
@@ -241,30 +233,6 @@ export function PackagesPageClient({ packages }: PackagesPageClientProps) {
                   </Button>
                 </div>
               )}
-            </div>
-
-            {/* Desktop Sidebar - Visible only on desktop */}
-            <aside className="hidden lg:block">
-              <div className="sticky top-28">
-                <PackageFilter
-                  searchQuery={searchQuery}
-                  setSearchQuery={setSearchQuery}
-                  selectedRegion={selectedRegion}
-                  setSelectedRegion={setSelectedRegion}
-                  selectedDuration={selectedDuration}
-                  setSelectedDuration={setSelectedDuration}
-                  selectedTheme={selectedTheme}
-                  setSelectedTheme={setSelectedTheme}
-                  selectedPrice={selectedPrice}
-                  setSelectedPrice={setSelectedPrice}
-                  sortBy={sortBy}
-                  setSortBy={setSortBy}
-                  onClearFilters={clearFilters}
-                  hasActiveFilters={hasActiveFilters}
-                />
-              </div>
-            </aside>
-          </div>
         </div>
       </section>
 

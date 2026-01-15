@@ -54,13 +54,6 @@ export default async function DiaryDetailPage({ params }: DiaryDetailPageProps) 
     notFound()
   }
 
-  const { data: relatedDiaries } = await supabase
-    .from("diaries")
-    .select("*")
-    .eq("is_published", true)
-    .neq("slug", slug)
-    .limit(3)
-
   // Popular stories: latest published diaries
   const { data: popularDiaries } = await supabase
     .from("diaries")
@@ -93,7 +86,6 @@ export default async function DiaryDetailPage({ params }: DiaryDetailPageProps) 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <DiaryDetailClient
         diary={diary}
-        relatedDiaries={relatedDiaries || []}
         popularDiaries={popularDiaries || []}
         url={diaryUrl}
       />
