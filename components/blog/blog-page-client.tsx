@@ -88,7 +88,7 @@ export function BlogPageClient({ blogs, categories }: BlogPageClientProps) {
   return (
     <>
       <Header />
-      <main className="bg-background min-h-screen overflow-x-hidden">
+      <main className="bg-background min-h-screen ">
         <div className="mt-16">
           <StaticHero
             image="/Images/blog.png"
@@ -101,9 +101,9 @@ export function BlogPageClient({ blogs, categories }: BlogPageClientProps) {
         {/* Featured section removed as requested */}
 
         {/* Main Content */}
-        <section className="from-background to-background relative z-10 overflow-hidden bg-linear-to-b via-[oklch(0.97_0.02_85)] py-10 pb-20 md:py-16 md:pb-24">
+        <section className="from-background to-background relative z-10 bg-linear-to-b via-[oklch(0.97_0.02_85)] py-10 pb-20 md:py-16 md:pb-24">
           <div className="container mx-auto px-4">
-            <div className="grid min-w-0 items-start gap-6 md:gap-8 lg:grid-cols-3">
+            <div className="grid min-w-0 gap-6 md:gap-8 lg:grid-cols-3">
               {/* Main Column */}
               <div className="min-w-0 lg:col-span-2">
                 {/* Search */}
@@ -209,7 +209,9 @@ export function BlogPageClient({ blogs, categories }: BlogPageClientProps) {
 
               {/* Sidebar - Hidden on mobile, shown on lg+ */}
               <div className="hidden lg:block">
-                <BlogSidebar blogs={blogs} />
+                <div className="sticky top-28">
+                  <BlogSidebar blogs={blogs} />
+                </div>
               </div>
             </div>
           </div>
@@ -219,3 +221,4 @@ export function BlogPageClient({ blogs, categories }: BlogPageClientProps) {
     </>
   )
 }
+

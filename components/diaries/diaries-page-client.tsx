@@ -193,8 +193,8 @@ export function DiariesPageClient({ diaries }: DiariesPageClientProps) {
               </div>
 
               {/* Desktop Sidebar - Visible only on desktop */}
-              <aside className="hidden lg:block">
-                <div className="sticky top-28 space-y-6">
+              <aside className="hidden lg:block ">
+                <div className="sticky top-20 space-y-6">
                   {/* Filter Section */}
                   <DiaryFilter
                     selectedRegion={selectedRegion}
