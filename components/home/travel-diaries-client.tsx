@@ -22,7 +22,7 @@ interface Diary {
   slug: string
   excerpt?: string
   cover_image?: string
-  date?: string
+  published_at?: string
 }
 
 interface TravelDiariesClientProps {
@@ -125,8 +125,8 @@ export function TravelDiariesClient({ blogs, diaries }: TravelDiariesClientProps
         title: diary.title,
         excerpt: diary.excerpt || "",
         image: diary.cover_image || `/placeholder.svg?height=300&width=500&query=${diary.title}`,
-        date: diary.date
-          ? new Date(diary.date).toLocaleDateString("en-US", {
+        date: diary.published_at
+          ? new Date(diary.published_at).toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",
               year: "numeric",
@@ -211,13 +211,11 @@ export function TravelDiariesClient({ blogs, diaries }: TravelDiariesClientProps
                     />
 
                     {/* Category badge */}
-                    {index === 0 && (
-                      <div className={`absolute top-3 left-3 rounded-full bg-linear-to-r px-2.5 py-1 text-xs font-bold text-white md:top-4 md:left-4 md:px-3 ${
-                        item.type === "blog" ? "from-forest-green to-mountain-blue" : "from-saffron to-golden-yellow"
-                      }`}>
-                        {item.type === "blog" ? "BLOG" : "DIARY"}
-                      </div>
-                    )}
+                    <div className={`absolute top-3 left-3 rounded-full bg-linear-to-r px-2.5 py-1 text-xs font-bold text-white md:top-4 md:left-4 md:px-3 ${
+                      item.type === "blog" ? "from-forest-green to-mountain-blue" : "from-saffron to-golden-yellow"
+                    }`}>
+                      {item.type === "blog" ? "BLOG" : "DIARY"}
+                    </div>
                   </div>
 
                   {/* Content */}

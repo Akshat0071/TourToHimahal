@@ -14,9 +14,9 @@ export async function TravelDiaries() {
       .limit(3),
     supabase
       .from("diaries")
-      .select("id, title, slug, excerpt, cover_image, date")
+      .select("id, title, slug, excerpt, cover_image, published_at")
       .eq("is_published", true)
-      .order("date", { ascending: false })
+      .order("published_at", { ascending: false })
       .limit(3),
   ])
 
