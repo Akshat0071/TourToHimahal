@@ -16,12 +16,12 @@ const montserrat = Montserrat({
 const siteMetadataAssets: Pick<Metadata, "icons" | "manifest"> = {
   icons: {
     icon: [
-      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png", sizes: "96x96" },
       { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/icon.png", type: "image/png" },
+      { url: "/favicon.ico" },
     ],
     shortcut: ["/favicon.ico"],
-    apple: ["/apple-icon.png"],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
   },
   manifest: "/manifest.webmanifest",
 }
