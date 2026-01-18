@@ -29,17 +29,24 @@ export function Logo({
     lg: "(min-width: 768px) 280px, 224px",
   }
 
+  // Use optimized dimensions based on actual display size
+  const dimensions = {
+    sm: { width: 140, height: 40 },
+    md: { width: 224, height: 64 },
+    lg: { width: 280, height: 80 },
+  }
+
   const LogoContent = () => (
     <div className={cn("group flex items-center", className)}>
       {/* Full Logo Image container */}
       <Image
         src="/Images/logot.webp"
         alt="TourToHimachal Logo"
-        width={560}
-        height={160}
+        width={dimensions[size].width}
+        height={dimensions[size].height}
         className={cn(sizes[size], "w-auto transition-all duration-300")}
         sizes={responsiveSizes[size]}
-        priority
+        quality={85}
       />
     </div>
   )

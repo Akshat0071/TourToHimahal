@@ -21,12 +21,13 @@ export function buildCloudinaryUrl(
     width?: number
     height?: number
     crop?: "fill" | "fit" | "scale" | "crop" | "thumb" | "pad" | "limit"
-    quality?: "auto" | number
+    quality?: "auto" | "auto:good" | "auto:eco" | "auto:low" | number
     format?: "auto" | "webp" | "avif" | "jpg" | "png"
     gravity?: "auto" | "face" | "center" | "north" | "south" | "east" | "west"
     aspectRatio?: string
     blur?: number
     sharpen?: boolean
+    dpr?: number
   },
 ): string {
   const cloudName = getCloudName()
@@ -48,6 +49,7 @@ export function buildCloudinaryUrl(
   if (transformations?.aspectRatio) transforms.push(`ar_${transformations.aspectRatio}`)
   if (transformations?.blur) transforms.push(`e_blur:${transformations.blur}`)
   if (transformations?.sharpen) transforms.push("e_sharpen")
+  if (transformations?.dpr) transforms.push(`dpr_${transformations.dpr}`)
 
   const transformString = transforms.length > 0 ? `${transforms.join(",")}/` : ""
 
@@ -151,9 +153,10 @@ export function optimizeCloudinaryDeliveryUrl(
   options?: {
     width?: number
     crop?: "limit" | "fill" | "fit" | "scale" | "crop" | "thumb" | "pad"
-    quality?: "auto" | number
+    quality?: "auto" | "auto:good" | "auto:eco" | "auto:low" | number
     format?: "auto" | "webp" | "avif" | "jpg" | "png"
     gravity?: "auto" | "center" | "north" | "south" | "east" | "west" | "face"
+    dpr?: number
   },
 ): string {
   if (!url) return url
@@ -162,9 +165,10 @@ export function optimizeCloudinaryDeliveryUrl(
 
   const width = options?.width
   const crop = options?.crop ?? (width ? "limit" : undefined)
-  const quality = options?.quality ?? "auto"
+  const quality = options?.quality ?? "auto:good"
   const format = options?.format ?? "auto"
   const gravity = options?.gravity
+  const dpr = options?.dpr ?? 1.0
 
   const transforms: string[] = []
   if (format) transforms.push(`f_${format}`)
@@ -172,6 +176,7 @@ export function optimizeCloudinaryDeliveryUrl(
   if (width) transforms.push(`w_${width}`)
   if (crop) transforms.push(`c_${crop}`)
   if (gravity) transforms.push(`g_${gravity}`)
+  if (dpr) transforms.push(`dpr_${dpr}`)
 
   const transformString = transforms.join(",")
   if (!transformString) return url

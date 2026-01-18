@@ -7,7 +7,7 @@ export default function Head() {
   // Likely homepage LCP image (used in the home Hero background)
   const lcpHeroImage = optimizeCloudinaryDeliveryUrl(
     "https://res.cloudinary.com/daqp8c5fa/image/upload/v1767795277/v7svtjhbjhj6cyadgfhz.webp",
-    { width: 800, quality: "auto", format: "auto", crop: "limit" },
+    { width: 1200, quality: "auto:good", format: "auto", crop: "limit", dpr: 1.0 },
   )
 
   return (

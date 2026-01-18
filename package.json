@@ -87,10 +87,9 @@
   },
   "browserslist": {
     "production": [
-      "last 2 Chrome versions",
-      "last 2 Edge versions",
-      "last 2 Firefox versions",
-      "last 2 Safari versions"
+      "defaults",
+      "not IE 11",
+      "not op_mini all"
     ],
     "development": [
       "last 1 Chrome version",

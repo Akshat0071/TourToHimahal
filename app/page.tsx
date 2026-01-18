@@ -1,14 +1,43 @@
 import { Suspense } from "react"
 import Script from "next/script"
-import { Header } from "@/components/home/header"
+import dynamic from "next/dynamic"
 import { Hero } from "@/components/home/hero"
-import { PopularDestinations } from "@/components/home/popular-destinations"
-import { TaxiService } from "@/components/home/taxi-service"
-import { DeferredHomeSections } from "@/components/home/deferred-home-sections"
-import { TravelDiaries } from "@/components/home/travel-diaries"
-import { DeferredCTABanner } from "@/components/home/deferred-cta-banner"
-import { Footer } from "@/components/home/footer"
 
+// Dynamic imports for non-critical components
+const Header = dynamic(
+  () => import("@/components/home/header").then((mod) => ({ default: mod.Header })),
+  { loading: () => null }
+)
+
+const PopularDestinations = dynamic(
+  () => import("@/components/home/popular-destinations").then((mod) => ({ default: mod.PopularDestinations })),
+  { loading: () => null }
+)
+
+const TaxiService = dynamic(
+  () => import("@/components/home/taxi-service").then((mod) => ({ default: mod.TaxiService })),
+  { loading: () => null }
+)
+
+const DeferredHomeSections = dynamic(
+  () => import("@/components/home/deferred-home-sections").then((mod) => ({ default: mod.DeferredHomeSections })),
+  { loading: () => null }
+)
+
+const TravelDiaries = dynamic(
+  () => import("@/components/home/travel-diaries").then((mod) => ({ default: mod.TravelDiaries })),
+  { loading: () => null }
+)
+
+const DeferredCTABanner = dynamic(
+  () => import("@/components/home/deferred-cta-banner").then((mod) => ({ default: mod.DeferredCTABanner })),
+  { loading: () => null }
+)
+
+const Footer = dynamic(
+  () => import("@/components/home/footer").then((mod) => ({ default: mod.Footer })),
+  { loading: () => null }
+)
 export default function HomePage() {
   return (
     <main className="bg-background min-h-screen">
