@@ -35,7 +35,7 @@ interface PackageCardProps {
 
 export function PackageCard({ pkg }: PackageCardProps) {
   const { settings } = useSettings()
-  const whatsappLink = generateWhatsAppLink({ packageName: pkg.title }, settings?.whatsapp_number)
+  const whatsappLink = generateWhatsAppLink({ packageName: pkg.title }, settings.whatsapp_number)
 
   // Calculate discount percentage
   const discountPercent =

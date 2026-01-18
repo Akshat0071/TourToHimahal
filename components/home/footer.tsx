@@ -27,33 +27,33 @@ export function Footer() {
   const socialLinks = [
     {
       icon: Facebook,
-      href: settings?.facebook_url || "https://facebook.com",
+      href: settings.facebook_url || "https://facebook.com",
       label: "Facebook",
       color: "hover:bg-blue-600",
     },
     {
       icon: Instagram,
-      href: settings?.instagram_url || "https://instagram.com",
+      href: settings.instagram_url || "https://instagram.com",
       label: "Instagram",
       color: "hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-500",
     },
     {
       icon: Twitter,
-      href: settings?.twitter_url || "https://twitter.com",
+      href: settings.twitter_url || "https://twitter.com",
       label: "Twitter",
       color: "hover:bg-sky-500",
     },
     {
       icon: Youtube,
-      href: settings?.youtube_url || "https://youtube.com",
+      href: settings.youtube_url || "https://youtube.com",
       label: "YouTube",
       color: "hover:bg-red-600",
     },
   ]
 
-  const contactPhone = settings?.contact_phone || ""
-  const contactEmail = settings?.contact_email || "info@tourtohimachal.com"
-  const address = settings?.address || "123 Mall Road, Shimla, Himachal Pradesh 171001"
+  const contactPhone = settings.contact_phone || ""
+  const contactEmail = settings.contact_email || "info@tourtohimachal.com"
+  const address = settings.address || "123 Mall Road, Shimla, Himachal Pradesh 171001"
 
   return (
     <footer className="relative overflow-hidden">
@@ -78,7 +78,7 @@ export function Footer() {
                
               </Link>
               <p className="mb-4 text-xs leading-relaxed text-slate-400 sm:mb-6 sm:text-sm md:text-base">
-                {settings?.about_text ||
+                {settings.about_text ||
                   "Your trusted partner for exploring the majestic Himachal Pradesh. From spiritual journeys to adventure trips, we make your travel dreams come true."}
               </p>
 

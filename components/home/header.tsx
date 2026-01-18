@@ -26,8 +26,8 @@ export function Header() {
   const scrollYRef = useRef(0)
   const pathname = usePathname()
 
-  const whatsappNumber = settings?.whatsapp_number || ""
-  const contactPhone = settings?.contact_phone || ""
+  const whatsappNumber = settings.whatsapp_number || ""
+  const contactPhone = settings.contact_phone || ""
 
   useEffect(() => {
     const handleScroll = () => {

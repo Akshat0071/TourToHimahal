@@ -56,7 +56,7 @@ interface PackageDetailClientProps {
 export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientProps) {
   const [isBookingOpen, setIsBookingOpen] = useState(false)
   const { settings } = useSettings()
-  const whatsappLink = generateWhatsAppLink({ packageName: pkg.title }, settings?.whatsapp_number)
+  const whatsappLink = generateWhatsAppLink({ packageName: pkg.title }, settings.whatsapp_number)
 
   useEffect(() => {
     // Next.js can restore scroll position after navigation; run this after paint to reliably land at top.
@@ -344,7 +344,7 @@ export function PackageDetailClient({ pkg, allPackages }: PackageDetailClientPro
                       variant="outline"
                       className="border-saffron/20 hover:bg-saffron/10 hover:border-saffron/40 h-10 w-full gap-2 border-2 bg-white/60 text-sm"
                     >
-                      <a href={`tel:${(settings?.contact_phone || "").replace(/\s/g, "")}`}>
+                      <a href={`tel:${(settings.contact_phone || "").replace(/\s/g, "")}`}>
                         <Phone className="h-4 w-4" />
                         Call Now
                       </a>

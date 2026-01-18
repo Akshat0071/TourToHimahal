@@ -52,7 +52,7 @@ export function BlogDetailClient({ post, relatedPosts }: BlogDetailClientProps) 
     {
       message: `Check out this article: ${post.title}`,
     },
-    settings?.whatsapp_number,
+    settings.whatsapp_number,
   )
 
   // Extract headings from markdown content to create table of contents

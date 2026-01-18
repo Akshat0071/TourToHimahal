@@ -106,7 +106,7 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
         <div className="flex flex-wrap justify-center gap-4">
           <Button asChild size="lg" className="bg-saffron hover:bg-saffron/90 gap-2 text-white">
             <a
-              href={`https://wa.me/${(settings?.whatsapp_number || "919876543210").replace(/[^0-9]/g, "")}`}
+              href={`https://wa.me/${(settings.whatsapp_number || "919876543210").replace(/[^0-9]/g, "")}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -115,7 +115,7 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
             </a>
           </Button>
           <Button asChild size="lg" variant="secondary" className="gap-2">
-            <a href={`tel:${settings?.contact_phone || ""}`}>
+            <a href={`tel:${settings.contact_phone || ""}`}>
               <Phone className="h-5 w-5" />
               Call Now
             </a>
@@ -382,7 +382,7 @@ export function TaxiPageClient({ vehicles, routes }: TaxiPageClientProps) {
           </Button>
           <Button asChild variant="outline" size="icon">
             <a
-              href={`https://wa.me/${(settings?.whatsapp_number || "919876543210").replace(/[^0-9]/g, "")}`}
+              href={`https://wa.me/${(settings.whatsapp_number || "919876543210").replace(/[^0-9]/g, "")}`}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Chat on WhatsApp"

@@ -9,6 +9,7 @@ const nextConfig = {
     // Enable inline critical CSS
     inlineCss: true,
   },
+  turbopack: {},
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

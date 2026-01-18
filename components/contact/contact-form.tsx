@@ -196,7 +196,7 @@ export function ContactForm() {
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
           <Button asChild className="bg-[#25D366] text-white hover:bg-[#25D366]/90">
             <a
-              href={`https://wa.me/${(settings?.whatsapp_number || "").replace(/[^0-9]/g, "")}?text=Hi!%20I%20just%20submitted%20an%20inquiry%20and%20would%20like%20to%20chat.`}
+              href={`https://wa.me/${(settings.whatsapp_number || "").replace(/[^0-9]/g, "")}?text=Hi!%20I%20just%20submitted%20an%20inquiry%20and%20would%20like%20to%20chat.`}
               target="_blank"
               rel="noopener noreferrer"
             >

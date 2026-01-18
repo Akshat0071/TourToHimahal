@@ -106,7 +106,7 @@ export function TaxiBookingForm() {
             phone: formData.phone,
             message: formData.message,
           },
-          settings?.whatsapp_number,
+          settings.whatsapp_number,
         )
 
         setTimeout(() => {

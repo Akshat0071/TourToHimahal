@@ -73,10 +73,10 @@ export function MapSection() {
                 <div className="text-muted-foreground bg-muted/50 flex items-center gap-2 rounded-lg p-2 text-xs sm:text-sm">
                   <Phone className="text-mountain-blue h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />
                   <a
-                    href={`tel:${(settings?.contact_phone || "").replace(/\s/g, "")}`}
+                    href={`tel:${(settings.contact_phone || "").replace(/\s/g, "")}`}
                     className="hover:text-primary truncate"
                   >
-                    {(settings?.contact_phone || "").replace(/\D/g, "").slice(-10)}
+                    {(settings.contact_phone || "").replace(/\D/g, "").slice(-10)}
                   </a>
                 </div>
               </div>

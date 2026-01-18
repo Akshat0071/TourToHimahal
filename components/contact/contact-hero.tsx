@@ -8,8 +8,8 @@ import { useSettings } from "@/lib/settings-context"
 export function ContactHero() {
   const { settings } = useSettings()
 
-  const contactPhone = settings?.contact_phone || ""
-  const whatsappNumber = settings?.whatsapp_number || ""
+  const contactPhone = settings.contact_phone || ""
+  const whatsappNumber = settings.whatsapp_number || ""
 
   return (
     <StaticHero

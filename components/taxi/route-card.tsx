@@ -27,7 +27,7 @@ export function RouteCard({ route }: RouteCardProps) {
     {
       route: `${route.from_location} to ${route.to_location}`,
     },
-    settings?.whatsapp_number,
+    settings.whatsapp_number,
   )
 
   return (

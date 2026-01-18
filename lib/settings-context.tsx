@@ -43,26 +43,26 @@ const defaultSettings: SiteSettings = {
 }
 
 interface SettingsContextType {
-  settings: SiteSettings | null
+  settings: SiteSettings
   loading: boolean
   refreshSettings: () => Promise<void>
 }
 
 const SettingsContext = createContext<SettingsContextType>({
-  settings: null,
+  settings: defaultSettings,
   loading: true,
   refreshSettings: async () => {},
 })
 
 export function SettingsProvider({ children }: { children: ReactNode }) {
-  const [settings, setSettings] = useState<SiteSettings | null>(null)
+  const [settings, setSettings] = useState<SiteSettings>(defaultSettings)
   const [loading, setLoading] = useState(true)
 
   const fetchSettings = async () => {
     try {
       const supabase = createBrowserClient()
       if (!supabase) {
-        setSettings(defaultSettings)
+        setLoading(false)
         return
       }
 
@@ -70,7 +70,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
 
       if (error) {
         console.error("Error fetching settings:", error)
-        setSettings(defaultSettings)
+        setLoading(false)
         return
       }
 
@@ -93,12 +93,9 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
           }
         })
         setSettings(settingsObj)
-      } else {
-        setSettings(defaultSettings)
       }
     } catch (error) {
       console.error("Error in fetchSettings:", error)
-      setSettings(defaultSettings)
     } finally {
       setLoading(false)
     }

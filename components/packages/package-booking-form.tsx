@@ -89,7 +89,7 @@ export function PackageBookingForm({ packageName, packagePrice, onSuccess }: Pac
             phone: formData.phone,
             message: formData.message,
           },
-          settings?.whatsapp_number,
+          settings.whatsapp_number,
         )
 
         setTimeout(() => {
