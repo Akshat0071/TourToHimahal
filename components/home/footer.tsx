@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
+import { ClientOnly } from "@/components/ui/client-only"
 import { Phone, Mail, MapPin, Facebook, Instagram, Twitter, Youtube, Heart, ArrowRight } from "lucide-react"
 import { useSettings } from "@/lib/settings-context"
 
@@ -51,6 +52,33 @@ export function Footer() {
     },
   ]
 
+  const defaultSocialLinks = [
+    {
+      icon: Facebook,
+      href: "https://facebook.com",
+      label: "Facebook",
+      color: "hover:bg-blue-600",
+    },
+    {
+      icon: Instagram,
+      href: "https://instagram.com",
+      label: "Instagram",
+      color: "hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-500",
+    },
+    {
+      icon: Twitter,
+      href: "https://twitter.com",
+      label: "Twitter",
+      color: "hover:bg-sky-500",
+    },
+    {
+      icon: Youtube,
+      href: "https://youtube.com",
+      label: "YouTube",
+      color: "hover:bg-red-600",
+    },
+  ]
+
   const contactPhone = settings.contact_phone || ""
   const contactEmail = settings.contact_email || "info@tourtohimachal.com"
   const address = settings.address || "123 Mall Road, Shimla, Himachal Pradesh 171001"
@@ -83,20 +111,39 @@ export function Footer() {
               </p>
 
               {/* Social links with colors */}
-              <div className="flex gap-2 sm:gap-3">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`flex h-9 w-9 items-center justify-center rounded-full bg-slate-800 transition-all duration-300 sm:h-10 sm:w-10 ${social.color}`}
-                    aria-label={social.label}
-                  >
-                    <social.icon className="h-4 w-4 sm:h-5 sm:w-5" />
-                  </a>
-                ))}
-              </div>
+              <ClientOnly
+                fallback={
+                  <div className="flex gap-2 sm:gap-3">
+                    {defaultSocialLinks.map((social) => (
+                      <a
+                        key={social.label}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex h-9 w-9 items-center justify-center rounded-full bg-slate-800 transition-all duration-300 sm:h-10 sm:w-10 ${social.color}`}
+                        aria-label={social.label}
+                      >
+                        <social.icon className="h-4 w-4 sm:h-5 sm:w-5" />
+                      </a>
+                    ))}
+                  </div>
+                }
+              >
+                <div className="flex gap-2 sm:gap-3">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex h-9 w-9 items-center justify-center rounded-full bg-slate-800 transition-all duration-300 sm:h-10 sm:w-10 ${social.color}`}
+                      aria-label={social.label}
+                    >
+                      <social.icon className="h-4 w-4 sm:h-5 sm:w-5" />
+                    </a>
+                  ))}
+                </div>
+              </ClientOnly>
             </div>
 
             {/* Quick Links */}
@@ -147,38 +194,64 @@ export function Footer() {
                 <span className="from-sunset-orange to-temple-red h-1 w-6 rounded-full bg-gradient-to-r sm:w-8" />
                 Contact Us
               </h3>
-              <ul className="space-y-3 sm:space-y-4">
-                <li className="group flex items-start gap-2 sm:gap-3">
-                  <div className="bg-saffron/10 group-hover:bg-saffron/20 shrink-0 rounded-lg p-1.5 transition-colors sm:p-2">
-                    <MapPin className="text-saffron h-4 w-4 sm:h-5 sm:w-5" />
-                  </div>
-                  <span className="text-xs text-slate-400 sm:text-sm md:text-base">{address}</span>
-                </li>
-                {contactPhone && (
+              <ClientOnly
+                fallback={
+                  <ul className="space-y-3 sm:space-y-4">
+                    <li className="group flex items-start gap-2 sm:gap-3">
+                      <div className="bg-saffron/10 group-hover:bg-saffron/20 shrink-0 rounded-lg p-1.5 transition-colors sm:p-2">
+                        <MapPin className="text-saffron h-4 w-4 sm:h-5 sm:w-5" />
+                      </div>
+                      <span className="text-xs text-slate-400 sm:text-sm md:text-base">
+                        Near Temple Complex, Chintpurni, HP 177106
+                      </span>
+                    </li>
+                    <li className="group flex items-center gap-2 sm:gap-3">
+                      <div className="bg-mountain-blue/10 group-hover:bg-mountain-blue/20 shrink-0 rounded-lg p-1.5 transition-colors sm:p-2">
+                        <Mail className="text-mountain-blue h-4 w-4 sm:h-5 sm:w-5" />
+                      </div>
+                      <a
+                        href="mailto:info@tourtohimachal.com"
+                        className="hover:text-mountain-blue text-xs break-all text-slate-400 transition-colors sm:text-sm md:text-base"
+                      >
+                        info@tourtohimachal.com
+                      </a>
+                    </li>
+                  </ul>
+                }
+              >
+                <ul className="space-y-3 sm:space-y-4">
+                  <li className="group flex items-start gap-2 sm:gap-3">
+                    <div className="bg-saffron/10 group-hover:bg-saffron/20 shrink-0 rounded-lg p-1.5 transition-colors sm:p-2">
+                      <MapPin className="text-saffron h-4 w-4 sm:h-5 sm:w-5" />
+                    </div>
+                    <span className="text-xs text-slate-400 sm:text-sm md:text-base">{address}</span>
+                  </li>
+                  {contactPhone && (
+                    <li className="group flex items-center gap-2 sm:gap-3">
+                      <div className="bg-forest-green/10 group-hover:bg-forest-green/20 shrink-0 rounded-lg p-1.5 transition-colors sm:p-2">
+                        <Phone className="text-forest-green h-4 w-4 sm:h-5 sm:w-5" />
+                      </div>
+                      <a
+                        href={`tel:${contactPhone.replace(/\s/g, "")}`}
+                        className="hover:text-forest-green text-xs text-slate-400 transition-colors sm:text-sm md:text-base"
+                      >
+                        {contactPhone}
+                      </a>
+                    </li>
+                  )}
                   <li className="group flex items-center gap-2 sm:gap-3">
-                    <div className="bg-forest-green/10 group-hover:bg-forest-green/20 shrink-0 rounded-lg p-1.5 transition-colors sm:p-2">
-                      <Phone className="text-forest-green h-4 w-4 sm:h-5 sm:w-5" />
+                    <div className="bg-mountain-blue/10 group-hover:bg-mountain-blue/20 shrink-0 rounded-lg p-1.5 transition-colors sm:p-2">
+                      <Mail className="text-mountain-blue h-4 w-4 sm:h-5 sm:w-5" />
                     </div>
                     <a
-                      href={`tel:${contactPhone.replace(/\s/g, "")}`}
-                      className="hover:text-forest-green text-xs text-slate-400 transition-colors sm:text-sm md:text-base"
+                      href={`mailto:${contactEmail}`}
+                      className="hover:text-mountain-blue text-xs break-all text-slate-400 transition-colors sm:text-sm md:text-base"
                     >
-                      {contactPhone}
+                      {contactEmail}
                     </a>
                   </li>
-                )}
-                <li className="group flex items-center gap-2 sm:gap-3">
-                  <div className="bg-mountain-blue/10 group-hover:bg-mountain-blue/20 shrink-0 rounded-lg p-1.5 transition-colors sm:p-2">
-                    <Mail className="text-mountain-blue h-4 w-4 sm:h-5 sm:w-5" />
-                  </div>
-                  <a
-                    href={`mailto:${contactEmail}`}
-                    className="hover:text-mountain-blue text-xs break-all text-slate-400 transition-colors sm:text-sm md:text-base"
-                  >
-                    {contactEmail}
-                  </a>
-                </li>
-              </ul>
+                </ul>
+              </ClientOnly>
             </div>
           </div>
         </div>

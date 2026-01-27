@@ -37,6 +37,19 @@ export default function Head() {
           })(window, document, "clarity", "script", "v3ikvkpm3x");`,
         }}
       />
+
+      {/* Google Analytics */}
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-22TPYRK5Z6" />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-22TPYRK5Z6');
+          `,
+        }}
+      />
     </>
   )
 }

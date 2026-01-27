@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { ClientOnly } from "@/components/ui/client-only"
 import { useSettings } from "@/lib/settings-context"
 import { Car, MapPin, Shield, Clock, CheckCircle2, ArrowRight } from "lucide-react"
 import { slideInLeft, slideInRight } from "@/lib/animation-variants"
@@ -162,21 +163,41 @@ export function TaxiService() {
             </div>
 
             <div className="mt-3 flex flex-col gap-2 sm:mt-4 sm:flex-row sm:gap-2.5 md:mt-5 md:gap-3">
-              <Button
-                size="lg"
-                variant="green"
-                className="h-9 w-full gap-1.5 text-xs sm:h-10 sm:w-auto sm:gap-2 sm:text-sm md:h-11 md:text-base"
-                asChild
+              <ClientOnly
+                fallback={
+                  <Button
+                    size="lg"
+                    variant="green"
+                    className="h-9 w-full gap-1.5 text-xs sm:h-10 sm:w-auto sm:gap-2 sm:text-sm md:h-11 md:text-base"
+                    asChild
+                  >
+                    <a
+                      href="https://wa.me/?text=Hi, I want to book a taxi"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Book Taxi on WhatsApp
+                      <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" />
+                    </a>
+                  </Button>
+                }
               >
-                <a
-                  href={`https://wa.me/${(settings.whatsapp_number || "").replace(/[^0-9]/g, "")}?text=Hi, I want to book a taxi`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Button
+                  size="lg"
+                  variant="green"
+                  className="h-9 w-full gap-1.5 text-xs sm:h-10 sm:w-auto sm:gap-2 sm:text-sm md:h-11 md:text-base"
+                  asChild
                 >
-                  Book Taxi on WhatsApp
-                  <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" />
-                </a>
-              </Button>
+                  <a
+                    href={`https://wa.me/${(settings.whatsapp_number || "").replace(/[^0-9]/g, "")}?text=Hi, I want to book a taxi`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Book Taxi on WhatsApp
+                    <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" />
+                  </a>
+                </Button>
+              </ClientOnly>
               <Button
                 size="lg"
                 variant="outline"
