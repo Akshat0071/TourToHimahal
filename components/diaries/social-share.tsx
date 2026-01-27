@@ -13,8 +13,9 @@ interface SocialShareProps {
 
 export function SocialShare({ title, url }: SocialShareProps) {
   const encodedTitle = encodeURIComponent(title)
-  // If url is relative, prepend window.location.origin
-  const absoluteUrl = url.startsWith("http") ? url : `${window.location.origin}${url}`
+  // If url is relative, prepend NEXT_PUBLIC_APP_URL or window.location.origin as fallback
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin
+  const absoluteUrl = url.startsWith("http") ? url : `${baseUrl}${url}`
   const encodedUrl = encodeURIComponent(absoluteUrl)
 
   const shareLinks = [
@@ -42,8 +43,9 @@ export function SocialShare({ title, url }: SocialShareProps) {
 
   const copyToClipboard = async () => {
     try {
-      // If url is relative, prepend window.location.origin
-      const absoluteUrl = url.startsWith("http") ? url : `${window.location.origin}${url}`
+      // If url is relative, prepend NEXT_PUBLIC_APP_URL or window.location.origin as fallback
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin
+      const absoluteUrl = url.startsWith("http") ? url : `${baseUrl}${url}`
       await navigator.clipboard.writeText(absoluteUrl)
     } catch (err) {
       console.error("Failed to copy:", err)
