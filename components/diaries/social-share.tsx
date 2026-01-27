@@ -13,7 +13,9 @@ interface SocialShareProps {
 
 export function SocialShare({ title, url }: SocialShareProps) {
   const encodedTitle = encodeURIComponent(title)
-  const encodedUrl = encodeURIComponent(url)
+  // If url is relative, prepend window.location.origin
+  const absoluteUrl = url.startsWith("http") ? url : `${window.location.origin}${url}`
+  const encodedUrl = encodeURIComponent(absoluteUrl)
 
   const shareLinks = [
     {
